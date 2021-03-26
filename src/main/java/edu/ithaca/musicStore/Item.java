@@ -6,18 +6,20 @@ public class Item {
     private String renterName;
 
     public Item(String name, double price, String renterName){
-        
+        this.name = name;
+        this.price = price;
+        this.renterName = renterName;
     }
 
     public String getName(){
-        return null;
+        return name;
     }
     
     public double getPrice(){
-        return 0;
+        return price;
     }
 
     public String getRenterName(){
-        return null;
+        return renterName;
     }
 }
