@@ -6,9 +6,14 @@ public class Item {
     private String renterName;
 
     public Item(String name, double price, String renterName){
+        
         this.name = name;
         this.price = price;
         this.renterName = renterName;
+    }
+
+    public static boolean isAmountValid(double balance){
+       return false;
     }
 
     public String getName(){
