@@ -25,7 +25,7 @@ class ItemTest {
     }
 
     @Test
-    void isAmountValid(){
+    void isAmountValid() throws IllegalArgumentException{
         assertThrows(IllegalArgumentException.class, ()->new Item("Electric guitar", 200.055, "Sean Blackford")); //border case
         assertThrows(IllegalArgumentException.class, ()->new Item("Electric guitar", -200, "Sean Blackford")); //border case
         Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
