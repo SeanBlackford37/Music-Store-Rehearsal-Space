@@ -8,21 +8,40 @@ class ItemTest {
     @Test
     void getNameTest() {
         Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
-
         assertEquals("Electric guitar", guitar.getName());
     }
     @Test
     void getPriceTest() {
         Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
-
         assertEquals(200, guitar.getPrice());
+        Item guitarTwo = new Item("Electric guitar", 200.10, "Sean Blackford");
+        assertEquals(200.10, guitarTwo.getPrice());
     }
     @Test
     void getRenterNameTest() {
         Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
-
         assertEquals("Sean Blackford", guitar.getRenterName());
     }
+
+    @Test
+    void setNameTest() {
+        Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
+        guitar.setName("Guitar");
+        assertEquals("Guitar", guitar.getName());
+    }
+    @Test
+    void setPriceTest() {
+        Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
+        guitar.setPrice(300);;
+        assertEquals(300, guitar.getPrice());
+    }
+    @Test
+    void setRenterNameTest() {
+        Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
+        guitar.setRenterName("Joe Bob");
+        assertEquals("Joe Bob", guitar.getRenterName());
+    }
+
 
     @Test
     void isAmountValid() throws IllegalArgumentException{

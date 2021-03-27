@@ -36,4 +36,16 @@ public class Item {
     public String getRenterName(){
         return renterName;
     }
+
+    public void setName(String name){
+      //null
+    }
+    
+    public void setPrice(double price){
+        //null
+    }
+
+    public void setRenterName(String renter){
+        //null
+    }
 }
