@@ -38,14 +38,14 @@ public class Item {
     }
 
     public void setName(String name){
-      //null
+      this.name = name;
     }
     
     public void setPrice(double price){
-        //null
+        this.price = price;
     }
 
     public void setRenterName(String renter){
-        //null
+        this.renterName = renter;
     }
 }
