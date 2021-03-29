@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.bank;
+package edu.ithaca.dragon;
 
 public class InsufficientFundsException extends Exception{
     private static final long serialVersionUID = 1L;
