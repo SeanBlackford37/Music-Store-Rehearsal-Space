@@ -4,7 +4,7 @@ import java.util.ArrayList;
 public class Customer {
 
     private MusicStore currentStore;
-    private ArrayList<Transaction> transactionList;
+    private ArrayList<Transaction> transactionHistory;
 
     public Customer(MusicStore currentStoreIn) throws NullPointerException{
         if(currentStoreIn!=null){
@@ -18,7 +18,7 @@ public class Customer {
     }
 
     
-    public void rentItem(String itemName) throws IllegalArgumentException{
+    public double rentItem(String itemName) throws IllegalArgumentException{
         //if it's in the inventory, get it 
         //create transaction
         //add it to the transactionlist
@@ -29,16 +29,19 @@ public class Customer {
      * @pre transaction must be added to transactionList and store inventory
      * @param rentalToCancel
      */
-    public void cancelItemRental(Item rentalToCancel){
-        //if in transaction list, delete it
+    public Transaction cancelItemRental(String itemName) throws IllegalArgumentException{
+        //if in transaction list, remove transaction
         //restore it to inventory
     }
 
-    public void rentRoom(Room spaceToRent){}
+    public double calculatePrice(){
+        //for one item? or multiple items?
+        //does that mean we change transaction and rentItem for multiple
+    }
 
-    public void cancelRoomRental(Room rentalToCancel){}
-
-    public double calculatePrice(){}
+    //return item method?
+    //property for items and rooms currently rented out
+    //or will method use musicStore
 
 
 
