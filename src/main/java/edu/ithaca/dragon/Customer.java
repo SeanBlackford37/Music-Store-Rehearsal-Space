@@ -18,10 +18,11 @@ public class Customer {
     }
 
     
-    public void rentItem(Item itemForRent){
+    public void rentItem(String itemName) throws IllegalArgumentException{
         //if it's in the inventory, get it 
         //create transaction
         //add it to the transactionlist
+        // throws exception if item is out of stock/already rented out
     }
 
     /**

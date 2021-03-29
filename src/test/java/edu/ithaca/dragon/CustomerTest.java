@@ -21,19 +21,43 @@ class CustomerTest {
 
         //customer has t list 
         assertNotEquals(null,c.getTransactionList());
-        
+
         //customer has empty t list
         assertEquals(0,c.getTransactionList.size());
 
     }
 
     @Test
-    void getBalanceTest() throws InsufficientFundsException{
-        BankAccount bankAccount = new BankAccount("a@b.com", 200);
-        bankAccount.withdraw(100);
+    void rentItemTest() throws IllegalArgumentException{
+        MusicStore ms = new MusicStore();
+        Customer c = new Customer(ms);
+        ms.addItem("Gibson Acoustic Guitar",45);
+        //Item is in inventory
+        c.rentItem("Gibson Acoustic Guitar");
+        assertEquals(1,c.getTransactionList().size());
+        //Ask about below
+        assertEquals("Gibson Acoustic Guitar", c.findTransaction("Transaction ID/Date?"));
 
-        assertEquals(100, bankAccount.getBalance());
-        assertThrows(InsufficientFundsException.class, () -> bankAccount.withdraw(300));
+        //Item isn't in inventory
+        //no changes made to transaction list
+        assertThrows(IllegalArgumentException.class, ()->c.rentItem("Coffee"));
+        assertEquals(1,c.getTransactionList().size());
+
+
+        //Item is out of stock/ already being rented by you
+        //no changes made to transaction list
+        assertThrows(IllegalArgumentException.class, ()->c.rentItem("Gibson Acoustic Guitar"));
+        assertEquals(1,c.getTransactionList().size());
+
+        //Item is out of stock/ already being rented by another customer
+        //no changes made to either transaction list
+        Customer d = new Customer(ms);
+        assertThrows(IllegalArgumentException.class, ()->d.rentItem("Gibson Acoustic Guitar"));
+        assertEquals(0,d.getTransactionList().size());
+        assertEquals(1,c.getTransactionList().size());
+
+
+
     }
 
     @Test
