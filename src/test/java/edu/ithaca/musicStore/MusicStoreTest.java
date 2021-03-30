@@ -63,7 +63,7 @@ public class MusicStoreTest {
         assertEquals(1, store.searchForInventoryItem("Guitar"));
 
         //Search for item at the end
-        assertEquals(0, store.searchForInventoryItem("Keyboard"));
+        assertEquals(3, store.searchForInventoryItem("Keyboard"));
 
         //Search for item that doesnt exist
         assertEquals(-1, store.searchForInventoryItem("Bongos"));

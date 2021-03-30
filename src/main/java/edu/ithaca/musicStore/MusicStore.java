@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.bank;
+package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,11 +23,23 @@ public class MusicStore {
     }
 
     public void addToInventory(Item itemToAdd){
-        //inventoryList.add(itemToAdd);
+        inventoryList.add(itemToAdd);
     }
 
-    public void removeFromInventory(String itemName, double price){
-        //inventoryList.remove(itemToRemove);
+    public void removeFromInventory(String itemName, double price) throws IllegalArgumentException{
+        int found = 0;
+        for (int i = 0; i < inventoryList.size(); i++){
+            if (inventoryList.get(i).getName().equals(itemName)){
+                if(inventoryList.get(i).getPrice() == price){
+                    inventoryList.remove(i);
+                    found++;
+                    break;
+                }
+            }
+        }
+        if (found == 0){
+            throw new IllegalArgumentException("Item does not exist");
+        }
     }
 
     public String getStoreName(){
@@ -35,7 +47,12 @@ public class MusicStore {
     }
 
     public int searchForInventoryItem(String itemName){
-        return -3;
+        for (int i = 0; i < inventoryList.size(); i++){
+            if (inventoryList.get(i).getName().equals(itemName)){
+                return i;
+            }
+        }
+        return -1;
     }
     
     public Item getInventoryItem(int index){
@@ -46,24 +63,57 @@ public class MusicStore {
         return inventoryList.size();
     }
 
-    public void moveToRented(String itemName){
+    public void moveToRented(String itemName) throws IllegalArgumentException{
+        int itemIndex = searchForInventoryItem(itemName);
+        if (itemIndex == -1){
+            throw new IllegalArgumentException("Item does not exist");
+        }
+        else{
+            addToRented(inventoryList.get(itemIndex));
+            removeFromInventory(itemName, inventoryList.get(itemIndex).getPrice());
+        }
+        
 
     }
 
     public void moveToInventory(String itemName){
-
+        int itemIndex = searchForRentedItem(itemName);
+        if (itemIndex == -1){
+            throw new IllegalArgumentException("Item does not exist");
+        }
+        else{
+            addToInventory(rentedList.get(itemIndex));
+            removeFromRented(itemName, rentedList.get(itemIndex).getPrice());
+        }
     }
 
     public void addToRented(Item itemToAdd){
-        //inventoryList.add(itemToAdd);
+        rentedList.add(itemToAdd);
     }
 
     public void removeFromRented(String itemName, double price){
-        //inventoryList.remove(itemToRemove);
+        int found = 0;
+        for (int i = 0; i < rentedList.size(); i++){
+            if (rentedList.get(i).getName().equals(itemName)){
+                if(rentedList.get(i).getPrice() == price){
+                    rentedList.remove(i);
+                    found++;
+                    break;
+                }
+            }
+        }
+        if (found == 0){
+            throw new IllegalArgumentException("Item does not exist");
+        }
     }
 
     public int searchForRentedItem(String itemName){
-        return -3;
+        for (int i = 0; i < rentedList.size(); i++){
+            if (rentedList.get(i).getName().equals(itemName)){
+                return i;
+            }
+        }
+        return -1;
     }
 
     public int getRentedSize(){
