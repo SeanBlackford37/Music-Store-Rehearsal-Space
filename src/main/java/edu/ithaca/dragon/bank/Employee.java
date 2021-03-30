@@ -32,7 +32,13 @@ public class Employee {
     }
 
     public void chargeClient(ArrayList<Item> purchases){
-
+        double total=0;
+        for(int i=0; i<purchases.size(); i++){
+            total= total + purchases.get(i).getPrice();
+        }
+        //Do we have a field for total funds in the store? If so, add total
+        //Need to look at how inventory list is structured
+        //Will put in loop and remove the first instance of each purchased item
     }
 
     public void viewSpaceSchedule(){
