@@ -6,14 +6,18 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class RoomTest {
     @Test
-    void constructorTest() {
+    void constructorTest() throws IllegalArgumentException {
         Room roomOne = new Room(false,210,true,"Sean");
-
         assertEquals("Sean", roomOne.getRenterName()); //equivalence class
+
+        Room roomTwo = new Room(false,210,true,"Joe"); //equivalence class
+        assertEquals("Joe", roomTwo.getRenterName()); //equivalence class
         //check for exception thrown correctly
         assertThrows(IllegalArgumentException.class, ()-> new Room(false,210,true,"")); //border case
         assertThrows(IllegalArgumentException.class, ()-> new Room(false,-210,true,"Sean")); //border case
-        assertThrows(IllegalArgumentException.class, ()-> new Room(true,210,false,"")); //border case
+        assertThrows(IllegalArgumentException.class, ()-> new Room(true,210,true,"Sean")); //border case
+        Room roomThree = new Room(true,210,false,""); //equivalence class
+        assertEquals(false, roomThree.getHasEquipment()); //equivalence class
     }
 
     @Test
