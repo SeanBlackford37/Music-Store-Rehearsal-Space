@@ -6,8 +6,8 @@ public class Item {
     private String renterName;
 
     public Item(String name, double price, String renterName){
-        if(!isAmountValid(price)){
-            throw new IllegalArgumentException("invalid amount");
+        if(!isAmountValid(price) || renterName.length() == 0 || name.length() == 0){
+            throw new IllegalArgumentException("invalid argument");
         }else{
             this.name = name;
             this.price = price;
