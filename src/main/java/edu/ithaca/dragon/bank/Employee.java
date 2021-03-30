@@ -28,5 +28,17 @@ public class Employee {
     public void viewEquipmentSchedule(){
 
     }
+
+    public int getID(){
+        return employeeID;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public double getPayAmt(){
+        return payAmt;
+    }
     
 }
