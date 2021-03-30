@@ -29,12 +29,13 @@ public class Customer {
      * @pre transaction must be added to transactionList and store inventory
      * @param rentalToCancel
      */
-    public Transaction cancelItemRental(String itemName) throws IllegalArgumentException{
-        //if in transaction list, remove transaction
-        //restore it to inventory
+    public String cancelItemRental(String itemName) throws IllegalArgumentException{
+        // if in transaction list, remove transaction
+        // give customer transaction printout?
+        // restore it to inventory
     }
 
-    public double calculatePrice(){
+    public double calculatePriceForRoomAndItem(){
         //for one item? or multiple items?
         //does that mean we change transaction and rentItem for multiple
     }
