@@ -43,10 +43,33 @@ public class EmployeeTest {
 
     void chargeClientTest(){
         Employee employee1= new Employee(12345, "Steve");
+        ArrayList<Item> stock= new ArrayList<Item>();
+        stock.add(new Item("piano"));
+        stock.add(new Item("piano"));
+        stock.add(new Item("guitar"));
+        stock.add(new Item("piano"));
+        stock.add(new Item("guitar"));
+        stock.add(new Item("piano"));
+        stock.add(new Item("guitar"));
+        stock.add(new Item("sheetMusic"));
+        stock.add(new Item("sheetMusic"));
         ArrayList<Item> purchases= new ArrayList<Item>();
         purchases.add(new Item("piano"));
         purchases.add(new Item("sheet music"));
+        ArrayList<Item> findItems= new ArrayList<Item>();
+        findItems= employee1.checkStock("piano");
+        assertTrue(findItems.size()==4);
+        findItems.clear();
+        findItems= employee1.checkStock("sheet music");
+        assertTrue(findItems.size()==2);
         employee1.chargeClient(purchases);
+        findItems= employee1.checkStock("piano");
+        assertTrue(findItems.size()==3);
+        findItems.clear();
+        findItems= employee1.checkStock("sheet music");
+        assertTrue(findItems.size()==1);
+        //We should add fireld for total funds in music store
+
     }
 
     void equipmentScheduleTest(){
