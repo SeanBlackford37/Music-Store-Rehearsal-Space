@@ -81,8 +81,14 @@ public class Customer {
         return transactionHistory;
     }
 
-    public Transaction findTransaction(String itemName){
-        return null;
+    public Transaction findTransaction(String itemName) throws IllegalArgumentException{
+        for(int i=0;i<transactionHistory.size();i++){
+            Transaction t = transactionHistory.get(i);
+            if(t.getItemRented().getName().equals(itemName)){
+                return t;
+            }
+        }
+        throw new IllegalArgumentException("No transaction exists for that item");
     }
 
     public Transaction findTransaction(int index) throws IndexOutOfBoundsException{

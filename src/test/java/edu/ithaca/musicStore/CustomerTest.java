@@ -28,13 +28,15 @@ class CustomerTest {
     void rentItemTest(){
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
-        ms.addToInventory(new Item("guitar",45, "n/a"));
+        Item i =new Item("guitar",45, "n/a");
+        ms.addToInventory(i);
         //Item is in inventory and price is correct
         assertEquals(45, c.rentItem("guitar"));
         assertEquals(1,c.getTransactionHistorySize());
+        assertEquals("Bob",c.findTransaction("guitar").getItemRented().getRenterName());
 
-        //update value with today's date
-        assertEquals(c.findTransaction(0), c.findTransaction("guitar"));
+        
+        assertEquals(i, c.findTransaction("guitar").getItemRented());
         assertEquals(0,ms.getInventorySize());
         assertEquals(1,ms.getRentedSize());
 
@@ -91,6 +93,7 @@ class CustomerTest {
         assertEquals(1,ms.getInventorySize());
         assertEquals(0,ms.getRentedSize());
         assertEquals(0,c.getRentedItemsSize());
+        assertEquals("n/a",i.getRenterName());
     }
     @Test
     void findTransactionTest() {
