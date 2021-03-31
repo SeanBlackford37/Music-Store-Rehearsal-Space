@@ -92,15 +92,40 @@ class CustomerTest {
         assertEquals(0,ms.getRentedSize());
         assertEquals(0,c.getRentedItemsSize());
     }
+    @Test
+    void findTransactionTest() throws IndexOutOfBoundsException{
+        MusicStore ms = new MusicStore("ms");
+        Customer c = new Customer(ms, "Bob");
+        ms.addToInventory(new Item("guitar",45, "n/a"));
+        
+        //index out of range, empty list
+        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(0));
+        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
+        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(-1));
+
+       
+
+
+        
+        c.rentItem("guitar");
+        //index out of range, non-empty list
+        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
+        //item is e
+        assertEquals(ms.getRentedItem(0),c.findTransaction(0));
+
+
+
+        
+    }
 
     @Test
-    void cancelRentalTest() throws IllegalArgumentException, RuntimeException{
+    void cancelRentalTest() throws IllegalArgumentException{
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         ms.addToInventory(new Item("guitar",45, "n/a"));
         
         //no transactions recorded for customer
-        assertThrows(RuntimeException.class, ()->c.cancelItemRental("guitar"));
+        assertThrows(IllegalArgumentException.class, ()->c.cancelItemRental("guitar"));
         
         c.rentItem("guitar");
 
