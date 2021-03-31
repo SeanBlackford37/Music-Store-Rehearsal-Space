@@ -15,6 +15,14 @@ class ItemTest {
         assertThrows(IllegalArgumentException.class, ()-> new Item("", 200, "Sean Blackford")); //border case
         assertThrows(IllegalArgumentException.class, ()-> new Item("Electric guitar", -200, "Sean Blackford")); //border case
         
+        Item guitarTwo = new Item("Electric guitar", 200);
+        assertEquals("Electric guitar", guitarTwo.getName()); //equivalence class
+        //check for exception thrown correctly
+        assertThrows(IllegalArgumentException.class, ()-> new Item("", 200)); //border case
+        assertThrows(IllegalArgumentException.class, ()-> new Item("Electric guitar", -200)); //border case
+        assertThrows(IllegalArgumentException.class, ()-> new Item("Electric guitar", 200.555)); //border case
+        
+        
     }
     @Test
     void getNameTest() {
