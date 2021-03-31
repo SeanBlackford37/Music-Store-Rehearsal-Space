@@ -23,10 +23,7 @@ public class Customer {
 
     
     public double rentItem(String itemName) throws IllegalArgumentException{
-        //if it's in the inventory, get it 
-        //create transaction
-        //add it to the transactionlist
-        // throws exception if item is out of stock/already rented out
+        
         int itemStockIndex = currentStore.searchForInventoryItem(itemName);
         if(itemStockIndex>=0){
             Item rental = currentStore.getInventoryItem(itemStockIndex);
@@ -44,9 +41,6 @@ public class Customer {
      * @param rentalToCancel
      */
     public Transaction cancelItemRental(String itemName) throws IllegalArgumentException{
-        // if in transaction list, remove transaction
-        // give customer transaction printout?
-        // restore it to inventory
         for(int i=transactionHistory.size()-1;i>=0;i--){
             Transaction t = transactionHistory.get(i);
             if(t.getItemRented().getName().equals(itemName)){
@@ -57,9 +51,6 @@ public class Customer {
         throw new IllegalArgumentException("No transaction exists for this item");
     }
 
-    //return item method?
-    //property for items and rooms currently rented out
-    //or will method use musicStore
     public Item returnItem(String itemName) throws IllegalArgumentException{
         int itemStoreRentedIndex = currentStore.searchForRentedItem(itemName);
         if(itemStoreRentedIndex>=0){
