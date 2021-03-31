@@ -6,6 +6,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ItemTest {
     @Test
+    void constructorTest() {
+        Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
+        assertEquals("Electric guitar", guitar.getName()); //equivalence class
+
+        //check for exception thrown correctly
+        assertThrows(IllegalArgumentException.class, ()-> new Item("Electric guitar", 200, "")); //border case
+        assertThrows(IllegalArgumentException.class, ()-> new Item("", 200, "Sean Blackford")); //border case
+        assertThrows(IllegalArgumentException.class, ()-> new Item("Electric guitar", -200, "Sean Blackford")); //border case
+        
+    }
+    @Test
     void getNameTest() {
         Item guitar = new Item("Electric guitar", 200, "Sean Blackford");
         assertEquals("Electric guitar", guitar.getName());
