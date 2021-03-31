@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.bank;
+package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 
@@ -20,33 +20,48 @@ public class Employee {
         payAmt= 15.00;
     }
 
-    public ArrayList<Item> checkStock(String searchItem){
-        ArrayList<Item> inventory= MusicStore.getInventoryList();//Will this be a static method? If not will change this
-        ArrayList<Item> inStock= new ArrayList<Item>();
+    public boolean checkStock(String searchItem, ArrayList<Item> inventory){
+        //change boolean
         for(int i=0; i<inventory.size(); i++){
-            if(inventory.get(i).getName().equals(searchItem));
-            inStock.add(inventory.get(i));
+            if(inventory.get(i).getName().equals(searchItem)){
+                return true;
+            }
         }
-        return inStock;
+        return false;
         
     }
 
-    public void chargeClient(ArrayList<Item> purchases){
+    public void chargeClient(ArrayList<Item> purchases, ArrayList<Item> inventory){
         double total=0;
         for(int i=0; i<purchases.size(); i++){
             total= total + purchases.get(i).getPrice();
+            for(int j=0; j<inventory.size(); j++){
+                String toRemove= purchases.get(i).getName();
+                if(inventory.get(j).getName().equals(toRemove)){
+                    inventory.remove(j);
+                }
+            }
         }
-        //Do we have a field for total funds in the store? If so, add total
-        //Need to look at how inventory list is structured
-        //Will put in loop and remove the first instance of each purchased item
+
+        //Add total to total funds in store
     }
 
-    public void viewSpaceSchedule(){
+    public String viewSpaceSchedule(ArrayList<Room> rentedRooms){
+        String schedule="Currently rented rooms: \n";
+        for(int i=0; i<rentedRooms.size(); i++){
+            schedule= schedule + "Room number: " + Integer.toString(rentedRooms.get(i).getRoomNumber()) + " Renter name: " + rentedRooms.get(i).getRenterName() + "\n";
+        }
+        return schedule;
 
     }
 
-    public void viewEquipmentSchedule(){
+    public String viewEquipmentSchedule(ArrayList<Item> rentedItems){
+        String schedule="Currently rented items: \n";
+        for(int i=0; i<rentedItems.size(); i++){
+            schedule= schedule+ rentedItems.get(i).getName() + "\n";
+        }
 
+        return schedule;
     }
 
     public int getID(){
