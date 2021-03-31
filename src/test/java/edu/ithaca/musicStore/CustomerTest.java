@@ -111,7 +111,7 @@ class CustomerTest {
         //index out of range, non-empty list
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
         //item is e
-        assertEquals(ms.getRentedItem(0),c.findTransaction(0));
+        assertEquals(ms.getRentedItem(0),c.findTransaction(0).getItemRented());
 
 
 

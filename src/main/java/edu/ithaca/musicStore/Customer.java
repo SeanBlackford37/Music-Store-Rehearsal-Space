@@ -85,7 +85,10 @@ public class Customer {
         return null;
     }
 
-    public Transaction findTransaction(int index){
+    public Transaction findTransaction(int index) throws IndexOutOfBoundsException{
+        if(index>=transactionHistory.size()||index<0){
+            throw new IndexOutOfBoundsException("invalid index entered");
+        }
         return transactionHistory.get(index);
         
     }
