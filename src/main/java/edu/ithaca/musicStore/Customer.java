@@ -5,11 +5,13 @@ public class Customer {
 
     private MusicStore currentStore;
     private ArrayList<Transaction> transactionHistory;
+    private ArrayList<Item> rentedItems;
 
     public Customer(MusicStore currentStoreIn) throws NullPointerException{
         if(currentStoreIn!=null){
             currentStore=currentStoreIn;
-            transactionList = new ArrayList<>();
+            transactionHistory = new ArrayList<>();
+            rentedItems = new ArrayList<>();
         }
         else{
             throw new NullPointerException("Customer is not associated with a store");
@@ -23,6 +25,7 @@ public class Customer {
         //create transaction
         //add it to the transactionlist
         // throws exception if item is out of stock/already rented out
+        return -1;
     }
 
     /**
@@ -33,11 +36,7 @@ public class Customer {
         // if in transaction list, remove transaction
         // give customer transaction printout?
         // restore it to inventory
-    }
-
-    public double calculatePriceForRoomAndItem(){
-        //for one item? or multiple items?
-        //does that mean we change transaction and rentItem for multiple
+        return "";
     }
 
     //return item method?
@@ -51,9 +50,20 @@ public class Customer {
         return transactionHistory;
     }
 
-    public Transaction findTransaction(String itemName, String date){}
+    public Transaction findTransaction(String itemName){
+        return null;
+    }
 
+    public Transaction findTransaction(int index){
+        return null;
+    }
 
+    public int getTransactionHistorySize(){
+        return transactionHistory.size();
+    }
+    public int getRentedItemsSize(){
+        return rentedItems.size();
+    }
 
 
 
