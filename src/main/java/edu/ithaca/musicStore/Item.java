@@ -15,6 +15,17 @@ public class Item {
         }
         
     }
+     public Item(String name, double price){
+        if(!isAmountValid(price) || name.length() == 0){
+            throw new IllegalArgumentException("invalid argument");
+        }else{
+            this.name = name;
+            this.price = price;
+            this.renterName = "N/A";
+        }
+        
+    }
+    //Have a second constructor 
 
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
