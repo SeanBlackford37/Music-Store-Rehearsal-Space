@@ -22,7 +22,7 @@ public class Employee {
 
     public ArrayList<Item> checkStock(String searchItem){
         ArrayList<Item> inventory= MusicStore.getInventoryList();//Will this be a static method? If not will change this
-        ArrayList<Item> inStock- new ArrayList<Item>();
+        ArrayList<Item> inStock= new ArrayList<Item>();
         for(int i=0; i<inventory.size(); i++){
             if(inventory.get(i).getName().equals(searchItem));
             inStock.add(inventory.get(i));

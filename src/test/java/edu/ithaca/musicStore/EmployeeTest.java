@@ -1,4 +1,4 @@
-package edu.ithaca.dragon.bank;
+package edu.ithaca.musicStore;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -23,13 +23,13 @@ public class EmployeeTest {
     void checkStockTest(){
         Employee employee1= new Employee(12345, "Steve");
         ArrayList<Item> stock= new ArrayList<Item>();
-        stock.add(new Item("piano"));
-        stock.add(new Item("piano"));
-        stock.add(new Item("guitar"));
-        stock.add(new Item("piano"));
-        stock.add(new Item("guitar"));
-        stock.add(new Item("piano"));
-        stock.add(new Item("guitar"));
+        stock.add(new Item("piano", 150, "Mary"));
+        stock.add(new Item("piano", 150, "Joe"));
+        stock.add(new Item("guitar", 100, "Dustin"));
+        stock.add(new Item("piano", 150, "Mike"));
+        stock.add(new Item("guitar", 50, "Lucas"));
+        stock.add(new Item("piano", 150, "Max"));
+        stock.add(new Item("guitar", 100, "John"));
         ArrayList<Item> findItems= new ArrayList<Item>();
         findItems= employee1.checkStock("piano");
         assertTrue(findItems.size()== 4);
@@ -44,18 +44,16 @@ public class EmployeeTest {
     void chargeClientTest(){
         Employee employee1= new Employee(12345, "Steve");
         ArrayList<Item> stock= new ArrayList<Item>();
-        stock.add(new Item("piano"));
-        stock.add(new Item("piano"));
-        stock.add(new Item("guitar"));
-        stock.add(new Item("piano"));
-        stock.add(new Item("guitar"));
-        stock.add(new Item("piano"));
-        stock.add(new Item("guitar"));
-        stock.add(new Item("sheetMusic"));
-        stock.add(new Item("sheetMusic"));
+        stock.add(new Item("piano", 150, "Mary"));
+        stock.add(new Item("piano", 150, "Joe"));
+        stock.add(new Item("guitar", 100, "Dustin"));
+        stock.add(new Item("piano", 150, "Mike"));
+        stock.add(new Item("guitar", 50, "Lucas"));
+        stock.add(new Item("piano", 150, "Max"));
+        stock.add(new Item("guitar", 100, "John"));
         ArrayList<Item> purchases= new ArrayList<Item>();
-        purchases.add(new Item("piano"));
-        purchases.add(new Item("sheet music"));
+        purchases.add(new Item("piano", 150, "Mary"));
+        purchases.add(new Item("sheet music", 20, "Mary"));
         ArrayList<Item> findItems= new ArrayList<Item>();
         findItems= employee1.checkStock("piano");
         assertTrue(findItems.size()==4);
@@ -68,7 +66,7 @@ public class EmployeeTest {
         findItems.clear();
         findItems= employee1.checkStock("sheet music");
         assertTrue(findItems.size()==1);
-        //We should add fireld for total funds in music store
+        //We should add field for total funds in music store
 
     }
 
