@@ -26,5 +26,8 @@ public class Transaction {
     public Item getItemRented(){
         return itemRented;
     }
+    public double getOrderAmount(){
+        return orderAmount;
+    }
 
 }

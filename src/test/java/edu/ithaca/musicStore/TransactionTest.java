@@ -16,5 +16,7 @@ public class TransactionTest {
         assertThrows(IllegalArgumentException.class,()->new Transaction(null,null));
         assertThrows(IllegalArgumentException.class,()->new Transaction(i,null));
         assertThrows(IllegalArgumentException.class,()->new Transaction(null,c));
+
+        assertEquals(150, t.getOrderAmount());
     }
 }
