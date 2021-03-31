@@ -33,6 +33,7 @@ public class Customer {
             rental.setRenterName(customerName);
             currentStore.moveToRented(itemName);
             transactionHistory.add(new Transaction(rental,this));
+            rentedItems.add(rental);
             return rental.getPrice();
         }
         else{ throw new IllegalArgumentException("Item is out of inventory");}
@@ -52,8 +53,21 @@ public class Customer {
     //return item method?
     //property for items and rooms currently rented out
     //or will method use musicStore
-    public void returnItem(String itemName) throws IllegalArgumentException{
+    public Item returnItem(String itemName) throws IllegalArgumentException{
+        int itemStoreRentedIndex = currentStore.searchForRentedItem(itemName);
+        if(itemStoreRentedIndex>=0){
 
+            for(int i=0;i<rentedItems.size();i++){
+                Item returnItem = rentedItems.get(i);
+                if(returnItem.getName().equals(itemName)){
+                    returnItem.setRenterName("n/a");
+                    rentedItems.remove(returnItem);
+                    currentStore.moveToInventory(itemName);
+                    return returnItem;
+                }
+            }
+            throw new IllegalArgumentException("you haven't rented this item");
+        }else{throw new IllegalArgumentException("we don't have any record of this item being rented out"); }
     }
 
     public ArrayList<Transaction> getTransactionHistory(){

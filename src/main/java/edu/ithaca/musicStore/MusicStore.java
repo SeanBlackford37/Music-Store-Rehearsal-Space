@@ -59,6 +59,10 @@ public class MusicStore {
         return inventoryList.get(index);
     }
 
+    public Item getRentedItem(int index){
+        return rentedList.get(index);
+    }
+
     public int getInventorySize(){
         return inventoryList.size();
     }

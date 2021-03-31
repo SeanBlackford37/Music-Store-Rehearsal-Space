@@ -85,7 +85,8 @@ class CustomerTest {
         assertEquals(1,ms.getRentedSize());
         assertEquals(1,c.getRentedItemsSize());
 
-        c.returnItem("guitar");
+        Item i = ms.getRentedItem(0);
+        assertEquals(i,c.returnItem("guitar"));
 
         assertEquals(1,ms.getInventorySize());
         assertEquals(0,ms.getRentedSize());
