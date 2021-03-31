@@ -47,7 +47,14 @@ public class Customer {
         // if in transaction list, remove transaction
         // give customer transaction printout?
         // restore it to inventory
-        return null;
+        for(int i=transactionHistory.size()-1;i>=0;i--){
+            Transaction t = transactionHistory.get(i);
+            if(t.getItemRented().getName().equals(itemName)){
+                returnItem(itemName);
+                return transactionHistory.remove(i);
+            }
+        }
+        throw new IllegalArgumentException("No transaction exists for this item");
     }
 
     //return item method?
@@ -79,7 +86,8 @@ public class Customer {
     }
 
     public Transaction findTransaction(int index){
-        return null;
+        return transactionHistory.get(index);
+        
     }
 
     public int getTransactionHistorySize(){

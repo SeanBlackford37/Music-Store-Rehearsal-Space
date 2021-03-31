@@ -20,4 +20,8 @@ public class Transaction {
         orderAmount=0;
     }
 
+    public Item getItemRented(){
+        return itemRented;
+    }
+
 }
