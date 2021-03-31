@@ -4,7 +4,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 public class Transaction {
-    private String dateTime;
+    //private String dateTime;
     private Item itemRented;
     //private Employee seller;
     private Customer buyer;
@@ -14,13 +14,13 @@ public class Transaction {
         if(itemIn==null || buyerIn==null){
             throw new IllegalArgumentException("null argument entered");
         }
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
-        dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-        +String.valueOf(cal.get(Calendar.YEAR));
+        //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
+        //dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
+        //+String.valueOf(cal.get(Calendar.YEAR));
         itemRented=itemIn;
         //seller=sellerIn;
         buyer=buyerIn;
-        orderAmount=0;
+        orderAmount=itemIn.getPrice();
     }
 
     public Item getItemRented(){
