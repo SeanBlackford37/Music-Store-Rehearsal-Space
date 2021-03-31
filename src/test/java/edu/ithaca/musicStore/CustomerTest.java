@@ -96,22 +96,38 @@ class CustomerTest {
     void findTransactionTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
-        ms.addToInventory(new Item("guitar",45, "n/a"));
+        Item i = new Item("guitar",45, "n/a");
+        ms.addToInventory(i);
         
+        //find transaction using index
         //index out of range, empty list
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(0));
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(-1));
-
-       
-
-
         
         c.rentItem("guitar");
         //index out of range, non-empty list
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
         //item is e
         assertEquals(ms.getRentedItem(0),c.findTransaction(0).getItemRented());
+        c.cancelItemRental("guitar");
+
+        //findTransaction using itemName
+        //empty list, item not in inventory
+        assertThrows(IllegalArgumentException.class, ()->c.findTransaction("djembe"));
+        //empty list, item in inventory
+        assertThrows(IllegalArgumentException.class,()->c.findTransaction("guitar"));
+
+        c.rentItem("guitar");
+        //non empty list, item never in inventory
+        assertThrows(IllegalArgumentException.class, ()->c.findTransaction("djembe"));
+        //transaction in list
+        assertEquals(i,c.findTransaction("guitar").getItemRented());
+
+
+
+
+
 
 
 
