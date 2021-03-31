@@ -18,12 +18,12 @@ public class MusicStoreTest {
     void addItemTest() {
         MusicStore store = new MusicStore("Fancy Store");
         //Add valid item
-        store.addToInventory(new Item("Guitar", 94, null));
+        store.addToInventory(new Item("Guitar", 94, "none"));
         assertEquals(1, store.getInventorySize());
         assertEquals("Guitar", store.getInventoryItem(0).getName());
 
         //Add same item
-        store.addToInventory(new Item("Guitar", 94, null));
+        store.addToInventory(new Item("Guitar", 94, "none"));
         assertEquals(2, store.getInventorySize());
         assertEquals("Guitar", store.getInventoryItem(1).getName());
 
@@ -32,14 +32,14 @@ public class MusicStoreTest {
     @Test
     void removeItemTest() {
         MusicStore store = new MusicStore("Fancy Store");
-        store.addToInventory(new Item("Guitar", 94, null));
+        store.addToInventory(new Item("Guitar", 94, "none"));
         //remove valid item
         store.removeFromInventory("Guitar", 94);
         assertEquals(0, store.getInventorySize());
 
         //Remove when items have same name but different price
-        store.addToInventory(new Item("Guitar", 94, null));
-        store.addToInventory(new Item("Guitar", 93, null));
+        store.addToInventory(new Item("Guitar", 94, "none"));
+        store.addToInventory(new Item("Guitar", 93, "none"));
         store.removeFromInventory("Guitar", 94);
         assertEquals(1, store.getInventorySize());
         assertEquals(93, store.getInventoryItem(0).getPrice());
@@ -51,10 +51,10 @@ public class MusicStoreTest {
     @Test
     void searchForItemTest() {
         MusicStore store = new MusicStore("Fancy Store");
-        store.addToInventory(new Item("Flute", 23, null));
-        store.addToInventory(new Item("Guitar", 94, null));
-        store.addToInventory(new Item("Guitar", 94, null));
-        store.addToInventory(new Item("Keyboard", 130, null));
+        store.addToInventory(new Item("Flute", 23, "none"));
+        store.addToInventory(new Item("Guitar", 94, "none"));
+        store.addToInventory(new Item("Guitar", 94, "none"));
+        store.addToInventory(new Item("Keyboard", 130, "none"));
 
         //Search for valid item at front
         assertEquals(0, store.searchForInventoryItem("Flute"));
@@ -72,10 +72,10 @@ public class MusicStoreTest {
     @Test
     void moveToRentedTest() {
         MusicStore store = new MusicStore("Fancy Store");
-        store.addToInventory(new Item("Flute", 23, null));
-        store.addToInventory(new Item("Guitar", 94, null));
-        store.addToInventory(new Item("Guitar", 94, null));
-        store.addToInventory(new Item("Keyboard", 130, null));
+        store.addToInventory(new Item("Flute", 23, "none"));
+        store.addToInventory(new Item("Guitar", 94, "none"));
+        store.addToInventory(new Item("Guitar", 94, "none"));
+        store.addToInventory(new Item("Keyboard", 130, "none"));
         
         //Move Valid Item
         store.moveToRented("Flute");
@@ -96,10 +96,10 @@ public class MusicStoreTest {
     @Test
     void moveToInventoryTest() {
         MusicStore store = new MusicStore("Fancy Store");
-        store.addToRented(new Item("Flute", 23, null));
-        store.addToRented(new Item("Guitar", 94, null));
-        store.addToRented(new Item("Guitar", 94, null));
-        store.addToRented(new Item("Keyboard", 130, null));
+        store.addToRented(new Item("Flute", 23, "none"));
+        store.addToRented(new Item("Guitar", 94, "none"));
+        store.addToRented(new Item("Guitar", 94, "none"));
+        store.addToRented(new Item("Keyboard", 130, "none"));
         
         //Move Valid Item
         store.moveToInventory("Flute");
