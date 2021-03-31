@@ -6,12 +6,14 @@ public class Customer {
     private MusicStore currentStore;
     private ArrayList<Transaction> transactionHistory;
     private ArrayList<Item> rentedItems;
+    private String customerName;
 
-    public Customer(MusicStore currentStoreIn) throws NullPointerException{
+    public Customer(MusicStore currentStoreIn, String nameIn) throws NullPointerException{
         if(currentStoreIn!=null){
             currentStore=currentStoreIn;
             transactionHistory = new ArrayList<>();
             rentedItems = new ArrayList<>();
+            customerName = nameIn;
         }
         else{
             throw new NullPointerException("Customer is not associated with a store");
@@ -25,18 +27,26 @@ public class Customer {
         //create transaction
         //add it to the transactionlist
         // throws exception if item is out of stock/already rented out
-        return -1;
+        int itemStockIndex = currentStore.searchForInventoryItem(itemName);
+        if(itemStockIndex>=0){
+            Item rental = currentStore.getInventoryItem(itemStockIndex);
+            rental.setRenterName(customerName);
+            currentStore.moveToRented(itemName);
+            transactionHistory.add(new Transaction(rental,this));
+            return rental.getPrice();
+        }
+        else{ throw new IllegalArgumentException("Item is out of inventory");}
     }
 
     /**
      * @pre transaction must be added to transactionList and store inventory
      * @param rentalToCancel
      */
-    public String cancelItemRental(String itemName) throws IllegalArgumentException{
+    public Transaction cancelItemRental(String itemName) throws IllegalArgumentException{
         // if in transaction list, remove transaction
         // give customer transaction printout?
         // restore it to inventory
-        return "";
+        return null;
     }
 
     //return item method?

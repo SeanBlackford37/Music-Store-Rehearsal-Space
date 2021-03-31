@@ -11,16 +11,13 @@ class CustomerTest {
         
 
         //exception is thrown when music store is null
-        assertThrows(NullPointerException.class,()->new Customer(null));
+        assertThrows(NullPointerException.class,()->new Customer(null, "Bob"));
 
         MusicStore ms = new MusicStore("ms");
-        Customer c = new Customer(ms);
+        Customer c = new Customer(ms, "Bob");
 
         //customer is created when music store is not null
         assertNotEquals(null, c);
-
-        //customer has t list 
-        assertNotEquals(null,c.getTransactionHistory());
 
         //customer has empty t list
         assertEquals(0,c.getTransactionHistorySize());
@@ -30,8 +27,8 @@ class CustomerTest {
     @Test
     void rentItemTest() throws IllegalArgumentException{
         MusicStore ms = new MusicStore("ms");
-        Customer c = new Customer(ms);
-        ms.addToInventory(new Item("guitar",45, null));
+        Customer c = new Customer(ms, "Bob");
+        ms.addToInventory(new Item("guitar",45, "n/a"));
         //Item is in inventory and price is correct
         assertEquals(45, c.rentItem("guitar"));
         assertEquals(1,c.getTransactionHistorySize());
@@ -41,7 +38,7 @@ class CustomerTest {
         assertEquals(0,ms.getInventorySize());
         assertEquals(1,ms.getRentedSize());
 
-        ms.addToInventory(new Item("djembe",150,null));
+        ms.addToInventory(new Item("djembe",150,"n/a"));
         //Item isn't in inventory
         //no changes made to transaction list
         assertThrows(IllegalArgumentException.class, ()->c.rentItem("coffee"));
@@ -59,7 +56,7 @@ class CustomerTest {
 
         //Item is out of stock/ already being rented by another customer
         //no changes made to either transaction list
-        Customer d = new Customer(ms);
+        Customer d = new Customer(ms, "Bob");
         assertThrows(IllegalArgumentException.class, ()->d.rentItem("guitar"));
         assertEquals(0,d.getTransactionHistorySize());
         assertEquals(1,c.getTransactionHistorySize());
@@ -72,8 +69,8 @@ class CustomerTest {
     @Test 
     void returnItemTest() throws IllegalArgumentException{
         MusicStore ms = new MusicStore("ms");
-        Customer c = new Customer(ms);
-        ms.addToInventory(new Item("guitar",45, null));
+        Customer c = new Customer(ms, "Bob");
+        ms.addToInventory(new Item("guitar",45, "n/a"));
         //no items rented, item in inventory
         assertThrows(IllegalArgumentException.class, ()->c.returnItem("guitar"));
         //no items rented, item not in inventory
@@ -98,8 +95,8 @@ class CustomerTest {
     @Test
     void cancelRentalTest() throws IllegalArgumentException, RuntimeException{
         MusicStore ms = new MusicStore("ms");
-        Customer c = new Customer(ms);
-        ms.addToInventory(new Item("guitar",45, null));
+        Customer c = new Customer(ms, "Bob");
+        ms.addToInventory(new Item("guitar",45, "n/a"));
         
         //no transactions recorded for customer
         assertThrows(RuntimeException.class, ()->c.cancelItemRental("guitar"));
