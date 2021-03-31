@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class CustomerTest {
 
     @Test
-    void constructorTest() throws NullPointerException{
+    void constructorTest(){
         
 
         //exception is thrown when music store is null
@@ -25,7 +25,7 @@ class CustomerTest {
     }
 
     @Test
-    void rentItemTest() throws IllegalArgumentException{
+    void rentItemTest(){
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         ms.addToInventory(new Item("guitar",45, "n/a"));
@@ -67,7 +67,7 @@ class CustomerTest {
 
     }
     @Test 
-    void returnItemTest() throws IllegalArgumentException{
+    void returnItemTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         ms.addToInventory(new Item("guitar",45, "n/a"));
@@ -93,7 +93,7 @@ class CustomerTest {
         assertEquals(0,c.getRentedItemsSize());
     }
     @Test
-    void findTransactionTest() throws IndexOutOfBoundsException{
+    void findTransactionTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         ms.addToInventory(new Item("guitar",45, "n/a"));
@@ -119,7 +119,7 @@ class CustomerTest {
     }
 
     @Test
-    void cancelRentalTest() throws IllegalArgumentException{
+    void cancelRentalTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         ms.addToInventory(new Item("guitar",45, "n/a"));
