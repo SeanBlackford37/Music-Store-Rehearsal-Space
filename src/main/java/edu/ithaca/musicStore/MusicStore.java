@@ -180,12 +180,16 @@ public class MusicStore {
         employeeList.add(toAdd);
     }
 
-    public void removeEmployee(Employee toRemove){
-        if(employeeList.contains(toRemove) == false){
-            throw new IllegalArgumentException("Employee does not exist");
+    public void removeEmployee(int employeeID){
+        boolean contains= false;
+        for(int i=0; i<employeeList.size(); i++){
+            if(employeeList.get(i).getID()== employeeID){
+                contains= true;
+                employeeList.remove(i);
+            }
         }
-        else{
-            employeeList.remove(toRemove);
+        if(contains== false){
+            throw new IllegalArgumentException("Employee does not exist");
         }
         }
        

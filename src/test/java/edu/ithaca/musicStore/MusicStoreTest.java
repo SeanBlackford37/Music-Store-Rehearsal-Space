@@ -198,14 +198,14 @@ public class MusicStoreTest {
         store.addEmployee(employee2);
         store.addEmployee(employee3);
         assertTrue(store.getEmployeeList().size()==3);
-        store.removeEmployee(employee1);
-        store.removeEmployee(employee3);
+        store.removeEmployee(12345);
+        store.removeEmployee(34567);
         assertTrue(store.getEmployeeList().size()==1);
         assertFalse(store.getEmployeeList().contains(employee1));
         assertFalse(store.getEmployeeList().contains(employee3));
         assertTrue(store.getEmployeeList().contains(employee2));
-        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(employee1));
-        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(employee4));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(12345));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(45678));
     }
 
 }
