@@ -206,6 +206,10 @@ public class MusicStore {
         return employeeList;
     }
 
+    public Employee getEmployee(int index){
+        return employeeList.get(index);
+    }
+
 
 
     public void addToStoreBalance(double profit) throws IllegalArgumentException{
@@ -233,6 +237,16 @@ public class MusicStore {
           return true;
         }
        return false;
+    }
+
+     public int findEmployee(int ID){
+        for (int i = 0; i < employeeList.size(); i++){
+            if (employeeList.get(i).getID()==(ID)){
+                return i;
+            }
+        }
+        return -1;
+    
     }
 
 
