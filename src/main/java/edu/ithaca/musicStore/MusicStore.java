@@ -9,7 +9,7 @@ public class MusicStore {
     private String storeName;
     private List<Item> inventoryList;
     private List<Item> rentedList;
-    //private List<Employee> employeeList;
+    private List<Employee> employeeList;
     //private List<RepairTech> repairTechList;
     private List<Room> roomList;
     private double storeBalance;
@@ -18,7 +18,7 @@ public class MusicStore {
         storeName = name;
         inventoryList = new ArrayList<>();
         rentedList = new ArrayList<>();
-        //employeeList = new ArrayList<>();
+        employeeList = new ArrayList<>();
         //repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
@@ -28,7 +28,7 @@ public class MusicStore {
         storeName = name;
         inventoryList = new ArrayList<>();
         rentedList = new ArrayList<>();
-        //employeeList = new ArrayList<>();
+        employeeList = new ArrayList<>();
         //repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance =  balance;
@@ -175,6 +175,20 @@ public class MusicStore {
     public double getSoreBalance(){
         return storeBalance;
     }
+
+    public void addEmployee(Employee toAdd){
+
+    }
+
+    public void removeEmployee(int employeeID){
+
+    }
+
+    public List<Employee> getEmployeeList(){
+        return employeeList;
+    }
+
+
 
 
 }
