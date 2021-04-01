@@ -30,8 +30,11 @@ class CustomerTest {
         Customer c = new Customer(ms, "Bob");
         Item i =new Item("guitar",45, "n/a");
         ms.addToInventory(i);
+        Employee e = new Employee(10101,"Todd");
+        //invalid employee
+        assertThrows(IllegalArgumentException.class,()->c.rentItem("guitar",null));
         //Item is in inventory and price is correct
-        assertEquals(45, c.rentItem("guitar"));
+        assertEquals(45, c.rentItem("guitar",e));
         assertEquals(1,c.getTransactionHistorySize());
         assertEquals("Bob",c.findTransaction("guitar").getItemRented().getRenterName());
 
@@ -43,7 +46,7 @@ class CustomerTest {
         ms.addToInventory(new Item("djembe",150,"n/a"));
         //Item isn't in inventory
         //no changes made to transaction list
-        assertThrows(IllegalArgumentException.class, ()->c.rentItem("coffee"));
+        assertThrows(IllegalArgumentException.class, ()->c.rentItem("coffee",e));
         assertEquals(1,c.getTransactionHistorySize());
         assertEquals(1,ms.getInventorySize());
         assertEquals(1,ms.getRentedSize());
@@ -51,7 +54,7 @@ class CustomerTest {
 
         //Item is out of stock/ already being rented by you
         //no changes made to transaction list
-        assertThrows(IllegalArgumentException.class, ()->c.rentItem("guitar"));
+        assertThrows(IllegalArgumentException.class, ()->c.rentItem("guitar",e));
         assertEquals(1,c.getTransactionHistorySize());
         assertEquals(1,ms.getInventorySize());
         assertEquals(1,ms.getRentedSize());
@@ -59,7 +62,7 @@ class CustomerTest {
         //Item is out of stock/ already being rented by another customer
         //no changes made to either transaction list
         Customer d = new Customer(ms, "Bob");
-        assertThrows(IllegalArgumentException.class, ()->d.rentItem("guitar"));
+        assertThrows(IllegalArgumentException.class, ()->d.rentItem("guitar",e));
         assertEquals(0,d.getTransactionHistorySize());
         assertEquals(1,c.getTransactionHistorySize());
         assertEquals(1,ms.getInventorySize());
@@ -72,13 +75,14 @@ class CustomerTest {
     void returnItemTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
+        Employee e = new Employee(10101,"Todd");
         ms.addToInventory(new Item("guitar",45, "n/a"));
         //no items rented, item in inventory
         assertThrows(IllegalArgumentException.class, ()->c.returnItem("guitar"));
         //no items rented, item not in inventory
         assertThrows(IllegalArgumentException.class, ()->c.returnItem("djembe"));
 
-        c.rentItem("guitar");
+        c.rentItem("guitar",e);
 
         // item rented, not in inventory
         assertThrows(IllegalArgumentException.class, ()->c.returnItem("djembe"));
@@ -100,6 +104,7 @@ class CustomerTest {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         Item i = new Item("guitar",45, "n/a");
+        Employee e = new Employee(10101,"Todd");
         ms.addToInventory(i);
         
         //find transaction using index
@@ -108,7 +113,7 @@ class CustomerTest {
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(-1));
         
-        c.rentItem("guitar");
+        c.rentItem("guitar",e);
         //index out of range, non-empty list
         assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
         //item is e
@@ -121,32 +126,25 @@ class CustomerTest {
         //empty list, item in inventory
         assertThrows(IllegalArgumentException.class,()->c.findTransaction("guitar"));
 
-        c.rentItem("guitar");
+        c.rentItem("guitar",e);
         //non empty list, item never in inventory
         assertThrows(IllegalArgumentException.class, ()->c.findTransaction("djembe"));
         //transaction in list
         assertEquals(i,c.findTransaction("guitar").getItemRented());
 
-
-
-
-
-
-
-
-        
     }
 
     @Test
     void cancelRentalTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
+        Employee e = new Employee(10101,"Todd");
         ms.addToInventory(new Item("guitar",45, "n/a"));
         
         //no transactions recorded for customer
         assertThrows(IllegalArgumentException.class, ()->c.cancelItemRental("guitar"));
         
-        c.rentItem("guitar");
+        c.rentItem("guitar",e);
 
         //no transaction for item listed
         assertThrows(IllegalArgumentException.class, ()->c.cancelItemRental("coffee"));

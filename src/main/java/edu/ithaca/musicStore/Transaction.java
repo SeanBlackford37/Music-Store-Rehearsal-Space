@@ -7,10 +7,11 @@ public class Transaction {
     //private String dateTime;
     private Item itemRented;
     private Customer buyer;
+    private Employee seller;
     private double orderAmount;
     private String description;
 
-    public Transaction(Item itemIn, Customer buyerIn) throws IllegalArgumentException{
+    public Transaction(Item itemIn, Customer buyerIn, Employee sellerIn) throws IllegalArgumentException{
         if(itemIn==null || buyerIn==null){
             throw new IllegalArgumentException("null argument entered");
         }
@@ -20,8 +21,10 @@ public class Transaction {
         itemRented=itemIn;
         buyer=buyerIn;
         orderAmount=itemIn.getPrice();
-        description="\nTransaction\n\nCustomer: "+buyer.getCustomerName()
+        seller = sellerIn;
+        description="\nTransaction\n\nSeller: "+seller.getName()+"\nCustomer: "+buyer.getCustomerName()
         +"\nRental Item: "+itemRented.getName()+"\nTotal: $"+orderAmount;
+        
     }
 
     public Item getItemRented(){

@@ -22,16 +22,19 @@ public class Customer {
     }
 
     
-    public double rentItem(String itemName) throws IllegalArgumentException{
+    public double rentItem(String itemName, Employee seller) throws IllegalArgumentException{
         
         int itemStockIndex = currentStore.searchForInventoryItem(itemName);
         if(itemStockIndex>=0){
-            Item rental = currentStore.getInventoryItem(itemStockIndex);
-            rental.setRenterName(customerName);
-            currentStore.moveToRented(itemName);
-            transactionHistory.add(new Transaction(rental,this));
-            rentedItems.add(rental);
-            return rental.getPrice();
+            if(seller!=null){
+                Item rental = currentStore.getInventoryItem(itemStockIndex);
+                rental.setRenterName(customerName);
+                currentStore.moveToRented(itemName);
+                transactionHistory.add(new Transaction(rental,this, seller));
+                rentedItems.add(rental);
+                return rental.getPrice();
+            }
+            else{throw new IllegalArgumentException("Invalid seller entered");}
         }
         else{ throw new IllegalArgumentException("Item is out of inventory");}
     }
