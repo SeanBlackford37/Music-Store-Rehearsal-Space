@@ -3,7 +3,7 @@ package edu.ithaca.musicStore;
 import java.util.ArrayList;
 import java.util.List;
 
-import edu.ithaca.musicStore.Item;
+
 
 public class MusicStore {
     private String storeName;
@@ -11,7 +11,8 @@ public class MusicStore {
     private List<Item> rentedList;
     //private List<Employee> employeeList;
     //private List<RepairTech> repairTechList;
-    //private List<Room> roomList;
+    private List<Room> roomList;
+    private double storeBalance;
 
     public MusicStore(String name){
         storeName = name;
@@ -19,7 +20,18 @@ public class MusicStore {
         rentedList = new ArrayList<>();
         //employeeList = new ArrayList<>();
         //repairTechList = new ArrayList<>();
-        //roomList = new ArrayList<>();
+        roomList = new ArrayList<>();
+        storeBalance = 0;
+    }
+
+    public MusicStore(String name, double balance){
+        storeName = name;
+        inventoryList = new ArrayList<>();
+        rentedList = new ArrayList<>();
+        //employeeList = new ArrayList<>();
+        //repairTechList = new ArrayList<>();
+        roomList = new ArrayList<>();
+        storeBalance =  balance;
     }
 
     public void addToInventory(Item itemToAdd){
@@ -122,6 +134,46 @@ public class MusicStore {
 
     public int getRentedSize(){
         return rentedList.size();
+    }
+
+    public void addToRoomList(Room itemToAdd){
+        roomList.add(itemToAdd);
+    }
+
+    public void removeFromRoomList(int roomName) throws IllegalArgumentException{
+        int found = 0;
+        for (int i = 0; i < roomList.size(); i++){
+            if (roomList.get(i).getRoomNumber()==(roomName)){
+                    roomList.remove(i);
+                    found++;
+                    break;
+            }
+        }
+        if (found == 0){
+            throw new IllegalArgumentException("Item does not exist");
+        }
+    }
+
+    public int findRoom(int roomNumber){
+        for (int i = 0; i < roomList.size(); i++){
+            if (roomList.get(i).getRoomNumber()==(roomNumber)){
+                return i;
+            }
+        }
+        return -1;
+        //stuff
+    }
+
+    public Room getRoom(int index){
+        return roomList.get(index);
+    }
+
+    public int getRoomListSize(){
+        return roomList.size();
+    }
+
+    public double getSoreBalance(){
+        return storeBalance;
     }
 
 
