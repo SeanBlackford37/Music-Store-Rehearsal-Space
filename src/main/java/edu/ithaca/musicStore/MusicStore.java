@@ -240,7 +240,12 @@ public class MusicStore {
     }
 
      public int findEmployee(int ID){
-        
+        for (int i = 0; i < employeeList.size(); i++){
+            if (employeeList.get(i).getID()==(ID)){
+                return i;
+            }
+        }
+        return -1;
     
     }
 

@@ -268,22 +268,22 @@ public class MusicStoreTest {
     @Test
     void searchForEmployeeTest() {
         MusicStore store = new MusicStore("Fancy Store");
-        store.addEmployee(new Employee(12, "John"));
-        store.addEmployee(new Employee(13, "Bob"));
-        store.addEmployee(new Employee(14, "Nami"));
-        store.addEmployee(new Employee(15, "Elise"));
+        store.addEmployee(new Employee(12345, "John"));
+        store.addEmployee(new Employee(13345, "Bob"));
+        store.addEmployee(new Employee(14345, "Nami"));
+        store.addEmployee(new Employee(15345, "Elise"));
 
         //Search for valid item at front
-        assertEquals(0, store.findEmployee(12));
+        assertEquals(0, store.findEmployee(12345));
 
         //Search for item when there are two of the same
-        assertEquals(1, store.findEmployee(13));
+        assertEquals(1, store.findEmployee(13345));
 
         //Search for item at the end
-        assertEquals(2, store.findEmployee(14));
+        assertEquals(2, store.findEmployee(14345));
 
         //Search for item that doesnt exist
-        assertEquals(-1, store.findEmployee(1));
+        assertEquals(-1, store.findEmployee(19345));
     }
 
 
