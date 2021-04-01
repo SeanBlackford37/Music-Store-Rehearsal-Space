@@ -18,6 +18,8 @@ public class EmployeeTest {
         assertTrue(employee1.getPayAmt()==15.00);
         assertThrows(IllegalArgumentException.class, ()-> new Employee(0, "Steve"));
         assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, ""));
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", -50));
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", 25.555));
     }
     
     @Test

@@ -19,6 +19,30 @@ public class Employee {
         this.employeeID= employeeID;
         payAmt= 15.00;
     }
+    public Employee(int employeeID, String name, double payAmt){
+        //check to make sure employeeID is 5 digits
+        if(isIdValid(employeeID) !=5){
+            throw new IllegalArgumentException("EmployeeID is not valid");
+        }
+        if(name.isEmpty()){
+            throw new IllegalArgumentException("You must enter a name");
+        }
+        if(!isAmountValid(payAmt)){
+            throw new IllegalArgumentException("You must enter a valid pay amount");
+        }
+        this.name= name;
+        this.employeeID= employeeID;
+        this.payAmt= payAmt;
+    }
+
+    public static boolean isAmountValid(double balance){
+        String s = "" + balance;
+        String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
+        if(balance >=0 && result[1].length() <= 2){
+          return true;
+        }
+       return false;
+    }
 
     public boolean checkStock(String searchItem, ArrayList<Item> inventory){
         //change boolean
