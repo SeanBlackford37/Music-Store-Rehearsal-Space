@@ -138,7 +138,7 @@ public class MusicStore {
 
     public void removeFromRoomList(int roomName) throws IllegalArgumentException{
         int found = 0;
-        for (int i = 0; i < inventoryList.size(); i++){
+        for (int i = 0; i < roomList.size(); i++){
             if (roomList.get(i).getRoomNumber()==(roomName)){
                     roomList.remove(i);
                     found++;
@@ -151,15 +151,25 @@ public class MusicStore {
     }
 
     public int findRoom(int roomNumber){
+        for (int i = 0; i < roomList.size(); i++){
+            if (roomList.get(i).getRoomNumber()==(roomNumber)){
+                return i;
+            }
+        }
+        return -1;
         //stuff
     }
 
     public Room getRoom(int index){
-        //whoops
+        return roomList.get(index);
     }
 
     public int getRoomListSize(){
-        //yeet
+        return roomList.size();
+    }
+
+    public double getSoreBalance(){
+        return storeBalance;
     }
 
 
