@@ -25,7 +25,7 @@ public class Item {
         }
         
     }
-    //Have a second constructor 
+    
 
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
