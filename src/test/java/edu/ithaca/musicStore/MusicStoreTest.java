@@ -116,4 +116,60 @@ public class MusicStoreTest {
         assertThrows(IllegalArgumentException.class, ()->store.moveToInventory("Bongos")); 
 
     }
+
+    @Test
+    void addRoomTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        //Add valid item
+        store.addToRoomList(new Room(true, 1, false, "none"));
+        assertEquals(1, store.getRoomListSize());
+        assertEquals(1, store.getRoom(0).getRoomNumber());
+
+        //Add same item
+        store.addToRoomList(new Room(true, 1, false, "none"));
+        assertEquals(2, store.getRoomListSize());
+        assertEquals(1, store.getRoom(1).getRoomNumber());
+
+    }
+
+    @Test
+    void removeRoomTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addToRoomList(new Room(true, 1, false, "none"));
+        //remove valid item
+        store.removeFromRoomList(1);
+        assertEquals(0, store.getRoomListSize());
+
+        //Remove when items have same name but different price
+        store.addToRoomList(new Room(true, 1, false, "none"));
+        store.addToRoomList(new Room(true, 1, false, "none"));
+        store.removeFromRoomList(1);
+        assertEquals(1, store.getRoomListSize());
+        assertEquals(1, store.getRoom(0).getRoomNumber());
+
+        //Remove an item that doesnt exist
+        assertThrows(IllegalArgumentException.class, ()->store.removeFromRoomList(50)); 
+    }
+
+    @Test
+    void searchForRoomTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addToRoomList(new Room(true, 1, false, "none"));
+        store.addToRoomList(new Room(true, 2, false, "none"));
+        store.addToRoomList(new Room(true, 3, false, "none"));
+        store.addToRoomList(new Room(true, 4, false, "none"));
+
+        //Search for valid item at front
+        assertEquals(0, store.findRoom(1));
+
+        //Search for item when there are two of the same
+        assertEquals(0, store.findRoom(2));
+
+        //Search for item at the end
+        assertEquals(0, store.findRoom(4));
+
+        //Search for item that doesnt exist
+        assertEquals(-1, store.findRoom(30));
+    }
+
 }
