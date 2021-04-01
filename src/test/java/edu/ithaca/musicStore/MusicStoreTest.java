@@ -172,6 +172,19 @@ public class MusicStoreTest {
     }
 
     @Test
+    void addEmployeeTest(){
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addEmployee(new Employee(12345, "Steve"));
+        store.addEmployee(new Employee(23456, "Linda"));
+        store.addEmployee(new Employee(34567, "John"));
+        assertTrue(store.getEmployeeList().size()==3);
+        assertTrue(store.getEmployeeList().get(0).getName().equals("Steve"));
+        assertTrue(store.getEmployeeList().get(1).getID()== 23456);
+        assertTrue(store.getEmployeeList().get(2).getName().equals("John"));
+        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(12345, "")));
+        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(0, "Sarah")));
+
+    @Test
     void createStoreTestWithBalance(){
         //create valid store with no decimals
         MusicStore store = new MusicStore("Cool", 10);
@@ -227,9 +240,31 @@ public class MusicStoreTest {
         //add with negative
         assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10));
 
+
     }
 
     @Test
+    void removeEmployeeTest(){
+        MusicStore store = new MusicStore("Fancy Store");
+        Employee employee1=new Employee(12345, "Steve");
+        Employee employee2= (new Employee(23456, "Linda"));
+        Employee employee3= new Employee(34567, "John");
+        Employee employee4= new Employee(45678, "Dustin");
+        store.addEmployee(employee1);
+        store.addEmployee(employee2);
+        store.addEmployee(employee3);
+        assertTrue(store.getEmployeeList().size()==3);
+        store.removeEmployee(12345);
+        store.removeEmployee(34567);
+        assertTrue(store.getEmployeeList().size()==1);
+        assertFalse(store.getEmployeeList().contains(employee1));
+        assertFalse(store.getEmployeeList().contains(employee3));
+        assertTrue(store.getEmployeeList().contains(employee2));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(12345));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(45678));
+    }
+
+
     void subtractFromStoreBalanceTest(){
         //create valid store 
         MusicStore store = new MusicStore("Cool", 10);
@@ -261,7 +296,5 @@ public class MusicStoreTest {
         assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10));
 
     }
-
-
 
 }
