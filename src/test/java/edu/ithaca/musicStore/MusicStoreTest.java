@@ -183,6 +183,7 @@ public class MusicStoreTest {
         assertTrue(store.getEmployeeList().get(2).getName().equals("John"));
         assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(12345, "")));
         assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(0, "Sarah")));
+    }
 
     @Test
     void createStoreTestWithBalance(){
@@ -262,6 +263,27 @@ public class MusicStoreTest {
         assertTrue(store.getEmployeeList().contains(employee2));
         assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(12345));
         assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(45678));
+    }
+
+    @Test
+    void searchForEmployeeTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addEmployee(new Employee(12, "John"));
+        store.addEmployee(new Employee(13, "Bob"));
+        store.addEmployee(new Employee(14, "Nami"));
+        store.addEmployee(new Employee(15, "Elise"));
+
+        //Search for valid item at front
+        assertEquals(0, store.findEmployee(12));
+
+        //Search for item when there are two of the same
+        assertEquals(1, store.findEmployee(13));
+
+        //Search for item at the end
+        assertEquals(2, store.findEmployee(14));
+
+        //Search for item that doesnt exist
+        assertEquals(-1, store.findEmployee(1));
     }
 
 
