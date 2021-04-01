@@ -193,18 +193,19 @@ public class MusicStoreTest {
         Employee employee1=new Employee(12345, "Steve");
         Employee employee2= (new Employee(23456, "Linda"));
         Employee employee3= new Employee(34567, "John");
+        Employee employee4= new Employee(45678, "Dustin");
         store.addEmployee(employee1);
         store.addEmployee(employee2);
         store.addEmployee(employee3);
         assertTrue(store.getEmployeeList().size()==3);
-        store.removeEmployee(12345);
-        store.removeEmployee(34567);
+        store.removeEmployee(employee1);
+        store.removeEmployee(employee3);
         assertTrue(store.getEmployeeList().size()==1);
         assertFalse(store.getEmployeeList().contains(employee1));
         assertFalse(store.getEmployeeList().contains(employee3));
         assertTrue(store.getEmployeeList().contains(employee2));
-        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(12345));
-        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(0));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(employee1));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(employee4));
     }
 
 }

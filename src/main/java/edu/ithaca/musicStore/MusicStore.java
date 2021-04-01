@@ -177,12 +177,19 @@ public class MusicStore {
     }
 
     public void addEmployee(Employee toAdd){
-
+        employeeList.add(toAdd);
     }
 
-    public void removeEmployee(int employeeID){
-
-    }
+    public void removeEmployee(Employee toRemove){
+        if(employeeList.contains(toRemove) == false){
+            throw new IllegalArgumentException("Employee does not exist");
+        }
+        else{
+            employeeList.remove(toRemove);
+        }
+        }
+       
+    
 
     public List<Employee> getEmployeeList(){
         return employeeList;
