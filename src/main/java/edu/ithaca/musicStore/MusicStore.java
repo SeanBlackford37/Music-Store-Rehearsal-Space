@@ -172,8 +172,16 @@ public class MusicStore {
         return roomList.size();
     }
 
-    public double getSoreBalance(){
+    public double getStoreBalance(){
         return storeBalance;
+    }
+
+    public void addToStoreBalance(double profit){
+        //
+    }
+
+    public void subtractFromStoreBalance(double cost){
+        //
     }
 
 
