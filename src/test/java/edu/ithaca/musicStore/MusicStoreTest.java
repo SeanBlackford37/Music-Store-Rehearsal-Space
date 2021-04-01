@@ -179,11 +179,11 @@ public class MusicStoreTest {
 
         //create valid store with 1 decimal
         store = new MusicStore("Cool", 10.1);
-        assertEquals(10, store.getStoreBalance());
+        assertEquals(10.1, store.getStoreBalance());
 
         //create valid store with 2 decimals
         store = new MusicStore("Cool", 10.13);
-        assertEquals(10, store.getStoreBalance());
+        assertEquals(10.13, store.getStoreBalance());
 
         //create store with 3 decimals
         assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", 10.123));
