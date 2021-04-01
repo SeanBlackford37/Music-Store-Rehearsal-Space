@@ -29,5 +29,8 @@ public class Transaction {
     public double getOrderAmount(){
         return orderAmount;
     }
+    public Customer getBuyer(){
+        return buyer;
+    }
 
 }
