@@ -11,7 +11,6 @@ public class MusicStoreTest {
         //Create store
         MusicStore store = new MusicStore("Fancy Store");
         assertEquals("Fancy Store", store.getStoreName());
-
     }
 
     @Test
@@ -171,5 +170,98 @@ public class MusicStoreTest {
         //Search for room that doesnt exist
         assertEquals(-1, store.findRoom(30));
     }
+
+    @Test
+    void createStoreTestWithBalance(){
+        //create valid store with no decimals
+        MusicStore store = new MusicStore("Cool", 10);
+        assertEquals(10, store.getStoreBalance());
+
+        //create valid store with 1 decimal
+        store = new MusicStore("Cool", 10.1);
+        assertEquals(10.1, store.getStoreBalance());
+
+        //create valid store with 2 decimals
+        store = new MusicStore("Cool", 10.13);
+        assertEquals(10.13, store.getStoreBalance());
+
+        //create store with 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", 10.123));
+        //create store with negative 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10.123));
+        //create store with negative 2 decimals
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10.13));
+        //create store with negative and 1 decimal
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10.3));
+        //create store with negative
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10));
+
+    }
+
+    @Test
+    void addToStoreBalanceTest(){
+        //create valid store 
+        MusicStore store = new MusicStore("Cool", 10);
+        assertEquals(10, store.getStoreBalance());
+
+        //add an int
+        store.addToStoreBalance(10);
+        assertEquals(20, store.getStoreBalance());
+
+        //add a num with 1 decimal
+        store.addToStoreBalance(10.1);
+        assertEquals(30.1, store.getStoreBalance());
+
+        //add a num with 2 decimals
+        store.addToStoreBalance(10.12);
+        assertEquals(40.22, store.getStoreBalance());
+
+        //add with 3 decimals
+        assertThrows(IllegalArgumentException.class, ()-> store.addToStoreBalance(10.123));
+        //add with negative 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10.123));
+        //add with negative 2 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10.13));
+        //add with negative and 1 decimal
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10.3));
+        //add with negative
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10));
+
+    }
+
+    @Test
+    void subtractFromStoreBalanceTest(){
+        //create valid store 
+        MusicStore store = new MusicStore("Cool", 10);
+        assertEquals(10, store.getStoreBalance());
+
+        //subtract an int
+        store.subtractFromStoreBalance(2);
+        assertEquals(8, store.getStoreBalance());
+
+        //subtract with 1 decimal
+        store.subtractFromStoreBalance(2.1);
+        assertEquals(5.9, store.getStoreBalance());
+
+        //subtract with 2 decimal
+        store.subtractFromStoreBalance(2.12);
+        assertEquals(3.78, store.getStoreBalance());
+
+        //sub with more than balance
+        assertThrows(IllegalArgumentException.class, ()-> store.subtractFromStoreBalance(40));
+        //sub with 3 decimals
+        assertThrows(IllegalArgumentException.class, ()-> store.subtractFromStoreBalance(1.123));
+        //sub with negative 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10.123));
+        //sub with negative 2 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10.13));
+        //sub with negative and 1 decimal
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10.3));
+        //sub with negative
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10));
+
+    }
+
+
 
 }
