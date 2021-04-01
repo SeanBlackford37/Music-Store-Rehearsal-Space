@@ -1,14 +1,14 @@
 package edu.ithaca.musicStore;
 
-import java.util.Calendar;
-import java.util.TimeZone;
+//import java.util.Calendar;
+//import java.util.TimeZone;
 
 public class Transaction {
     //private String dateTime;
     private Item itemRented;
-    //private Employee seller;
     private Customer buyer;
     private double orderAmount;
+    private String description;
 
     public Transaction(Item itemIn, Customer buyerIn) throws IllegalArgumentException{
         if(itemIn==null || buyerIn==null){
@@ -18,9 +18,10 @@ public class Transaction {
         //dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
         //+String.valueOf(cal.get(Calendar.YEAR));
         itemRented=itemIn;
-        //seller=sellerIn;
         buyer=buyerIn;
         orderAmount=itemIn.getPrice();
+        description="\nTransaction\n\nCustomer: "+buyer.getCustomerName()
+        +"\nRental Item: "+itemRented.getName()+"\nTotal: $"+orderAmount;
     }
 
     public Item getItemRented(){
@@ -31,6 +32,9 @@ public class Transaction {
     }
     public Customer getBuyer(){
         return buyer;
+    }
+    public String getDescription(){
+        return description;
     }
 
 }

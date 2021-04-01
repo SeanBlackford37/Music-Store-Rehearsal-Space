@@ -20,5 +20,8 @@ public class TransactionTest {
         assertEquals(150, t.getOrderAmount());
         assertEquals(i,t.getItemRented());
         assertEquals(c,t.getBuyer());
+        assertTrue(t.getDescription().contains("Bob"));
+        assertTrue(t.getDescription().contains("djembe"));
+        assertTrue(t.getDescription().contains(String.valueOf(t.getOrderAmount())));
     }
 }

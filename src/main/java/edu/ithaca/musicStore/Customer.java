@@ -97,6 +97,8 @@ public class Customer {
         return rentedItems.size();
     }
 
-
+    public String getCustomerName(){
+        return customerName;
+    }
 
 }
