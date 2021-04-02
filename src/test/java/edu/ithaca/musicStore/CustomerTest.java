@@ -191,7 +191,40 @@ class CustomerTest {
 
     }
     @Test
-    void returnRoom(){} 
+    void returnRoom(){
+        MusicStore ms = new MusicStore("ms");
+        Customer c = new Customer(ms, "Bob");
+        Employee e = new Employee(10101,"Todd");
+        Room room =new Room(1);
+
+        //room not included in store
+        assertThrows(IllegalArgumentException.class,()->c.returnRoom(1));
+
+        ms.addToRoomList(room);
+
+        //room hasn't been rented yet
+        assertThrows(IllegalArgumentException.class,()->c.returnRoom(1));
+
+        
+        c.rentRoom(1, e);
+        assertFalse(room.getIsEmptyRoom());
+        assertEquals("Bob",room.getRenterName());
+
+        //customer tries to return a room that's rented by another customer
+        Customer d = new Customer(ms,"Fran");
+        assertThrows(IllegalArgumentException.class,()->d.returnRoom(1));
+        
+        c.returnRoom(1);
+        
+        assertTrue(room.getIsEmptyRoom());
+        assertEquals("n/a",room.getRenterName());
+
+        
+
+        
+        
+
+    } 
     @Test
     void cancelRoom(){}
 }

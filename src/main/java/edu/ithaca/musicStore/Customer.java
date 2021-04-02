@@ -116,6 +116,10 @@ public class Customer {
         }
     }
 
+    public Room returnRoom(int roomNum) throws IllegalArgumentException{
+        return null;
+    }
+
     public int getTransactionHistorySize(){
         return transactionHistory.size();
     }

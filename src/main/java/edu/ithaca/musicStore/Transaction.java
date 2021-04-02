@@ -54,8 +54,8 @@ public class Transaction {
         //+String.valueOf(cal.get(Calendar.YEAR));
         
         buyer=buyerIn;
-        orderAmount=0;
-        //orderAmount=roomIn.getPrice();
+        
+        orderAmount=roomIn.getRate();
         seller = sellerIn;
         roomRented = roomIn;
         description="\nTransaction\n\nSeller: "+seller.getName()+"\nCustomer: "+buyer.getCustomerName()
