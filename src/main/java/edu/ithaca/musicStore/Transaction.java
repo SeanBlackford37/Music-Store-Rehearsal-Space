@@ -78,5 +78,8 @@ public class Transaction {
     public Room getRoomRented(){
         return roomRented;
     }
+    public Employee getSeller(){
+        return seller;
+    }
 
 }

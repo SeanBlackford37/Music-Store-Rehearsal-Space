@@ -141,6 +141,7 @@ class CustomerTest {
         Employee e = new Employee(10101,"Todd");
         ms.addToInventory(new Item("guitar",45, "n/a"));
         Room r = new Room(1);
+        ms.addToRoomList(r);
         
         //no transactions recorded for customer
         assertThrows(IllegalArgumentException.class, ()->c.cancelItemRental("guitar"));
@@ -162,7 +163,7 @@ class CustomerTest {
 
         Transaction t2 = c.findTransaction(1);
         assertEquals(t2,c.cancelItemRental("guitar"));
-        assertEquals(0,c.getTransactionHistorySize());
+        assertEquals(1,c.getTransactionHistorySize()); //room transaction
 
 
     }
