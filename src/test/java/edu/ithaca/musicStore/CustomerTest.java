@@ -162,7 +162,7 @@ class CustomerTest {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         Employee e = new Employee(10101,"Todd");
-        Room room =new Room(1, "n/a");
+        Room room =new Room(1);
         ms.addToRoomList(room);
         int num = room.getRoomNumber();
         //renting an unprepared room or unavailable rooms

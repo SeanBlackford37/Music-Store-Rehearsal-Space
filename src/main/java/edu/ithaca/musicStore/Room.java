@@ -22,14 +22,14 @@ public class Room {
         }
     }
 
-    public Room(int roomNumber, String renterName){
-        if(roomNumber <= 0 || renterName.length() == 0 && hasEquipment){
+    public Room(int roomNumber){
+        if(roomNumber <= 0){
             throw new IllegalArgumentException("invalid argument");
         }else{
             this.hasEquipment=false;
             this.isEmptyRoom=true;
             this.roomNumber = roomNumber;
-            this.renterName = renterName;
+            this.renterName = "n/a";
             this.rate = 50;
         }
     }
@@ -45,6 +45,9 @@ public class Room {
     }
     public String getRenterName(){
         return renterName;
+    }
+    public double getRate(){
+        return rate;
     }
 
     public void setIsEmptyRoom(boolean isEmptyRoom){

@@ -93,8 +93,27 @@ public class Customer {
         
     }
 
-    public boolean rentRoom(int roomNumber, Employee seller) throws IllegalArgumentException{
-        return false;
+    public double rentRoom(int roomNumber, Employee seller) throws IllegalArgumentException{
+        int roomIndex=currentStore.findRoom(roomNumber);
+        if(seller==null){
+            throw new IllegalArgumentException("seller not in system");
+        }
+        else if(roomIndex==-1){
+            throw new IllegalArgumentException("room is not in our system or is unavailable");
+        }
+        else{
+            Room r = currentStore.getRoom(roomIndex);
+            if(r.getIsEmptyRoom()&&!r.getHasEquipment()){
+                r.setIsEmptyRoom(false);
+                r.setRenterName(customerName);
+                //figure out equipment for next sprint
+                Transaction t = new Transaction(this, seller, r);
+                transactionHistory.add(t);
+                //currentStore.removeFromRoomList(roomNumber);
+                return r.getRate();
+            }
+            else{throw new IllegalArgumentException("room is currently occupied or unprepared");}
+        }
     }
 
     public int getTransactionHistorySize(){

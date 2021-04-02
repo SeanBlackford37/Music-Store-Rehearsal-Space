@@ -59,7 +59,7 @@ public class Transaction {
         seller = sellerIn;
         roomRented = roomIn;
         description="\nTransaction\n\nSeller: "+seller.getName()+"\nCustomer: "+buyer.getCustomerName()
-        +"\nRoom Number: "+roomRented.getRoomNumber()+"\nRental Item: "+itemRented.getName()+"\nTotal: $"+orderAmount;
+        +"\nRoom Number: "+roomRented.getRoomNumber()+"\nTotal: $"+orderAmount;
         
     }
 
