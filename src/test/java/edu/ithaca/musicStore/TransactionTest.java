@@ -13,8 +13,8 @@ public class TransactionTest {
         Employee e = new Employee(10101,"Todd");
         Transaction t = new Transaction(i,c,e);
 
+        //case where customer only rents an item
         assertNotEquals(null, t);
-        assertThrows(IllegalArgumentException.class,()->new Transaction(null,null,null));
         assertThrows(IllegalArgumentException.class,()->new Transaction(i,null,null));
         assertThrows(IllegalArgumentException.class,()->new Transaction(null,c,null));
         assertThrows(IllegalArgumentException.class,()->new Transaction(null,null, e));
@@ -26,5 +26,7 @@ public class TransactionTest {
         assertTrue(t.getDescription().contains("djembe"));
         assertTrue(t.getDescription().contains(String.valueOf(t.getOrderAmount())));
         assertTrue(t.getDescription().contains("Todd"));
+
+        //case where customer only rents a room
     }
 }

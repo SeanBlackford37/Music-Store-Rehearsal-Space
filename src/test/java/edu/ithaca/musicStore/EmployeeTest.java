@@ -73,9 +73,12 @@ public class EmployeeTest {
     void viewSpaceScheduleTest(){
         Employee employee1= new Employee(12345, "Steve");
         ArrayList<Room> rented= new ArrayList<Room>();
-        rented.add(new Room(false, 1, true, "Sadie"));
-        rented.add(new Room(false, 5, true, "Carolyn"));
-        rented.add(new Room(false, 9, true, "Sophia"));
+        // rented.add(new Room(false, 1, true, "Sadie"));
+        // rented.add(new Room(false, 5, true, "Carolyn"));
+        // rented.add(new Room(false, 9, true, "Sophia"));
+        rented.add(new Room( 1, "Sadie"));
+        rented.add(new Room( 5,  "Carolyn"));
+        rented.add(new Room( 9, "Sophia"));
         String testView= employee1.viewSpaceSchedule(rented);
         System.out.println(testView);
 

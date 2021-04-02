@@ -93,6 +93,10 @@ public class Customer {
         
     }
 
+    public boolean rentRoom(int roomNumber, Employee seller) throws IllegalArgumentException{
+        return false;
+    }
+
     public int getTransactionHistorySize(){
         return transactionHistory.size();
     }
@@ -104,4 +108,7 @@ public class Customer {
         return customerName;
     }
 
+    public Item getRentedItem(int index){
+        return rentedItems.get(index);
+    }
 }

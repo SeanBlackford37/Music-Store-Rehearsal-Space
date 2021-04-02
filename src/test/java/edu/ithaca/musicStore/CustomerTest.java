@@ -157,4 +157,41 @@ class CustomerTest {
 
     }
 
+    @Test
+    void rentRoomTest(){
+        MusicStore ms = new MusicStore("ms");
+        Customer c = new Customer(ms, "Bob");
+        Employee e = new Employee(10101,"Todd");
+        Room room =new Room(1, "n/a");
+        ms.addToRoomList(room);
+        int num = room.getRoomNumber();
+        //renting an unprepared room or unavailable rooms
+        room.setHasEquipment(true);
+        assertThrows(IllegalArgumentException.class,()->c.rentRoom(num,e));
+        room.setIsEmptyRoom(false);
+        assertThrows(IllegalArgumentException.class,()->c.rentRoom(num,e));
+        room.setHasEquipment(false);
+        assertThrows(IllegalArgumentException.class,()->c.rentRoom(num,e));
+
+        //room is rentable again
+        room.setIsEmptyRoom(true);
+
+        assertEquals(50,c.rentRoom(num,e));
+        assertEquals("Bob",room.getRenterName());
+        Transaction t = c.findTransaction(0);
+        assertEquals(room,t.getRoomRented());
+        assertFalse(room.getIsEmptyRoom());
+
+        //customer rents the same room twice
+        assertThrows(IllegalArgumentException.class, ()->c.rentRoom(1, e));
+        //another customer tries to rent the same room
+        Customer d = new Customer(ms,"Fran");
+        assertThrows(IllegalArgumentException.class,()->d.rentRoom(1,e));
+        
+
+    }
+    @Test
+    void returnRoom(){} 
+    @Test
+    void cancelRoom(){}
 }

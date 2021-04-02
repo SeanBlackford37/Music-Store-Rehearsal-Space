@@ -5,6 +5,7 @@ public class Room {
     private int roomNumber;
     private boolean hasEquipment;
     private String renterName;
+    private double rate;
     //If nonone is in the room isEmptyRoom has to be True, and hasEquipment has to be false, renterName has to be empty
     public Room(boolean isEmptyRoom, int roomNumber, boolean hasEquipment, String renterName){
        
@@ -17,6 +18,19 @@ public class Room {
             this.roomNumber = roomNumber;
             this.hasEquipment = hasEquipment;
             this.renterName = renterName;
+            this.rate = 50;
+        }
+    }
+
+    public Room(int roomNumber, String renterName){
+        if(roomNumber <= 0 || renterName.length() == 0 && hasEquipment){
+            throw new IllegalArgumentException("invalid argument");
+        }else{
+            this.hasEquipment=false;
+            this.isEmptyRoom=true;
+            this.roomNumber = roomNumber;
+            this.renterName = renterName;
+            this.rate = 50;
         }
     }
 
