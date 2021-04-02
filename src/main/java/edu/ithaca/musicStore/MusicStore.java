@@ -9,7 +9,7 @@ public class MusicStore {
     private String storeName;
     private List<Item> inventoryList;
     private List<Item> rentedList;
-    //private List<Employee> employeeList;
+    private List<Employee> employeeList;
     //private List<RepairTech> repairTechList;
     private List<Room> roomList;
     private double storeBalance;
@@ -18,20 +18,26 @@ public class MusicStore {
         storeName = name;
         inventoryList = new ArrayList<>();
         rentedList = new ArrayList<>();
-        //employeeList = new ArrayList<>();
+        employeeList = new ArrayList<>();
         //repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
     }
 
-    public MusicStore(String name, double balance){
-        storeName = name;
-        inventoryList = new ArrayList<>();
-        rentedList = new ArrayList<>();
-        //employeeList = new ArrayList<>();
-        //repairTechList = new ArrayList<>();
-        roomList = new ArrayList<>();
-        storeBalance =  balance;
+
+    public MusicStore(String name, double balance) throws IllegalArgumentException{
+        if(!isAmountValid(balance)){
+            throw new IllegalArgumentException("invalid argument");
+        }
+        else{
+            storeName = name;
+            inventoryList = new ArrayList<>();
+            rentedList = new ArrayList<>();
+            employeeList = new ArrayList<>();
+            //repairTechList = new ArrayList<>();
+            roomList = new ArrayList<>();
+            storeBalance =  balance;
+        }
     }
 
     public void addToInventory(Item itemToAdd){
@@ -107,7 +113,7 @@ public class MusicStore {
         rentedList.add(itemToAdd);
     }
 
-    public void removeFromRented(String itemName, double price){
+    public void removeFromRented(String itemName, double price) throws IllegalArgumentException{
         int found = 0;
         for (int i = 0; i < rentedList.size(); i++){
             if (rentedList.get(i).getName().equals(itemName)){
@@ -172,9 +178,77 @@ public class MusicStore {
         return roomList.size();
     }
 
-    public double getSoreBalance(){
+    public double getStoreBalance(){
         return storeBalance;
     }
+
+
+    public void addEmployee(Employee toAdd){
+        employeeList.add(toAdd);
+    }
+
+    public void removeEmployee(int employeeID){
+        boolean contains= false;
+        for(int i=0; i<employeeList.size(); i++){
+            if(employeeList.get(i).getID()== employeeID){
+                contains= true;
+                employeeList.remove(i);
+            }
+        }
+        if(contains== false){
+            throw new IllegalArgumentException("Employee does not exist");
+        }
+        }
+       
+    
+
+    public List<Employee> getEmployeeList(){
+        return employeeList;
+    }
+
+    public Employee getEmployee(int index){
+        return employeeList.get(index);
+    }
+
+
+
+    public void addToStoreBalance(double profit) throws IllegalArgumentException{
+        if(!isAmountValid(profit)){
+            throw new IllegalArgumentException("invalid argument");
+        }else{
+            storeBalance += profit;
+        }
+    }
+
+    public void subtractFromStoreBalance(double cost) throws IllegalArgumentException{
+        if(!isAmountValid(cost) || cost > storeBalance){
+            throw new IllegalArgumentException("invalid argument");
+        }else{
+            storeBalance -= cost;
+            int num  = (int)(storeBalance * 100);
+            storeBalance = ((double)num) /100;
+        }
+    }
+
+    public static boolean isAmountValid(double balance) {
+        String s = "" + balance;
+        String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
+        if(balance >=0 && result[1].length() <= 2){
+          return true;
+        }
+       return false;
+    }
+
+     public int findEmployee(int ID){
+        for (int i = 0; i < employeeList.size(); i++){
+            if (employeeList.get(i).getID()==(ID)){
+                return i;
+            }
+        }
+        return -1;
+    
+    }
+
 
 
 }

@@ -11,7 +11,6 @@ public class MusicStoreTest {
         //Create store
         MusicStore store = new MusicStore("Fancy Store");
         assertEquals("Fancy Store", store.getStoreName());
-
     }
 
     @Test
@@ -170,6 +169,154 @@ public class MusicStoreTest {
 
         //Search for room that doesnt exist
         assertEquals(-1, store.findRoom(30));
+    }
+
+    @Test
+    void addEmployeeTest(){
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addEmployee(new Employee(12345, "Steve"));
+        store.addEmployee(new Employee(23456, "Linda"));
+        store.addEmployee(new Employee(34567, "John"));
+        assertTrue(store.getEmployeeList().size()==3);
+        assertTrue(store.getEmployeeList().get(0).getName().equals("Steve"));
+        assertTrue(store.getEmployeeList().get(1).getID()== 23456);
+        assertTrue(store.getEmployeeList().get(2).getName().equals("John"));
+        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(12345, "")));
+        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(0, "Sarah")));
+    }
+
+    @Test
+    void createStoreTestWithBalance(){
+        //create valid store with no decimals
+        MusicStore store = new MusicStore("Cool", 10);
+        assertEquals(10, store.getStoreBalance());
+
+        //create valid store with 1 decimal
+        store = new MusicStore("Cool", 10.1);
+        assertEquals(10.1, store.getStoreBalance());
+
+        //create valid store with 2 decimals
+        store = new MusicStore("Cool", 10.13);
+        assertEquals(10.13, store.getStoreBalance());
+
+        //create store with 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", 10.123));
+        //create store with negative 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10.123));
+        //create store with negative 2 decimals
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10.13));
+        //create store with negative and 1 decimal
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10.3));
+        //create store with negative
+        assertThrows(IllegalArgumentException.class, ()->new MusicStore("Cool", -10));
+
+    }
+
+    @Test
+    void addToStoreBalanceTest(){
+        //create valid store 
+        MusicStore store = new MusicStore("Cool", 10);
+        assertEquals(10, store.getStoreBalance());
+
+        //add an int
+        store.addToStoreBalance(10);
+        assertEquals(20, store.getStoreBalance());
+
+        //add a num with 1 decimal
+        store.addToStoreBalance(10.1);
+        assertEquals(30.1, store.getStoreBalance());
+
+        //add a num with 2 decimals
+        store.addToStoreBalance(10.12);
+        assertEquals(40.22, store.getStoreBalance());
+
+        //add with 3 decimals
+        assertThrows(IllegalArgumentException.class, ()-> store.addToStoreBalance(10.123));
+        //add with negative 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10.123));
+        //add with negative 2 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10.13));
+        //add with negative and 1 decimal
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10.3));
+        //add with negative
+        assertThrows(IllegalArgumentException.class, ()->store.addToStoreBalance( -10));
+
+
+    }
+
+    @Test
+    void removeEmployeeTest(){
+        MusicStore store = new MusicStore("Fancy Store");
+        Employee employee1=new Employee(12345, "Steve");
+        Employee employee2= (new Employee(23456, "Linda"));
+        Employee employee3= new Employee(34567, "John");
+        Employee employee4= new Employee(45678, "Dustin");
+        store.addEmployee(employee1);
+        store.addEmployee(employee2);
+        store.addEmployee(employee3);
+        assertTrue(store.getEmployeeList().size()==3);
+        store.removeEmployee(12345);
+        store.removeEmployee(34567);
+        assertTrue(store.getEmployeeList().size()==1);
+        assertFalse(store.getEmployeeList().contains(employee1));
+        assertFalse(store.getEmployeeList().contains(employee3));
+        assertTrue(store.getEmployeeList().contains(employee2));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(12345));
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(45678));
+    }
+
+    @Test
+    void searchForEmployeeTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addEmployee(new Employee(12345, "John"));
+        store.addEmployee(new Employee(13345, "Bob"));
+        store.addEmployee(new Employee(14345, "Nami"));
+        store.addEmployee(new Employee(15345, "Elise"));
+
+        //Search for valid item at front
+        assertEquals(0, store.findEmployee(12345));
+
+        //Search for item when there are two of the same
+        assertEquals(1, store.findEmployee(13345));
+
+        //Search for item at the end
+        assertEquals(2, store.findEmployee(14345));
+
+        //Search for item that doesnt exist
+        assertEquals(-1, store.findEmployee(19345));
+    }
+
+
+    void subtractFromStoreBalanceTest(){
+        //create valid store 
+        MusicStore store = new MusicStore("Cool", 10);
+        assertEquals(10, store.getStoreBalance());
+
+        //subtract an int
+        store.subtractFromStoreBalance(2);
+        assertEquals(8, store.getStoreBalance());
+
+        //subtract with 1 decimal
+        store.subtractFromStoreBalance(2.1);
+        assertEquals(5.9, store.getStoreBalance());
+
+        //subtract with 2 decimal
+        store.subtractFromStoreBalance(2.12);
+        assertEquals(3.78, store.getStoreBalance());
+
+        //sub with more than balance
+        assertThrows(IllegalArgumentException.class, ()-> store.subtractFromStoreBalance(40));
+        //sub with 3 decimals
+        assertThrows(IllegalArgumentException.class, ()-> store.subtractFromStoreBalance(1.123));
+        //sub with negative 3 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10.123));
+        //sub with negative 2 decimals
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10.13));
+        //sub with negative and 1 decimal
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10.3));
+        //sub with negative
+        assertThrows(IllegalArgumentException.class, ()->store.subtractFromStoreBalance( -10));
+
     }
 
 }
