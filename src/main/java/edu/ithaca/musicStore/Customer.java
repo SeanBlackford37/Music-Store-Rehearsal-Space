@@ -99,7 +99,7 @@ public class Customer {
             throw new IllegalArgumentException("seller not in system");
         }
         else if(roomIndex==-1){
-            throw new IllegalArgumentException("room is not in our system or is unavailable");
+            throw new IllegalArgumentException("room is not in our system");
         }
         else{
             Room r = currentStore.getRoom(roomIndex);
@@ -117,7 +117,23 @@ public class Customer {
     }
 
     public Room returnRoom(int roomNum) throws IllegalArgumentException{
-        return null;
+        int roomIndex=currentStore.findRoom(roomNum);
+        if(roomIndex==-1){
+            throw new IllegalArgumentException("room is not in our system");
+        }
+        else{
+            Room r = currentStore.getRoom(roomIndex);
+            if(!r.getIsEmptyRoom()&&r.getRenterName().equals(customerName)){
+                r.setIsEmptyRoom(true);
+                r.setRenterName("n/a");
+                return r;
+            }
+            else if(r.getIsEmptyRoom()){
+                throw new IllegalArgumentException("room is already unoccupied");
+            }
+            else{throw new IllegalArgumentException("room is being rented by another patron");}
+        }
+
     }
 
     public int getTransactionHistorySize(){
