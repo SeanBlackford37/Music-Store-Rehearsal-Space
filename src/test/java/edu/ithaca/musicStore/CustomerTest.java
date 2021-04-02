@@ -269,7 +269,6 @@ class CustomerTest {
         c.cancelItemRental("guitar");
         c.rentRoom(1,e);
         Transaction t = c.findTransaction(1);// 1 trans for returned room, 1 trans for unreturned room
-        System.out.println(t.getOrderAmount());
         assertEquals(t,c.cancelRoom(1));
         assertEquals(1,c.getTransactionHistorySize());
 
