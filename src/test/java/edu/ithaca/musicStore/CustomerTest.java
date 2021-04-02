@@ -140,6 +140,8 @@ class CustomerTest {
         Customer c = new Customer(ms, "Bob");
         Employee e = new Employee(10101,"Todd");
         ms.addToInventory(new Item("guitar",45, "n/a"));
+        Room r = new Room(1);
+        ms.addToRoomList(r);
         
         //no transactions recorded for customer
         assertThrows(IllegalArgumentException.class, ()->c.cancelItemRental("guitar"));
@@ -155,6 +157,120 @@ class CustomerTest {
         assertEquals(t,c.cancelItemRental("guitar"));
         assertEquals(0,c.getTransactionHistorySize());
 
+        //TH includes room transaction
+        c.rentRoom(1,e);
+        c.rentItem("guitar", e);
+
+        Transaction t2 = c.findTransaction(1);
+        assertEquals(t2,c.cancelItemRental("guitar"));
+        assertEquals(1,c.getTransactionHistorySize()); //room transaction
+
+
     }
 
+    @Test
+    void rentRoomTest(){
+        MusicStore ms = new MusicStore("ms");
+        Customer c = new Customer(ms, "Bob");
+        Employee e = new Employee(10101,"Todd");
+        Room room =new Room(1);
+        ms.addToRoomList(room);
+        int num = room.getRoomNumber();
+        //renting an unprepared room or unavailable rooms
+        room.setHasEquipment(true);
+        assertThrows(IllegalArgumentException.class,()->c.rentRoom(num,e));
+        room.setIsEmptyRoom(false);
+        assertThrows(IllegalArgumentException.class,()->c.rentRoom(num,e));
+        room.setHasEquipment(false);
+        assertThrows(IllegalArgumentException.class,()->c.rentRoom(num,e));
+
+        //room is rentable again
+        room.setIsEmptyRoom(true);
+
+        assertEquals(50,c.rentRoom(num,e));
+        assertEquals("Bob",room.getRenterName());
+        Transaction t = c.findTransaction(0);
+        assertEquals(room,t.getRoomRented());
+        assertFalse(room.getIsEmptyRoom());
+        assertEquals(1,c.getTransactionHistorySize());
+        assertEquals(t,c.findTransaction(0));
+
+        //customer rents the same room twice
+        assertThrows(IllegalArgumentException.class, ()->c.rentRoom(1, e));
+        //another customer tries to rent the same room
+        Customer d = new Customer(ms,"Fran");
+        assertThrows(IllegalArgumentException.class,()->d.rentRoom(1,e));
+        
+
+    }
+    @Test
+    void returnRoom(){
+        MusicStore ms = new MusicStore("ms");
+        Customer c = new Customer(ms, "Bob");
+        Employee e = new Employee(10101,"Todd");
+        Room room =new Room(1);
+
+        //room not included in store
+        assertThrows(IllegalArgumentException.class,()->c.returnRoom(1));
+
+        ms.addToRoomList(room);
+
+        //room hasn't been rented yet
+        assertThrows(IllegalArgumentException.class,()->c.returnRoom(1));
+
+        
+        c.rentRoom(1, e);
+        assertFalse(room.getIsEmptyRoom());
+        assertEquals("Bob",room.getRenterName());
+
+        //customer tries to return a room that's rented by another customer
+        Customer d = new Customer(ms,"Fran");
+        assertThrows(IllegalArgumentException.class,()->d.returnRoom(1));
+        
+        c.returnRoom(1);
+        
+        assertTrue(room.getIsEmptyRoom());
+        assertEquals("n/a",room.getRenterName());
+
+    } 
+    @Test
+    void cancelRoom(){
+        MusicStore ms = new MusicStore("ms");
+        Customer c = new Customer(ms, "Bob");
+        Employee e = new Employee(10101,"Todd");
+        Room room =new Room(1);
+
+         //room not included in store
+         assertThrows(IllegalArgumentException.class,()->c.cancelRoom(1));
+         assertEquals(0,c.getTransactionHistorySize());
+
+         ms.addToRoomList(room);
+        
+
+        //empty transaction history
+        assertThrows(IllegalArgumentException.class, ()->c.cancelRoom(1));
+        assertEquals(0,c.getTransactionHistorySize());
+
+        Item i =new Item("guitar",45, "n/a");
+        ms.addToInventory(i);
+        c.rentItem("guitar",e); //+1 transaction
+
+        //TH with only item transaction
+        assertThrows(IllegalArgumentException.class, ()->c.cancelRoom(1));
+        assertEquals(1,c.getTransactionHistorySize());
+
+        c.rentRoom(1,e); //+1 transaction
+        c.returnRoom(1);
+        //transaction exists but room was already returned
+        assertThrows(IllegalArgumentException.class, ()->c.cancelRoom(1));
+        assertEquals(2,c.getTransactionHistorySize());
+
+        //transaction exists alone
+        c.cancelItemRental("guitar");
+        c.rentRoom(1,e);
+        Transaction t = c.findTransaction(1);// 1 trans for returned room, 1 trans for unreturned room
+        assertEquals(t,c.cancelRoom(1));
+        assertEquals(1,c.getTransactionHistorySize());
+
+    }
 }
