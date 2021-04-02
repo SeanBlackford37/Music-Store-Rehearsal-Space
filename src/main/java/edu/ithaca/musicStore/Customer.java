@@ -46,9 +46,11 @@ public class Customer {
     public Transaction cancelItemRental(String itemName) throws IllegalArgumentException{
         for(int i=transactionHistory.size()-1;i>=0;i--){
             Transaction t = transactionHistory.get(i);
-            if(t.getItemRented().getName().equals(itemName)){
-                returnItem(itemName);
-                return transactionHistory.remove(i);
+            if(t.getItemRented()!=null){
+                if(t.getItemRented().getName().equals(itemName)){
+                    returnItem(itemName);
+                    return transactionHistory.remove(i);
+                }
             }
         }
         throw new IllegalArgumentException("No transaction exists for this item");
@@ -78,8 +80,10 @@ public class Customer {
     public Transaction findTransaction(String itemName) throws IllegalArgumentException{
         for(int i=0;i<transactionHistory.size();i++){
             Transaction t = transactionHistory.get(i);
-            if(t.getItemRented().getName().equals(itemName)){
-                return t;
+            if(t.getItemRented()!=null){
+                if(t.getItemRented().getName().equals(itemName)){
+                    return t;
+                }
             }
         }
         throw new IllegalArgumentException("No transaction exists for that item");
@@ -136,6 +140,10 @@ public class Customer {
 
     }
 
+    public Transaction cancelRoom(int roomNum) throws IllegalArgumentException{
+        return null;
+    }
+
     public int getTransactionHistorySize(){
         return transactionHistory.size();
     }
@@ -147,7 +155,10 @@ public class Customer {
         return customerName;
     }
 
-    public Item getRentedItem(int index){
+    public Item getRentedItem(int index)throws IndexOutOfBoundsException{
+        if(index>=rentedItems.size()||index<0){
+            throw new IndexOutOfBoundsException("invalid index entered");
+        }
         return rentedItems.get(index);
     }
 }
