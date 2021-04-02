@@ -238,7 +238,12 @@ class CustomerTest {
         Customer c = new Customer(ms, "Bob");
         Employee e = new Employee(10101,"Todd");
         Room room =new Room(1);
-        ms.addToRoomList(room);
+
+         //room not included in store
+         assertThrows(IllegalArgumentException.class,()->c.cancelRoom(1));
+         assertEquals(0,c.getTransactionHistorySize());
+
+         ms.addToRoomList(room);
         
 
         //empty transaction history
@@ -247,24 +252,25 @@ class CustomerTest {
 
         Item i =new Item("guitar",45, "n/a");
         ms.addToInventory(i);
-        c.rentItem("guitar",e);
+        c.rentItem("guitar",e); //+1 transaction
 
         //TH with only item transaction
         assertThrows(IllegalArgumentException.class, ()->c.cancelRoom(1));
         assertEquals(1,c.getTransactionHistorySize());
 
-        c.rentRoom(1,e);
+        c.rentRoom(1,e); //+1 transaction
         c.returnRoom(1);
         //transaction exists but room was already returned
         assertThrows(IllegalArgumentException.class, ()->c.cancelRoom(1));
-        assertEquals(1,c.getTransactionHistorySize());
+        assertEquals(2,c.getTransactionHistorySize());
 
         //transaction exists alone
         c.cancelItemRental("guitar");
         c.rentRoom(1,e);
-        Transaction t = c.findTransaction(0);
+        Transaction t = c.findTransaction(1);// 1 trans for returned room, 1 trans for unreturned room
+        System.out.println(t.getOrderAmount());
         assertEquals(t,c.cancelRoom(1));
-        assertEquals(0,c.getTransactionHistorySize());
+        assertEquals(1,c.getTransactionHistorySize());
 
     }
 }

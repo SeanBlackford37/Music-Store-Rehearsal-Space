@@ -141,7 +141,20 @@ public class Customer {
     }
 
     public Transaction cancelRoom(int roomNum) throws IllegalArgumentException{
-        return null;
+        
+        for(int i=transactionHistory.size()-1;i>=0;i--){
+            Transaction t = transactionHistory.get(i);
+            if(t.getRoomRented()!=null){
+                Room r = t.getRoomRented();
+                if(r.getRoomNumber()==roomNum&&r.getRenterName()==customerName){
+                    returnRoom(1);
+                    return transactionHistory.remove(i);
+                }
+            }
+
+        }
+        throw new IllegalArgumentException("no transaction exists for this room");
+
     }
 
     public int getTransactionHistorySize(){
