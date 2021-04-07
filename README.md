@@ -6,7 +6,7 @@ Emma Bieck ACP test
 
 Narrative/scenarios document: https://docs.google.com/document/d/1clUWzP2B5oCUBiwhsKCfPovN4zQN43pQIjzBysRx-fs/edit
 
--Sprint One-
+-Sprint One- \
 Sprint goal One: Develop a functional rental system for rooms and equipment where customers can create or cancel a rental
 
 Link to class diagram: https://drive.google.com/file/d/16AYklGn8iEJZQSFaz-CMNDAx5lnp4YCY/view?usp=sharing
