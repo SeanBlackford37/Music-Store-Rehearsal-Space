@@ -1,9 +1,4 @@
 # Music-Store-Rehearsal-Space
-Dani Berman add/commit/push test
-Morgan Ziegler add/commit/push test
-Sean Blackford add/commit/push test
-Emma Bieck ACP test
-
 Narrative/scenarios document: https://docs.google.com/document/d/1clUWzP2B5oCUBiwhsKCfPovN4zQN43pQIjzBysRx-fs/edit
 
 -Sprint One- \
