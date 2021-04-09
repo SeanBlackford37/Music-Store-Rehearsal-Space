@@ -91,7 +91,13 @@ public class Employee {
     }
 
     public void addHours(double hrsWorked){
-
+        if(hrsWorked<0){
+            throw new IllegalArgumentException("Must enter a valid amount of hours");
+        }
+        else{
+        hoursWorked+= hrsWorked;
+        }
+        
     }
 
     public double getHoursWorked(){
