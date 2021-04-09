@@ -83,5 +83,21 @@ public class EmployeeTest {
 
     }
 
+    @Test
+    void addHoursTest(){
+        Employee employee1= new Employee(12345, "Steve");
+        employee1.addHours(20);
+        assertTrue(employee1.getHoursWorked()== 20);
+        Employee employee2= new Employee(23456, "Dustin");
+        employee2.addHours(0);
+        assertTrue(employee2.getHoursWorked()==0);
+        Employee employee3= new Employee(34567, "Nancy");
+        employee3.addHours(50.50);
+        assertTrue(employee3.getHoursWorked()==50.50);s
+
+
+    }
+
+
 
 }
