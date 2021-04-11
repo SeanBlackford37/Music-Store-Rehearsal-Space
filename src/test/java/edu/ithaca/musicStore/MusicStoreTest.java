@@ -170,6 +170,19 @@ public class MusicStoreTest {
         //Search for room that doesnt exist
         assertEquals(-1, store.findRoom(30));
     }
+    @Test
+    void avaibleRoomListTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addToRoomList(new Room(true,1,false,"none"));
+        store.addToRoomList(new Room(false,2,true,"Joe Smith"));
+        store.addToRoomList(new Room(true,3,false,"none"));
+        store.addToRoomList(new Room(false,4,false,"Bob"));
+        store.addToRoomList(new Room(true,5,false,"none"));
+
+        //Search for valid room at front
+        assertEquals(3, store.availableRoomList().size());
+
+    }
 
     @Test
     void addEmployeeTest(){
