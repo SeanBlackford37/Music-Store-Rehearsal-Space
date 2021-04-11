@@ -201,6 +201,27 @@ class CustomerTest {
     }
 
     @Test
+    void findRentedItemTest(){
+        MusicStore ms = new MusicStore("ms");
+        Customer c = new Customer(ms, "Bob");
+        Item i = new Item("guitar",45, "n/a");
+        Employee e = new Employee(10101,"Todd");
+        ms.addToInventory(i);
+
+        //empty list, item not in inventory
+        assertThrows(IllegalArgumentException.class, ()->c.findRentedItem("djembe"));
+        //empty list, item in inventory
+        assertThrows(IllegalArgumentException.class,()->c.findRentedItem("guitar"));
+
+        c.rentItem("guitar",e);
+        //non empty list, item never in inventory
+        assertThrows(IllegalArgumentException.class, ()->c.findRentedItem("djembe"));
+        //transaction in list
+        assertEquals(i,c.findRentedItem("guitar"));
+        
+    }
+
+    @Test
     void cancelItemRentalTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
@@ -239,7 +260,7 @@ class CustomerTest {
         assertEquals(1, c.getRentedItemsSize());
         
         Transaction t = c.getTransaction(0);
-        Item i = ms.getInventoryItem(0);
+        
 
         //Narrative 2: Customer cancels transaction for item from store they rented
             //Transaction canceled is the transaction for the guitar
@@ -253,6 +274,7 @@ class CustomerTest {
             //Store's rented item list decreases to zero from one
         assertEquals(0,ms.getRentedSize());
             //Renter name for item is "n/a"
+        Item i = ms.getInventoryItem(0);
         assertEquals("n/a", i.getRenterName());
 
         c.rentRoom(1,e);
