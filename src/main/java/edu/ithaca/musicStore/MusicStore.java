@@ -84,6 +84,10 @@ public class MusicStore {
     public int getInventorySize(){
         return inventoryList.size();
     }
+    public List<Item> getInventoryList(){
+        return inventoryList;
+    }
+
 
     public void moveToRented(String itemName) throws IllegalArgumentException{
         int itemIndex = searchForInventoryItem(itemName);
@@ -142,8 +146,18 @@ public class MusicStore {
         return rentedList.size();
     }
 
+    
     public void addToRoomList(Room itemToAdd){
         roomList.add(itemToAdd);
+    }
+    public List<Room> availableRoomList(){
+        List<Room> availableRoomList =  new ArrayList<>();
+        for(int i = 0; i < roomList.size(); i++){
+            if(roomList.get(i).getIsEmptyRoom()){
+                availableRoomList.add(roomList.get(i));
+            }
+        }
+        return availableRoomList;
     }
 
     public void removeFromRoomList(int roomName) throws IllegalArgumentException{
