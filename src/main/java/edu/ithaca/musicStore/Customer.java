@@ -174,4 +174,14 @@ public class Customer {
         }
         return rentedItems.get(index);
     }
+
+    public Item findRentedItem(String itemName) throws IllegalArgumentException{
+        for(int i=0;i<rentedItems.size();i++){
+            Item item = rentedItems.get(i);
+            if(item.getName().equals(itemName)){
+                return item;
+            }
+        }
+        throw new IllegalArgumentException("Customer is not currently renting this item");
+    } 
 }
