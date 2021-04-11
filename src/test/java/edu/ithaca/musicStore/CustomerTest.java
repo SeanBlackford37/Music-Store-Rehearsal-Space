@@ -166,7 +166,7 @@ class CustomerTest {
         //add narrative for invalid return when there's only a transaction for a room in TH
     }
     @Test
-    void findTransactionTest() {
+    void getandfindTransactionTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         Item i = new Item("guitar",45, "n/a");
@@ -175,15 +175,15 @@ class CustomerTest {
         
         //find transaction using index
         //index out of range, empty list
-        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(0));
-        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
-        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(-1));
+        assertThrows(IndexOutOfBoundsException.class, ()->c.getTransaction(0));
+        assertThrows(IndexOutOfBoundsException.class, ()->c.getTransaction(1));
+        assertThrows(IndexOutOfBoundsException.class, ()->c.getTransaction(-1));
         
         c.rentItem("guitar",e);
         //index out of range, non-empty list
-        assertThrows(IndexOutOfBoundsException.class, ()->c.findTransaction(1));
+        assertThrows(IndexOutOfBoundsException.class, ()->c.getTransaction(1));
         //item is e
-        assertEquals(ms.getRentedItem(0),c.findTransaction(0).getItemRented());
+        assertEquals(ms.getRentedItem(0),c.getTransaction(0).getItemRented());
         c.cancelItemRental("guitar");
 
         //findTransaction using itemName
@@ -238,7 +238,7 @@ class CustomerTest {
             //Customer rented items list is unchanged from 1
         assertEquals(1, c.getRentedItemsSize());
         
-        Transaction t = c.findTransaction(0);
+        Transaction t = c.getTransaction(0);
         Item i = ms.getInventoryItem(0);
 
         //Narrative 2: Customer cancels transaction for item from store they rented
@@ -257,7 +257,7 @@ class CustomerTest {
 
         c.rentRoom(1,e);
         c.rentItem("guitar", e);
-        Transaction t2 = c.findTransaction(1);
+        Transaction t2 = c.getTransaction(1);
 
         //Narrative 3: Customer cancels transaction when TH contains a room rental transaction
             //Transaction canceled is the transaction for the guitar
@@ -316,7 +316,7 @@ class CustomerTest {
             //Transaction is created for rental (0 to 1)
         assertEquals(1,c.getTransactionHistorySize());
             //Transaction created is for the room the customer rented
-        Transaction t = c.findTransaction(0);
+        Transaction t = c.getTransaction(0);
         assertEquals(room,t.getRoomRented());
             //Room is now considered occupied by the customer
         assertFalse(room.getIsEmptyRoom());
@@ -430,7 +430,7 @@ class CustomerTest {
         
         c.cancelItemRental("guitar"); //TH=1 for returned room
         c.rentRoom(1,e);
-        Transaction t = c.findTransaction(1);
+        Transaction t = c.getTransaction(1);
 
         //Narrative 4: Customer cancels a new transaction for a room they've rented and returned before
             //Transaction cancelled is the most recent transaction for the room

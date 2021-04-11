@@ -89,7 +89,7 @@ public class Customer {
         throw new IllegalArgumentException("No transaction exists for that item");
     }
 
-    public Transaction findTransaction(int index) throws IndexOutOfBoundsException{
+    public Transaction getTransaction(int index) throws IndexOutOfBoundsException{
         if(index>=transactionHistory.size()||index<0){
             throw new IndexOutOfBoundsException("invalid index entered");
         }
