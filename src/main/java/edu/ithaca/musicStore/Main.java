@@ -77,13 +77,39 @@ public class Main {
     }
 
     public static boolean validChoice(String input){
-        String[] choices = {"rent room", "rent equipment", "cancel room rental", "return equipment", "done"};
+        String[] choices = {"rent room", "rent equipment", "cancel room rental", "return equipment", "done", "Display information", "transaction History"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
             }
         }
         return false;
+    }
+    public static void displayInformation(Customer customerIn){
+        if(customerIn.getRoomRented() != null){
+        System.out.println("Currently rented room: " + customerIn.getRoomRented().getRoomNumber());
+        }else{
+            System.out.println("Currently rented room: no room" );
+        }
+        if(!customerIn.getRentedList().isEmpty()){
+        ArrayList<Item> rentedItems = customerIn.getRentedList();
+        System.out.println("Rented items:");
+            for(int i =0; i < rentedItems.size(); i++){
+                System.out.println(rentedItems.get(i).getName());
+            }
+        }else{
+            System.out.println("You have nothing rented!");
+        }
+    }
+    public static void transactionHistory(Customer customerIn){
+        ArrayList<Transaction> transactions =  customerIn.getTransactionHistory();
+        if(!transactions.isEmpty()){
+            for(int i = 0; i < transactions.size(); i++){
+                System.out.println(transactions.get(i).getDescription());
+            }
+        }else{
+            System.out.println("No transaction history!");
+        }
     }
     public static void customerInteraction(){
         MusicStore store = new MusicStore("Ithaca Music Store");
@@ -103,18 +129,18 @@ public class Main {
         Employee employeeOne = new Employee(12345, "Toby");
         System.out.println("Enter your name");
         String name = "Sean Blackford";
-        //name = scan.nextLine();
+        name = scan.nextLine();
         
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nCancel Room Rental\nReturn Equipment\nDone\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nCancel Room Rental\nReturn Equipment\nDone\nDisplay information\ntransaction History\n");
             input = scan.nextLine();
            
-            // if (!validChoice(input)){
+            if (!validChoice(input)){
                 
-            //     System.out.println("Please enter a valid choice");
-            // } 
+                System.out.println("Please enter a valid choice");
+            } 
             if(input.equalsIgnoreCase("rent room")){
                 rentingRoom(store, custOne, employeeOne);
             }
@@ -127,6 +153,11 @@ public class Main {
             else if(input.equalsIgnoreCase("return equipment")){
                 returnEquipment(store, custOne);
               
+            }else if(input.equalsIgnoreCase("Display information")){
+                displayInformation(custOne);
+            }
+            else if(input.equalsIgnoreCase("transaction History")){
+                transactionHistory(custOne);
             }
             
             
