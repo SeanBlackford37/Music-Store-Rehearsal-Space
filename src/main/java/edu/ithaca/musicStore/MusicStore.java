@@ -47,7 +47,7 @@ public class MusicStore {
     public void removeFromInventory(String itemName, double price) throws IllegalArgumentException{
         int found = 0;
         for (int i = 0; i < inventoryList.size(); i++){
-            if (inventoryList.get(i).getName().equals(itemName)){
+            if (inventoryList.get(i).getName().equalsIgnoreCase(itemName)){
                 if(inventoryList.get(i).getPrice() == price){
                     inventoryList.remove(i);
                     found++;
@@ -66,7 +66,7 @@ public class MusicStore {
 
     public int searchForInventoryItem(String itemName){
         for (int i = 0; i < inventoryList.size(); i++){
-            if (inventoryList.get(i).getName().equals(itemName)){
+            if (inventoryList.get(i).getName().equalsIgnoreCase(itemName)){
                 return i;
             }
         }
@@ -120,7 +120,7 @@ public class MusicStore {
     public void removeFromRented(String itemName, double price) throws IllegalArgumentException{
         int found = 0;
         for (int i = 0; i < rentedList.size(); i++){
-            if (rentedList.get(i).getName().equals(itemName)){
+            if (rentedList.get(i).getName().equalsIgnoreCase(itemName)){
                 if(rentedList.get(i).getPrice() == price){
                     rentedList.remove(i);
                     found++;
@@ -135,7 +135,7 @@ public class MusicStore {
 
     public int searchForRentedItem(String itemName){
         for (int i = 0; i < rentedList.size(); i++){
-            if (rentedList.get(i).getName().equals(itemName)){
+            if (rentedList.get(i).getName().equalsIgnoreCase(itemName)){
                 return i;
             }
         }
