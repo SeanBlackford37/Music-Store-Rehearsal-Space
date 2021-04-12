@@ -6,6 +6,7 @@ public class Employee {
     int employeeID;
     String name;
     double payAmt;
+    double hoursWorked;
 
     public Employee(int employeeID, String name){
         //check to make sure employeeID is 5 digits
@@ -18,6 +19,7 @@ public class Employee {
         this.name= name;
         this.employeeID= employeeID;
         payAmt= 15.00;
+        hoursWorked=0;
     }
     public Employee(int employeeID, String name, double payAmt){
         //check to make sure employeeID is 5 digits
@@ -86,6 +88,20 @@ public class Employee {
         }
 
         return schedule;
+    }
+
+    public void addHours(double hrsWorked){
+        if(hrsWorked<0){
+            throw new IllegalArgumentException("Must enter a valid amount of hours");
+        }
+        else{
+        hoursWorked+= hrsWorked;
+        }
+        
+    }
+
+    public double getHoursWorked(){
+        return hoursWorked;
     }
 
     public int getID(){
