@@ -7,6 +7,7 @@ public class Employee {
     String name;
     double payAmt;
     double hoursWorked;
+    double wasPaid;
 
     public Employee(int employeeID, String name){
         //check to make sure employeeID is 5 digits
@@ -20,6 +21,7 @@ public class Employee {
         this.employeeID= employeeID;
         payAmt= 15.00;
         hoursWorked=0;
+        wasPaid=0;
     }
     public Employee(int employeeID, String name, double payAmt){
         //check to make sure employeeID is 5 digits
@@ -115,6 +117,20 @@ public class Employee {
     public double getPayAmt(){
         return payAmt;
     }
+
+    public void setPayAmt(double newPay){
+        payAmt= newPay;
+    }
+
+    public void getPaid(double payment){
+        wasPaid+=payment;
+    }
+
+    public double seePayment(){
+        return wasPaid;
+    }
+
+
 
     public int isIdValid(int IDNumber){
         int count=0;

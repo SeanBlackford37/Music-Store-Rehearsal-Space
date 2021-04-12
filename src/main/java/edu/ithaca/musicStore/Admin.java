@@ -43,7 +43,14 @@ public class Admin extends Employee {
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
     }
+        public void payEmployee(int employeeID){
 
+        }
+
+        //use to raise or lower employee pay
+        public void changeEmployeePay(int employeeID, double newPayAmt){
+
+        }
 
     
 }

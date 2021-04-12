@@ -45,4 +45,41 @@ public class AdminTest {
         String testView= employeeOne.viewSpaceSchedule(rented);
         System.out.println(testView);
     }
+
+    @Test
+    void payEmployeeTest(){
+        Admin admin1= new Admin(56789, "Jack");
+        Employee employee1= new Employee(12345, "Katherine");
+        Employee employee2= new Employee(23456, "David");
+        Employee employee3= new Employee(34567, "Joe");
+        employee1.addHours(30);
+        employee2.addHours(40);
+        employee3.addHours(23);
+        double shouldBePayed1= employee1.getPayAmt()*employee1.getHoursWorked();
+        double shouldBePayed2= employee2.getPayAmt()*employee2.getHoursWorked();
+        double shouldBePayed3= employee3.getPayAmt()*employee3.getHoursWorked();
+        admin1.payEmployee(12345);
+        admin1.payEmployee(23456);
+        admin1.payEmployee(34567);
+        assertEquals(employee1.seePayment(), shouldBePayed1);
+        assertEquals(employee2.seePayment(), shouldBePayed2);
+        assertEquals(employee3.seePayment(), shouldBePayed3);
+        //will also subtract payment amount from MusicStore balance, will add when Employees are edited to include MusicStore
+    }
+
+    @Test
+    void changeEmployeePayTest(){
+        Admin admin1= new Admin(56789, "Jack");
+        Employee employee1= new Employee(12345, "Katherine");
+        Employee employee2= new Employee(23456, "David");
+        Employee employee3= new Employee(34567, "Joe");
+        admin1.changeEmployeePay(12345, 16.50);
+        admin1.changeEmployeePay(23456, 20.00);
+        assertThrows(IllegalArgumentException.class, ()-> admin1.changeEmployeePay(34567, -16.59));
+        assertEquals(employee1.getPayAmt(), 16.50);
+        assertEquals(employee2.getPayAmt(), 20.00);
+        assertEquals(employee3.getPayAmt(), 15.00);
+        admin1.changeEmployeePay(34567, 16.50);
+        
+    }
 }
