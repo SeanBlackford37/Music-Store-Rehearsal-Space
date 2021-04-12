@@ -20,24 +20,6 @@ public class RepairTechTest {
         assertThrows(IllegalArgumentException.class, ()-> new RepairTech(12345, "Steve", 25.555));
     }
     
-    @Test
-    void checkStockTest(){
-        RepairTech employee1= new RepairTech(12345, "Steve");
-        List<Item> stock= new ArrayList<Item>();
-        stock.add(new Item("piano", 150, "Mary"));
-        stock.add(new Item("piano", 150, "Joe"));
-        stock.add(new Item("guitar", 100, "Dustin"));
-        stock.add(new Item("piano", 150, "Mike"));
-        stock.add(new Item("guitar", 50, "Lucas"));
-        stock.add(new Item("piano", 150, "Max"));
-        stock.add(new Item("guitar", 100, "John"));
-        stock.add(new Item("trumpet", 100, "John"));
-        assertTrue(employee1.checkStock("piano", stock));
-        assertTrue(employee1.checkStock("trumpet", stock));
-        assertTrue(employee1.checkStock("guitar", stock));
-        assertFalse(employee1.checkStock("trombone", stock));
-
-    }
 
     @Test
     void addToRepairListTest(){
