@@ -62,7 +62,7 @@ public class Customer {
 
             for(int i=0;i<rentedItems.size();i++){
                 Item returnItem = rentedItems.get(i);
-                if(returnItem.getName().equals(itemName)){
+                if(returnItem.getName().equalsIgnoreCase(itemName)){
                     returnItem.setRenterName("n/a");
                     rentedItems.remove(returnItem);
                     currentStore.moveToInventory(itemName);
