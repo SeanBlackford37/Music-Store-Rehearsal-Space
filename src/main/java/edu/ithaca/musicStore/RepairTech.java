@@ -8,6 +8,7 @@ public class RepairTech {
     String name;
     double payAmt;
     List<Item> activeRepairs;
+    double hoursWorked;
 
     public RepairTech(int employeeID, String name){
         //check to make sure employeeID is 5 digits
@@ -21,6 +22,7 @@ public class RepairTech {
         this.employeeID= employeeID;
         payAmt= 15.00;
         activeRepairs = new ArrayList<>();
+        hoursWorked=0;
     }
 
     public RepairTech(int employeeID, String name, double payAmt){
@@ -38,6 +40,8 @@ public class RepairTech {
         this.employeeID= employeeID;
         this.payAmt= payAmt;
         activeRepairs = new ArrayList<>();
+        hoursWorked=0;
+    
     }
 
     public int isIdValid(int IDNumber){
@@ -68,6 +72,20 @@ public class RepairTech {
           return true;
         }
        return false;
+    }
+
+    public void addHours(double hrsWorked){
+        if(hrsWorked<0){
+            throw new IllegalArgumentException("Must enter a valid amount of hours");
+        }
+        else{
+        hoursWorked+= hrsWorked;
+        }
+        
+    }
+
+    public double getHoursWorked(){
+        return hoursWorked;
     }
 
     public void addToRepairList(Item itemToAdd){

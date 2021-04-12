@@ -51,6 +51,24 @@ public class RepairTechTest {
         assertEquals(-1, employee1.findRepair("guitar", "April"));
         
     }
+
+    @Test
+    void addHoursTest(){
+        RepairTech employee1= new RepairTech(12345, "Steve");
+        employee1.addHours(20);
+        assertTrue(employee1.getHoursWorked()== 20);
+        employee1.addHours(5);
+        assertTrue(employee1.getHoursWorked()==25);
+        RepairTech employee2= new RepairTech(23456, "Dustin");
+        employee2.addHours(0);
+        assertThrows(IllegalArgumentException.class, ()-> employee2.addHours(-30));
+        assertTrue(employee2.getHoursWorked()==0);
+        RepairTech employee3= new RepairTech(34567, "Nancy");
+        employee3.addHours(50.50);
+        assertTrue(employee3.getHoursWorked()==50.50);
+
+
+    }
     
 
     
