@@ -3,6 +3,7 @@ package edu.ithaca.musicStore;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.ArrayList;
 
@@ -98,6 +99,141 @@ public class EmployeeTest {
         employee3.addHours(50.50);
         assertTrue(employee3.getHoursWorked()==50.50);
 
+
+    }
+
+    @Test
+    void chargeCustomerForItemRentalTest(){
+        MusicStore ms = new MusicStore("ms");
+        Employee e = new Employee(10000, "Kip");
+        Customer c = new Customer(ms,"Barb");
+        Item i = new Item("djembe",45);
+        Item i2 = new Item ("guitar",45.456);
+
+        //empty inventory
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe", ms));
+        assertEquals(0,ms.getStoreBalance());
+
+        ms.addToInventory(i);
+        ms.addToInventory(i2);
+
+        //item in inventory with bad amount
+        assertThrows(RuntimeException.class,()->e.chargeCustomerForItemRental(c, "guitar", ms));
+        assertEquals(0,ms.getStoreBalance());
+
+        //item in inventory with good amount
+        e.chargeCustomerForItemRental(c, "djembe", ms);
+        assertEquals(45,ms.getStoreBalance());
+
+        //item is already rented by customer trying to rent
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe", ms));
+        assertEquals(45,ms.getStoreBalance());
+
+        //item is already rented by another customer
+        Customer d = new Customer(ms,"Dale");
+        assertThrows(IllegalArgumentException.class, ()->e.chargeCustomerForItemRental(d, "djembe", ms));
+        assertEquals(45,ms.getStoreBalance());
+
+        //customer is charged for item made recently available
+        c.returnItem("djembe");
+        e.chargeCustomerForItemRental(d, "djembe", ms);
+        assertEquals(90,ms.getStoreBalance());
+        
+    }
+
+    @Test
+    void chargeCustomerForRoomRentalTest(){
+        MusicStore ms = new MusicStore("ms");
+        Employee e = new Employee(10000, "Kip");
+        Customer c = new Customer(ms,"Barb");
+        Room r = new Room(123);
+
+        //empty room list
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForRoomRental(c, 123, ms));
+        assertEquals(0,ms.getStoreBalance());
+
+        ms.addToRoomList(r);
+
+        //room in list
+        e.chargeCustomerForRoomRental(c, 123, ms);
+        assertEquals(50,ms.getStoreBalance());
+
+        //room is already rented by the customer trying to rent
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForRoomRental(c, 123, ms));
+        assertEquals(50,ms.getStoreBalance());
+
+        //room is already rented by another customer
+        Customer d = new Customer(ms,"Dale");
+        assertThrows(IllegalArgumentException.class, ()->e.chargeCustomerForRoomRental(d, 123, ms));
+        assertEquals(50,ms.getStoreBalance());
+
+        //customer is charged for room made recently available
+        c.returnRoom(123);
+        e.chargeCustomerForRoomRental(d, 123, ms);
+        assertEquals(100,ms.getStoreBalance());
+    }
+
+    @Test
+    void refundCustomerForItemRentalTest(){
+        MusicStore ms = new MusicStore("ms");
+        Employee e = new Employee(10000, "Kip");
+        Customer c = new Customer(ms,"Barb");
+        Item i = new Item("djembe",45);
+        ms.addToInventory(i);
+
+        //empty rented list
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(c, "djembe", ms));
+        assertEquals(0,ms.getStoreBalance());
+
+        e.chargeCustomerForItemRental(c, "djembe", ms);
+
+        //refund customer for item being rented by another customer
+        Customer d = new Customer(ms,"Dale");
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(d, "djembe", ms));
+        assertEquals(45,ms.getStoreBalance());
+
+        //refund customer for item they've already returned
+        c.returnItem("djembe");
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(c, "djembe", ms));
+        assertEquals(45,ms.getStoreBalance());
+
+        //refund customer for item they were renting
+        e.chargeCustomerForItemRental(c, "djembe", ms);
+        assertEquals(90,ms.getStoreBalance());
+        e.refundCustomerForItemRental(c, "djembe", ms);
+        assertEquals(45,ms.getStoreBalance());
+        
+        
+    }
+
+    @Test
+    void refundCustomerForRoomRentalTest(){
+        MusicStore ms = new MusicStore("ms");
+        Employee e = new Employee(10000, "Kip");
+        Customer c = new Customer(ms,"Barb");
+        Room r = new Room(123);
+
+        //empty room list
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(c, 123, ms));
+        assertEquals(0,ms.getStoreBalance());
+
+        e.chargeCustomerForRoomRental(c, 123, ms);
+
+        //refund customer for room being rented by another customer
+        Customer d = new Customer(ms,"Dale");
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(d, 123, ms));
+        assertEquals(50,ms.getStoreBalance());
+
+        //refund customer for item they've already returned
+        c.returnRoom(123);
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(c, 123, ms));
+        assertEquals(50,ms.getStoreBalance());
+
+        //refund customer for item they were renting
+        e.chargeCustomerForRoomRental(c, 123, ms);
+        assertEquals(100,ms.getStoreBalance());
+        e.refundCustomerForRoomRental(c, 123, ms);
+        assertEquals(50,ms.getStoreBalance());
 
     }
 
