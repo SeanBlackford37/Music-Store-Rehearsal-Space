@@ -100,6 +100,23 @@ public class Employee {
         
     }
 
+    public void chargeCustomerForItemRental(Customer c, String itemName,MusicStore ms) throws IllegalArgumentException{
+        
+    }
+
+    public void chargeCustomerForRoomRental(Customer c, int roomNum,MusicStore ms) throws IllegalArgumentException{
+        
+    }
+
+    public void refundCustomerForItemRental(Customer c, String itemName,MusicStore ms) throws IllegalArgumentException{
+        
+    }
+
+    public void refundCustomerForRoomRental(Customer c, int roomNum, MusicStore ms) throws IllegalArgumentException{
+        
+    }
+
+
     public double getHoursWorked(){
         return hoursWorked;
     }
