@@ -97,27 +97,27 @@ public class EmployeeTest {
         Item i = new Item("djembe",45);
 
         //empty inventory
-        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe", ms));
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe"));
         assertEquals(0,ms.getStoreBalance());
 
         ms.addToInventory(i);
 
         //item in inventory with good amount
-        e.chargeCustomerForItemRental(c, "djembe", ms);
+        e.chargeCustomerForItemRental(c, "djembe");
         assertEquals(45,ms.getStoreBalance());
 
         //item is already rented by customer trying to rent
-        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe", ms));
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe"));
         assertEquals(45,ms.getStoreBalance());
 
         //item is already rented by another customer
         Customer d = new Customer(ms,"Dale");
-        assertThrows(IllegalArgumentException.class, ()->e.chargeCustomerForItemRental(d, "djembe", ms));
+        assertThrows(IllegalArgumentException.class, ()->e.chargeCustomerForItemRental(d, "djembe"));
         assertEquals(45,ms.getStoreBalance());
 
         //customer is charged for item made recently available
         c.returnItem("djembe");
-        e.chargeCustomerForItemRental(d, "djembe", ms);
+        e.chargeCustomerForItemRental(d, "djembe");
         assertEquals(90,ms.getStoreBalance());
         
     }
@@ -130,27 +130,27 @@ public class EmployeeTest {
         Room r = new Room(123);
 
         //empty room list
-        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForRoomRental(c, 123, ms));
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForRoomRental(c, 123));
         assertEquals(0,ms.getStoreBalance());
 
         ms.addToRoomList(r);
 
         //room in list
-        e.chargeCustomerForRoomRental(c, 123, ms);
+        e.chargeCustomerForRoomRental(c, 123);
         assertEquals(50,ms.getStoreBalance());
 
         //room is already rented by the customer trying to rent
-        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForRoomRental(c, 123, ms));
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForRoomRental(c, 123));
         assertEquals(50,ms.getStoreBalance());
 
         //room is already rented by another customer
         Customer d = new Customer(ms,"Dale");
-        assertThrows(IllegalArgumentException.class, ()->e.chargeCustomerForRoomRental(d, 123, ms));
+        assertThrows(IllegalArgumentException.class, ()->e.chargeCustomerForRoomRental(d, 123));
         assertEquals(50,ms.getStoreBalance());
 
         //customer is charged for room made recently available
         c.returnRoom(123);
-        e.chargeCustomerForRoomRental(d, 123, ms);
+        e.chargeCustomerForRoomRental(d, 123);
         assertEquals(100,ms.getStoreBalance());
     }
 
@@ -163,25 +163,25 @@ public class EmployeeTest {
         ms.addToInventory(i);
 
         //empty rented list
-        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(c, "djembe", ms));
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(c, "djembe"));
         assertEquals(0,ms.getStoreBalance());
 
-        e.chargeCustomerForItemRental(c, "djembe", ms);
+        e.chargeCustomerForItemRental(c, "djembe");
 
         //refund customer for item being rented by another customer
         Customer d = new Customer(ms,"Dale");
-        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(d, "djembe", ms));
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(d, "djembe"));
         assertEquals(45,ms.getStoreBalance());
 
         //refund customer for item they've already returned
         c.returnItem("djembe");
-        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(c, "djembe", ms));
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForItemRental(c, "djembe"));
         assertEquals(45,ms.getStoreBalance());
 
         //refund customer for item they were renting
-        e.chargeCustomerForItemRental(c, "djembe", ms);
+        e.chargeCustomerForItemRental(c, "djembe");
         assertEquals(90,ms.getStoreBalance());
-        e.refundCustomerForItemRental(c, "djembe", ms);
+        e.refundCustomerForItemRental(c, "djembe");
         assertEquals(45,ms.getStoreBalance());
         
         
@@ -195,26 +195,26 @@ public class EmployeeTest {
         Room r = new Room(123);
 
         //empty room list
-        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(c, 123, ms));
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(c, 123));
         assertEquals(0,ms.getStoreBalance());
 
         ms.addToRoomList(r);
-        e.chargeCustomerForRoomRental(c, 123, ms);
+        e.chargeCustomerForRoomRental(c, 123);
 
         //refund customer for room being rented by another customer
         Customer d = new Customer(ms,"Dale");
-        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(d, 123, ms));
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(d, 123));
         assertEquals(50,ms.getStoreBalance());
 
         //refund customer for item they've already returned
         c.returnRoom(123);
-        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(c, 123, ms));
+        assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(c, 123));
         assertEquals(50,ms.getStoreBalance());
 
         //refund customer for item they were renting
-        e.chargeCustomerForRoomRental(c, 123, ms);
+        e.chargeCustomerForRoomRental(c, 123);
         assertEquals(100,ms.getStoreBalance());
-        e.refundCustomerForRoomRental(c, 123, ms);
+        e.refundCustomerForRoomRental(c, 123);
         assertEquals(50,ms.getStoreBalance());
 
     }

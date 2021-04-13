@@ -66,19 +66,19 @@ public class Employee {
         
     }
 
-    public String viewSpaceSchedule(ArrayList<Room> rentedRooms){
-        String schedule="Currently rented rooms: \n";
-        for(int i=0; i<rentedRooms.size(); i++){
-            schedule= schedule + "Room number: " + Integer.toString(rentedRooms.get(i).getRoomNumber()) + " Renter name: " + rentedRooms.get(i).getRenterName() + "\n";
+    public String viewSpaceSchedule(ArrayList<Room> rentedRoostore){
+        String schedule="Currently rented roostore: \n";
+        for(int i=0; i<rentedRoostore.size(); i++){
+            schedule= schedule + "Room number: " + Integer.toString(rentedRoostore.get(i).getRoomNumber()) + " Renter name: " + rentedRoostore.get(i).getRenterName() + "\n";
         }
         return schedule;
 
     }
 
-    public String viewEquipmentSchedule(ArrayList<Item> rentedItems){
-        String schedule="Currently rented items: \n";
-        for(int i=0; i<rentedItems.size(); i++){
-            schedule= schedule+ rentedItems.get(i).getName() + "\n";
+    public String viewEquipmentSchedule(ArrayList<Item> rentedItestore){
+        String schedule="Currently rented itestore: \n";
+        for(int i=0; i<rentedItestore.size(); i++){
+            schedule= schedule+ rentedItestore.get(i).getName() + "\n";
         }
 
         return schedule;
@@ -94,30 +94,30 @@ public class Employee {
         
     }
 
-    public void chargeCustomerForItemRental(Customer c, String itemName,MusicStore ms) throws IllegalArgumentException{
+    public void chargeCustomerForItemRental(Customer c, String itemName) throws IllegalArgumentException{
         double amount = c.rentItem(itemName,this);
-        ms.addToStoreBalance(amount);
+        store.addToStoreBalance(amount);
         System.out.println(itemName+" Rental Transaction Approved For "+amount);
     }
 
-    public void chargeCustomerForRoomRental(Customer c, int roomNum,MusicStore ms) throws IllegalArgumentException{
+    public void chargeCustomerForRoomRental(Customer c, int roomNum) throws IllegalArgumentException{
         double amount = c.rentRoom(roomNum,this);
-        ms.addToStoreBalance(amount);
+        store.addToStoreBalance(amount);
         System.out.println("Room "+roomNum+" Rental Transaction Approved For "+amount);
     }
 
-    public void refundCustomerForItemRental(Customer c, String itemName,MusicStore ms) throws IllegalArgumentException{
+    public void refundCustomerForItemRental(Customer c, String itemName) throws IllegalArgumentException{
         Transaction t = c.cancelItemRental(itemName);
         double amount = t.getOrderAmount();
-        ms.subtractFromStoreBalance(amount);
+        store.subtractFromStoreBalance(amount);
         System.out.println(itemName+" Rental Refund Approved For "+amount);
 
     }
 
-    public void refundCustomerForRoomRental(Customer c, int roomNum, MusicStore ms) throws IllegalArgumentException{
+    public void refundCustomerForRoomRental(Customer c, int roomNum) throws IllegalArgumentException{
         Transaction t = c.cancelRoom(roomNum);
         double amount = t.getOrderAmount();
-        ms.subtractFromStoreBalance(amount);
+        store.subtractFromStoreBalance(amount);
         System.out.println("Room "+roomNum+" Rental Refund Approved For "+amount);
 
     }
