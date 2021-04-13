@@ -13,19 +13,21 @@ public class EmployeeTest {
     
     @Test
     void constructorTest(){
-        Employee employee1= new Employee(12345, "Steve");
+        MusicStore ms = new MusicStore("ms");
+        Employee employee1= new Employee(12345, "Steve",ms);
         assertTrue(employee1.getName().equals("Steve"));
         assertTrue(employee1.getID()== 12345);
         assertTrue(employee1.getPayAmt()==15.00);
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(0, "Steve"));
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, ""));
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", -50));
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", 25.555));
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(0, "Steve",ms));
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "",ms));
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", -50,ms));
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", 25.555,ms));
     }
     
     @Test
     void checkStockTest(){
-        Employee employee1= new Employee(12345, "Steve");
+        MusicStore ms = new MusicStore("ms");
+        Employee employee1= new Employee(12345, "Steve",ms);
         ArrayList<Item> stock= new ArrayList<Item>();
         stock.add(new Item("piano", 150, "Mary"));
         stock.add(new Item("piano", 150, "Joe"));
@@ -44,7 +46,8 @@ public class EmployeeTest {
 
     @Test
     void chargeClientTest(){
-        Employee employee1= new Employee(12345, "Steve");
+        MusicStore ms = new MusicStore("ms");
+        Employee employee1= new Employee(12345, "Steve",ms);
         ArrayList<Item> stock= new ArrayList<Item>();
         stock.add(new Item("piano", 150, "Mary"));
         stock.add(new Item("piano", 150, "Joe"));
@@ -62,7 +65,8 @@ public class EmployeeTest {
 
     @Test
     void equipmentScheduleTest(){
-        Employee employee1= new Employee(12345, "Steve");
+        MusicStore ms = new MusicStore("ms");
+        Employee employee1= new Employee(12345, "Steve",ms);
         ArrayList<Item> out= new ArrayList<Item>();
         out.add(new Item("piano", 150, "Mary"));
         out.add(new Item("piano", 150, "Joe"));
@@ -74,7 +78,8 @@ public class EmployeeTest {
 
     @Test
     void viewSpaceScheduleTest(){
-        Employee employee1= new Employee(12345, "Steve");
+        MusicStore ms = new MusicStore("ms");
+        Employee employee1= new Employee(12345, "Steve",ms);
         ArrayList<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 1, true, "Sadie"));
         rented.add(new Room(false, 5, true, "Carolyn"));
@@ -86,16 +91,17 @@ public class EmployeeTest {
 
     @Test
     void addHoursTest(){
-        Employee employee1= new Employee(12345, "Steve");
+        MusicStore ms = new MusicStore("ms");
+        Employee employee1= new Employee(12345, "Steve",ms);
         employee1.addHours(20);
         assertTrue(employee1.getHoursWorked()== 20);
         employee1.addHours(5);
         assertTrue(employee1.getHoursWorked()==25);
-        Employee employee2= new Employee(23456, "Dustin");
+        Employee employee2= new Employee(23456, "Dustin",ms);
         employee2.addHours(0);
         assertThrows(IllegalArgumentException.class, ()-> employee2.addHours(-30));
         assertTrue(employee2.getHoursWorked()==0);
-        Employee employee3= new Employee(34567, "Nancy");
+        Employee employee3= new Employee(34567, "Nancy",ms);
         employee3.addHours(50.50);
         assertTrue(employee3.getHoursWorked()==50.50);
 
@@ -105,7 +111,7 @@ public class EmployeeTest {
     @Test
     void chargeCustomerForItemRentalTest(){
         MusicStore ms = new MusicStore("ms");
-        Employee e = new Employee(10000, "Kip");
+        Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");
         Item i = new Item("djembe",45);
 
@@ -138,7 +144,7 @@ public class EmployeeTest {
     @Test
     void chargeCustomerForRoomRentalTest(){
         MusicStore ms = new MusicStore("ms");
-        Employee e = new Employee(10000, "Kip");
+        Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");
         Room r = new Room(123);
 
@@ -170,7 +176,7 @@ public class EmployeeTest {
     @Test
     void refundCustomerForItemRentalTest(){
         MusicStore ms = new MusicStore("ms");
-        Employee e = new Employee(10000, "Kip");
+        Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");
         Item i = new Item("djembe",45);
         ms.addToInventory(i);
@@ -203,7 +209,7 @@ public class EmployeeTest {
     @Test
     void refundCustomerForRoomRentalTest(){
         MusicStore ms = new MusicStore("ms");
-        Employee e = new Employee(10000, "Kip");
+        Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");
         Room r = new Room(123);
 

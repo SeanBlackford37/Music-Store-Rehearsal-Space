@@ -7,8 +7,9 @@ public class Employee {
     String name;
     double payAmt;
     double hoursWorked;
+    MusicStore store;
 
-    public Employee(int employeeID, String name){
+    public Employee(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits
         if(isIdValid(employeeID) !=5){
             throw new IllegalArgumentException("EmployeeID is not valid");
@@ -16,12 +17,16 @@ public class Employee {
         if(name.isEmpty()){
             throw new IllegalArgumentException("You must enter a name");
         }
+        if(store==null){
+            throw new IllegalArgumentException("Employee must be associated with a store");
+        }
         this.name= name;
         this.employeeID= employeeID;
+        this.store=store;
         payAmt= 15.00;
         hoursWorked=0;
     }
-    public Employee(int employeeID, String name, double payAmt){
+    public Employee(int employeeID, String name, double payAmt, MusicStore store){
         //check to make sure employeeID is 5 digits
         if(isIdValid(employeeID) !=5){
             throw new IllegalArgumentException("EmployeeID is not valid");
@@ -32,9 +37,13 @@ public class Employee {
         if(!isAmountValid(payAmt)){
             throw new IllegalArgumentException("You must enter a valid pay amount");
         }
+        if(store==null){
+            throw new IllegalArgumentException("Employee must be associated with a store");
+        }
         this.name= name;
         this.employeeID= employeeID;
         this.payAmt= payAmt;
+        this.store=store;
     }
 
     public static boolean isAmountValid(double balance){
