@@ -66,21 +66,6 @@ public class Employee {
         
     }
 
-    public void chargeClient(ArrayList<Item> purchases, ArrayList<Item> inventory){
-        double total=0;
-        for(int i=0; i<purchases.size(); i++){
-            total= total + purchases.get(i).getPrice();
-            for(int j=0; j<inventory.size(); j++){
-                String toRemove= purchases.get(i).getName();
-                if(inventory.get(j).getName().equals(toRemove)){
-                    inventory.remove(j);
-                }
-            }
-        }
-
-        //Add total to total funds in store
-    }
-
     public String viewSpaceSchedule(ArrayList<Room> rentedRooms){
         String schedule="Currently rented rooms: \n";
         for(int i=0; i<rentedRooms.size(); i++){

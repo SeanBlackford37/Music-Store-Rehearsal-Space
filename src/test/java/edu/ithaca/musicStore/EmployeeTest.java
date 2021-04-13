@@ -45,25 +45,6 @@ public class EmployeeTest {
     }
 
     @Test
-    void chargeClientTest(){
-        MusicStore ms = new MusicStore("ms");
-        Employee employee1= new Employee(12345, "Steve",ms);
-        ArrayList<Item> stock= new ArrayList<Item>();
-        stock.add(new Item("piano", 150, "Mary"));
-        stock.add(new Item("piano", 150, "Joe"));
-        stock.add(new Item("sheet music", 20, "Erica"));
-        ArrayList<Item> purchases= new ArrayList<Item>();
-        purchases.add(new Item("piano", 150, "Mary"));
-        purchases.add(new Item("sheet music", 20, "Mary"));
-        employee1.chargeClient(purchases, stock);
-        assertTrue(employee1.checkStock("piano", stock));
-        assertFalse(employee1.checkStock("sheet music", stock));
-        //We should add field for total funds in music store
-        //test to ensure that total funds has risen by total of purchase, in this case 170
-
-    }
-
-    @Test
     void equipmentScheduleTest(){
         MusicStore ms = new MusicStore("ms");
         Employee employee1= new Employee(12345, "Steve",ms);
