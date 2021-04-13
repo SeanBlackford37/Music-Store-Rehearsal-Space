@@ -7,7 +7,7 @@ public class RepairTech {
     int employeeID;
     String name;
     double payAmt;
-    List<Item> activeRepairs;
+
     double hoursWorked;
     MusicStore store;
 
@@ -25,7 +25,7 @@ public class RepairTech {
         this.name= name;
         this.employeeID= employeeID;
         payAmt= 15.00;
-        activeRepairs = new ArrayList<>();
+        
         hoursWorked=0;
         this.store = store;
     }
@@ -47,7 +47,7 @@ public class RepairTech {
         this.name= name;
         this.employeeID= employeeID;
         this.payAmt= payAmt;
-        activeRepairs = new ArrayList<>();
+       
         hoursWorked=0;
         this.store = store;
     
@@ -97,30 +97,7 @@ public class RepairTech {
         return hoursWorked;
     }
 
-    public void addToRepairList(Item itemToAdd){
-        activeRepairs.add(itemToAdd);
-    }
-
-    public void removeFromRepairList(String itemName, String customerName){
-       for (int i =0; i<activeRepairs.size(); i++){
-           if (activeRepairs.get(i).getName().equals(itemName) && activeRepairs.get(i).getRenterName().equals(customerName)){
-               activeRepairs.remove(i);
-           }
-       }
-    }
-
-    public int findRepair(String itemName, String customerName){
-        for (int i =0; i<activeRepairs.size(); i++){
-            if (activeRepairs.get(i).getName().equals(itemName) && activeRepairs.get(i).getRenterName().equals(customerName)){
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    public List<Item> getRepairList(){
-        return activeRepairs;
-    }
+    
 
     public boolean checkInventory(String itemName){
         if(store.searchForInventoryItem(itemName) == -1){
@@ -128,6 +105,15 @@ public class RepairTech {
         }
         else{
             return true;
+        }
+    }
+
+    public void pullFromInventory(String itemName){
+        try{
+            store.removeFromInventory(itemName);
+        }
+        catch(Exception e){
+            throw new IllegalArgumentException("Item not found");
         }
     }
     

@@ -60,6 +60,22 @@ public class MusicStore {
         }
     }
 
+    public void removeFromInventory(String itemName) throws IllegalArgumentException{
+        int found = 0;
+        for (int i = 0; i < inventoryList.size(); i++){
+            if (inventoryList.get(i).getName().equals(itemName)){
+                    inventoryList.remove(i);
+                    found++;
+                    break;
+            }
+        }
+        if (found == 0){
+            throw new IllegalArgumentException("Item does not exist");
+        }
+    }
+
+
+
     public String getStoreName(){
         return storeName;
     }
