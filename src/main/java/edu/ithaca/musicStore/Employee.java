@@ -8,6 +8,7 @@ public class Employee {
     double payAmt;
     double hoursWorked;
     double wasPaid;
+    MusicStore worksAt;
 
     public Employee(int employeeID, String name){
         //check to make sure employeeID is 5 digits
@@ -37,6 +38,23 @@ public class Employee {
         this.name= name;
         this.employeeID= employeeID;
         this.payAmt= payAmt;
+    }
+
+    public Employee(int employeeID, String name, double payAmt, MusicStore worksAt){
+        //check to make sure employeeID is 5 digits
+        if(isIdValid(employeeID) !=5){
+            throw new IllegalArgumentException("EmployeeID is not valid");
+        }
+        if(name.isEmpty()){
+            throw new IllegalArgumentException("You must enter a name");
+        }
+        if(!isAmountValid(payAmt)){
+            throw new IllegalArgumentException("You must enter a valid pay amount");
+        }
+        this.name= name;
+        this.employeeID= employeeID;
+        this.payAmt= payAmt;
+        this.worksAt= worksAt;
     }
 
     public static boolean isAmountValid(double balance){

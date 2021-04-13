@@ -11,6 +11,10 @@ public class Admin extends Employee {
         super(employeeID, name, payAmt);
     }
 
+    public Admin(int employeeID, String name, double payAmt, MusicStore worksAt){
+        super(employeeID, name, payAmt, worksAt);
+    }
+
     public ArrayList<Room> cancelSpaceRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;
         for(int i = 0; i < rentedRooms.size(); i++){
@@ -44,12 +48,18 @@ public class Admin extends Employee {
         return rentedRooms;
     }
         public void payEmployee(int employeeID){
-
+            Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
+            double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+            toPay.getPaid(salary); 
         }
 
         //use to raise or lower employee pay
         public void changeEmployeePay(int employeeID, double newPayAmt){
-
+            if(MusicStore.isAmountValid(newPayAmt)== false){
+                throw new IllegalArgumentException("Enter a valid amount");
+            }
+            Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
+            toPay.setPayAmt(newPayAmt);
         }
 
     
