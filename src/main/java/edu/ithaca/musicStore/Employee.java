@@ -101,19 +101,31 @@ public class Employee {
     }
 
     public void chargeCustomerForItemRental(Customer c, String itemName,MusicStore ms) throws IllegalArgumentException{
-        
+        double amount = c.rentItem(itemName,this);
+        ms.addToStoreBalance(amount);
+        System.out.println(itemName+" Rental Transaction Approved For "+amount);
     }
 
     public void chargeCustomerForRoomRental(Customer c, int roomNum,MusicStore ms) throws IllegalArgumentException{
-        
+        double amount = c.rentRoom(roomNum,this);
+        ms.addToStoreBalance(amount);
+        System.out.println("Room "+roomNum+" Rental Transaction Approved For "+amount);
     }
 
     public void refundCustomerForItemRental(Customer c, String itemName,MusicStore ms) throws IllegalArgumentException{
-        
+        Transaction t = c.cancelItemRental(itemName);
+        double amount = t.getOrderAmount();
+        ms.subtractFromStoreBalance(amount);
+        System.out.println(itemName+" Rental Refund Approved For "+amount);
+
     }
 
     public void refundCustomerForRoomRental(Customer c, int roomNum, MusicStore ms) throws IllegalArgumentException{
-        
+        Transaction t = c.cancelRoom(roomNum);
+        double amount = t.getOrderAmount();
+        ms.subtractFromStoreBalance(amount);
+        System.out.println("Room "+roomNum+" Rental Refund Approved For "+amount);
+
     }
 
 

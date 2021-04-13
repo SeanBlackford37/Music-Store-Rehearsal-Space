@@ -108,18 +108,12 @@ public class EmployeeTest {
         Employee e = new Employee(10000, "Kip");
         Customer c = new Customer(ms,"Barb");
         Item i = new Item("djembe",45);
-        Item i2 = new Item ("guitar",45.456);
 
         //empty inventory
         assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe", ms));
         assertEquals(0,ms.getStoreBalance());
 
         ms.addToInventory(i);
-        ms.addToInventory(i2);
-
-        //item in inventory with bad amount
-        assertThrows(RuntimeException.class,()->e.chargeCustomerForItemRental(c, "guitar", ms));
-        assertEquals(0,ms.getStoreBalance());
 
         //item in inventory with good amount
         e.chargeCustomerForItemRental(c, "djembe", ms);
@@ -217,6 +211,7 @@ public class EmployeeTest {
         assertThrows(IllegalArgumentException.class,()->e.refundCustomerForRoomRental(c, 123, ms));
         assertEquals(0,ms.getStoreBalance());
 
+        ms.addToRoomList(r);
         e.chargeCustomerForRoomRental(c, 123, ms);
 
         //refund customer for room being rented by another customer
