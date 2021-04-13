@@ -9,8 +9,9 @@ public class RepairTech {
     double payAmt;
     List<Item> activeRepairs;
     double hoursWorked;
+    MusicStore store;
 
-    public RepairTech(int employeeID, String name){
+    public RepairTech(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits
         if(isIdValid(employeeID) !=5){
             throw new IllegalArgumentException("EmployeeID is not valid");
@@ -18,14 +19,18 @@ public class RepairTech {
         if(name.isEmpty()){
             throw new IllegalArgumentException("You must enter a name");
         }
+        if (store == null){
+            throw new IllegalArgumentException("You must link employee to a store");
+        }
         this.name= name;
         this.employeeID= employeeID;
         payAmt= 15.00;
         activeRepairs = new ArrayList<>();
         hoursWorked=0;
+        this.store = store;
     }
 
-    public RepairTech(int employeeID, String name, double payAmt){
+    public RepairTech(int employeeID, String name, double payAmt, MusicStore store){
         //check to make sure employeeID is 5 digits
         if(isIdValid(employeeID) !=5){
             throw new IllegalArgumentException("EmployeeID is not valid");
@@ -36,11 +41,15 @@ public class RepairTech {
         if(!isAmountValid(payAmt)){
             throw new IllegalArgumentException("You must enter a valid pay amount");
         }
+        if (store == null){
+            throw new IllegalArgumentException("You must link employee to a store");
+        }
         this.name= name;
         this.employeeID= employeeID;
         this.payAmt= payAmt;
         activeRepairs = new ArrayList<>();
         hoursWorked=0;
+        this.store = store;
     
     }
 
@@ -111,6 +120,15 @@ public class RepairTech {
 
     public List<Item> getRepairList(){
         return activeRepairs;
+    }
+
+    public boolean checkInventory(String itemName){
+        if(store.searchForInventoryItem(itemName) == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
     }
     
 }
