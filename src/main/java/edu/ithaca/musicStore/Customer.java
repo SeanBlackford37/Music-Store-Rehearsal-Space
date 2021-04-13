@@ -47,7 +47,7 @@ public class Customer {
         for(int i=transactionHistory.size()-1;i>=0;i--){
             Transaction t = transactionHistory.get(i);
             if(t.getItemRented()!=null){
-                if(t.getItemRented().getName().equals(itemName)){
+                if(t.getItemRented().getName().equalsIgnoreCase(itemName)){
                     returnItem(itemName);
                     return transactionHistory.remove(i);
                 }

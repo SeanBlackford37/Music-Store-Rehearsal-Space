@@ -61,12 +61,12 @@ public class Main {
         
         while(!equipmentToReturn.equalsIgnoreCase("done") && !rentedItems.isEmpty()){
             System.out.println("Rented items:");
-            for(int i =0; i < rentedItems.size(); i++){
+            for(int i = rentedItems.size()-1; i >= 0; i--){
                 System.out.println(rentedItems.get(i).getName());
             }
             equipmentToReturn = scan.nextLine();
             if(store.searchForRentedItem(equipmentToReturn) != -1){
-                custIn.returnItem(equipmentToReturn);
+                custIn.cancelItemRental(equipmentToReturn);
                 System.out.println(equipmentToReturn + " has been returned");
             }else if(!equipmentToReturn.equalsIgnoreCase("done")){
                 System.out.println("You did not rent out that item");
@@ -104,7 +104,7 @@ public class Main {
     public static void transactionHistory(Customer customerIn){
         ArrayList<Transaction> transactions =  customerIn.getTransactionHistory();
         if(!transactions.isEmpty()){
-            for(int i = 0; i < transactions.size(); i++){
+            for(int i = transactions.size()-1; i >= 0; i--){
                 System.out.println(transactions.get(i).getDescription());
             }
         }else{
@@ -134,7 +134,7 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nCancel Room Rental\nReturn Equipment\nDone\nDisplay information\ntransaction History\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nCancel Room Rental\nReturn Equipment\nDone\nDisplay information\nTransaction History\n");
             input = scan.nextLine();
            
             if (!validChoice(input)){
