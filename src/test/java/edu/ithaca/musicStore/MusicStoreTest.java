@@ -174,15 +174,15 @@ public class MusicStoreTest {
     @Test
     void addEmployeeTest(){
         MusicStore store = new MusicStore("Fancy Store");
-        store.addEmployee(new Employee(12345, "Steve"));
-        store.addEmployee(new Employee(23456, "Linda"));
-        store.addEmployee(new Employee(34567, "John"));
+        store.addEmployee(new Employee(12345, "Steve",store));
+        store.addEmployee(new Employee(23456, "Linda",store));
+        store.addEmployee(new Employee(34567, "John",store));
         assertTrue(store.getEmployeeList().size()==3);
         assertTrue(store.getEmployeeList().get(0).getName().equals("Steve"));
         assertTrue(store.getEmployeeList().get(1).getID()== 23456);
         assertTrue(store.getEmployeeList().get(2).getName().equals("John"));
-        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(12345, "")));
-        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(0, "Sarah")));
+        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(12345, "",store)));
+        assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(0, "Sarah",store)));
     }
 
     @Test
@@ -247,10 +247,10 @@ public class MusicStoreTest {
     @Test
     void removeEmployeeTest(){
         MusicStore store = new MusicStore("Fancy Store");
-        Employee employee1=new Employee(12345, "Steve");
-        Employee employee2= (new Employee(23456, "Linda"));
-        Employee employee3= new Employee(34567, "John");
-        Employee employee4= new Employee(45678, "Dustin");
+        Employee employee1=new Employee(12345, "Steve",store);
+        Employee employee2= (new Employee(23456, "Linda",store));
+        Employee employee3= new Employee(34567, "John",store);
+        Employee employee4= new Employee(45678, "Dustin",store);
         store.addEmployee(employee1);
         store.addEmployee(employee2);
         store.addEmployee(employee3);
@@ -268,10 +268,10 @@ public class MusicStoreTest {
     @Test
     void searchForEmployeeTest() {
         MusicStore store = new MusicStore("Fancy Store");
-        store.addEmployee(new Employee(12345, "John"));
-        store.addEmployee(new Employee(13345, "Bob"));
-        store.addEmployee(new Employee(14345, "Nami"));
-        store.addEmployee(new Employee(15345, "Elise"));
+        store.addEmployee(new Employee(12345, "John", store));
+        store.addEmployee(new Employee(13345, "Bob",store));
+        store.addEmployee(new Employee(14345, "Nami",store));
+        store.addEmployee(new Employee(15345, "Elise",store));
 
         //Search for valid item at front
         assertEquals(0, store.findEmployee(12345));

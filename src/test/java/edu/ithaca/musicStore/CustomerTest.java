@@ -30,7 +30,7 @@ class CustomerTest {
         Customer c = new Customer(ms, "Bob");
         Item i =new Item("guitar",45, "n/a");
         ms.addToInventory(i);
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
 
         //Narrative 0: Employee never clocked in before charging the customer
         assertThrows(IllegalArgumentException.class,()->c.rentItem("guitar",null));
@@ -101,7 +101,7 @@ class CustomerTest {
     void returnItemTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         Item i = new Item("guitar",45, "n/a");
         ms.addToInventory(i);
 
@@ -170,7 +170,7 @@ class CustomerTest {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         Item i = new Item("guitar",45, "n/a");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         ms.addToInventory(i);
         
         //find transaction using index
@@ -205,7 +205,7 @@ class CustomerTest {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         Item i = new Item("guitar",45, "n/a");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         ms.addToInventory(i);
 
         //empty list, item not in inventory
@@ -225,7 +225,7 @@ class CustomerTest {
     void cancelItemRentalTest() {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         ms.addToInventory(new Item("guitar",45, "n/a"));
         Room r = new Room(1);
         ms.addToRoomList(r);
@@ -297,7 +297,7 @@ class CustomerTest {
     void rentRoomTest(){
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         Room room =new Room(1);
         ms.addToRoomList(room);
         int num = room.getRoomNumber();
@@ -366,7 +366,7 @@ class CustomerTest {
     void returnRoomTest(){
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         Room room =new Room(1);
 
         //Narrative 0: Customer returns a room not considered one of the store's
@@ -411,7 +411,7 @@ class CustomerTest {
     void cancelRoomTest(){
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         Room room =new Room(1);
 
         //Narrative 0: Customer cancels a room not considered one of the store's

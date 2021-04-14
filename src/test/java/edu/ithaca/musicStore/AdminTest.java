@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class AdminTest {
     @Test
     void constructorTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         assertEquals("Sean", employeeOne.getName());
         assertEquals(56789, employeeOne.getID());
         assertEquals(25, employeeOne.getPayAmt());
@@ -17,7 +18,8 @@ public class AdminTest {
     }
     @Test
     void cancelSpaceRentalTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         ArrayList<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 1, true, "Sadie"));
         rented.add(new Room(false, 5, true, "Carolyn"));
@@ -28,7 +30,8 @@ public class AdminTest {
     }
     @Test
     void addSpaceToRentalTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         ArrayList<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 5, true, "Carolyn"));
         rented.add(new Room(false, 9, true, "Sophia"));
@@ -37,7 +40,8 @@ public class AdminTest {
     }
     @Test
     void viewSpaceRentalTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         ArrayList<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 1, true, "Sadie"));
         rented.add(new Room(false, 5, true, "Carolyn"));

@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class Admin extends Employee {
 
-    public Admin(int employeeID, String name) {
-        super(employeeID, name);
+    public Admin(int employeeID, String name,MusicStore store) {
+        super(employeeID, name,store);
     }
-    public Admin(int employeeID, String name, double payAmt) {
-        super(employeeID, name, payAmt);
+    public Admin(int employeeID, String name, double payAmt, MusicStore store) {
+        super(employeeID, name, payAmt,store);
     }
 
     public ArrayList<Room> cancelSpaceRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{

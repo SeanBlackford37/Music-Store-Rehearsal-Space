@@ -147,7 +147,7 @@ public class Customer {
             if(t.getRoomRented()!=null){
                 Room r = t.getRoomRented();
                 if(r.getRoomNumber()==roomNum&&r.getRenterName()==customerName){
-                    returnRoom(1);
+                    returnRoom(roomNum);
                     return transactionHistory.remove(i);
                 }
             }
