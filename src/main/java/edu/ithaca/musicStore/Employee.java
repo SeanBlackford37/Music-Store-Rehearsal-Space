@@ -95,9 +95,11 @@ public class Employee {
     }
 
     public void chargeCustomerForItemRental(Customer c, String itemName) throws IllegalArgumentException{
-        double amount = c.rentItem(itemName,this);
-        store.addToStoreBalance(amount);
-        System.out.println(itemName+" Rental Transaction Approved For "+amount);
+        if(checkStock(itemName, store.getInventory())){
+            double amount = c.rentItem(itemName,this);
+            store.addToStoreBalance(amount);
+            System.out.println(itemName+" Rental Transaction Approved For "+amount);
+        }else{System.out.println(itemName+" Rental Transaction Not Approved");}
     }
 
     public void chargeCustomerForRoomRental(Customer c, int roomNum) throws IllegalArgumentException{

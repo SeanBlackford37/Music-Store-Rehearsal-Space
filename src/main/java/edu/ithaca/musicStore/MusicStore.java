@@ -249,6 +249,7 @@ public class MusicStore {
     
     }
 
-
-
+    public ArrayList<Item> getInventory(){
+        return (ArrayList<Item>) inventoryList;
+    }
 }
