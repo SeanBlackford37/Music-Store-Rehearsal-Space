@@ -11,9 +11,9 @@ public class Admin extends Employee {
         super(employeeID, name, payAmt);
     }
 
-    public Admin(int employeeID, String name, double payAmt, MusicStore worksAt){
+    /*public Admin(int employeeID, String name, double payAmt, MusicStore worksAt){
         super(employeeID, name, payAmt, worksAt);
-    }
+    }*/
 
     public ArrayList<Room> cancelSpaceRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;

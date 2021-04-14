@@ -40,7 +40,7 @@ public class Employee {
         this.payAmt= payAmt;
     }
 
-    public Employee(int employeeID, String name, double payAmt, MusicStore worksAt){
+   /* public Employee(int employeeID, String name, double payAmt, MusicStore worksAt){
         //check to make sure employeeID is 5 digits
         if(isIdValid(employeeID) !=5){
             throw new IllegalArgumentException("EmployeeID is not valid");
@@ -55,7 +55,7 @@ public class Employee {
         this.employeeID= employeeID;
         this.payAmt= payAmt;
         this.worksAt= worksAt;
-    }
+    }*/
 
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
