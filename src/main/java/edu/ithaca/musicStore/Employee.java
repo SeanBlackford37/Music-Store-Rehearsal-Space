@@ -141,7 +141,10 @@ public class Employee {
     }
 
     public void getPaid(double payment){
-        wasPaid+=payment;
+        wasPaid=payment;
+        hoursWorked=0;
+        //this currently reflects the most recent payment- could turn into a list to keep a record of all payments?
+        //Sets hours worked to zero so employee starts with no hours for the next week
     }
 
     public double seePayment(){

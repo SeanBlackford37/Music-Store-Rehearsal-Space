@@ -47,19 +47,30 @@ public class Admin extends Employee {
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
     }
-        public void payEmployee(int employeeID){
+        public void payEmployee(int employeeID) throws IllegalArgumentException{
+            if(worksAt.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            else{
             Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
             double salary= toPay.getHoursWorked()*toPay.getPayAmt();
-            toPay.getPaid(salary); 
+            toPay.getPaid(salary);
+            worksAt.subtractFromStoreBalance(salary); 
+            }
         }
 
         //use to raise or lower employee pay
-        public void changeEmployeePay(int employeeID, double newPayAmt){
+        public void changeEmployeePay(int employeeID, double newPayAmt) throws IllegalArgumentException{
             if(MusicStore.isAmountValid(newPayAmt)== false){
                 throw new IllegalArgumentException("Enter a valid amount");
             }
+            else if(worksAt.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            else{
             Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
             toPay.setPayAmt(newPayAmt);
+            }
         }
 
     
