@@ -8,7 +8,7 @@ public class Employee {
     double payAmt;
     double hoursWorked;
     double wasPaid;
-    MusicStore worksAt;
+    //MusicStore worksAt;
 
     public Employee(int employeeID, String name){
         //check to make sure employeeID is 5 digits
