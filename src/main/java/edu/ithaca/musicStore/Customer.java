@@ -7,7 +7,7 @@ public class Customer {
     private ArrayList<Transaction> transactionHistory;
     private ArrayList<Item> rentedItems;
     private String customerName;
-
+    private Room roomRented;
     public Customer(MusicStore currentStoreIn, String nameIn) throws NullPointerException{
         if(currentStoreIn!=null){
             currentStore=currentStoreIn;
@@ -47,7 +47,7 @@ public class Customer {
         for(int i=transactionHistory.size()-1;i>=0;i--){
             Transaction t = transactionHistory.get(i);
             if(t.getItemRented()!=null){
-                if(t.getItemRented().getName().equals(itemName)){
+                if(t.getItemRented().getName().equalsIgnoreCase(itemName)){
                     returnItem(itemName);
                     return transactionHistory.remove(i);
                 }
@@ -62,7 +62,7 @@ public class Customer {
 
             for(int i=0;i<rentedItems.size();i++){
                 Item returnItem = rentedItems.get(i);
-                if(returnItem.getName().equals(itemName)){
+                if(returnItem.getName().equalsIgnoreCase(itemName)){
                     returnItem.setRenterName("n/a");
                     rentedItems.remove(returnItem);
                     currentStore.moveToInventory(itemName);
@@ -110,14 +110,18 @@ public class Customer {
             if(r.getIsEmptyRoom()&&!r.getHasEquipment()){
                 r.setIsEmptyRoom(false);
                 r.setRenterName(customerName);
+                this.roomRented = r;
                 //figure out equipment for next sprint
                 Transaction t = new Transaction(this, seller, r);
-                transactionHistory.add(t);
+                transactionHistory.add(0,t);
                 //currentStore.removeFromRoomList(roomNumber);
                 return r.getRate();
             }
             else{throw new IllegalArgumentException("room is currently occupied or unprepared");}
         }
+    }
+    public Room getRoomRented(){
+        return roomRented;
     }
 
     public Room returnRoom(int roomNum) throws IllegalArgumentException{
@@ -166,6 +170,9 @@ public class Customer {
 
     public String getCustomerName(){
         return customerName;
+    }
+    public ArrayList<Item> getRentedList(){
+        return rentedItems;
     }
 
     public Item getRentedItem(int index)throws IndexOutOfBoundsException{
