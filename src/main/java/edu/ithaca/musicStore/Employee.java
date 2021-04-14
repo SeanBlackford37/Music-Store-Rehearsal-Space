@@ -99,7 +99,7 @@ public class Employee {
             double amount = c.rentItem(itemName,this);
             store.addToStoreBalance(amount);
             System.out.println(itemName+" Rental Transaction Approved For "+amount);
-        }else{System.out.println(itemName+" Rental Transaction Not Approved");}
+        }else{System.out.println(itemName+" Rental Transaction Not Approved. Item Invalid.");}
     }
 
     public void chargeCustomerForRoomRental(Customer c, int roomNum) throws IllegalArgumentException{
