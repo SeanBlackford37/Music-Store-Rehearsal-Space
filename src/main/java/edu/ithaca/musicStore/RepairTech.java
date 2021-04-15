@@ -108,9 +108,11 @@ public class RepairTech {
         }
     }
 
-    public void pullFromInventory(String itemName){
+    public Item pullFromInventory(String itemName){
         try{
+            Item temp = store.getInventoryItem(store.searchForInventoryItem(itemName));
             store.removeFromInventory(itemName);
+            return temp;
         }
         catch(Exception e){
             throw new IllegalArgumentException("Item not found");
