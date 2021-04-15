@@ -140,7 +140,9 @@ public class Employee {
     public double getPayAmt(){
         return payAmt;
     }
-
+    public void setPayAmt(double payAmtIn){
+        payAmt = payAmtIn;
+    }
     public int isIdValid(int IDNumber){
         int count=0;
         while (IDNumber !=0){
