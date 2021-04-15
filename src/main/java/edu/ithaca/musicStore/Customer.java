@@ -39,6 +39,13 @@ public class Customer {
         else{ throw new IllegalArgumentException("Item is out of inventory");}
     }
 
+    public double rentMutipleItems(ArrayList<String> itemsToRent, Employee seller){
+        //return itemsToRent.totalPrice();
+        return 0;
+    }
+    public double getTotalRentCost(){
+        return 0;
+    }
     /**
      * @pre transaction must be added to transactionList and store inventory
      * @param rentalToCancel
