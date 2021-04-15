@@ -126,7 +126,7 @@ public class Main {
         store.addToInventory(new Item("Guitar", 15, "none"));
 
         String input = "go";
-        Employee employeeOne = new Employee(12345, "Toby");
+        Employee employeeOne = new Employee(12345, "Toby", store);
         System.out.println("Enter your name");
         String name = "Sean Blackford";
         name = scan.nextLine();
