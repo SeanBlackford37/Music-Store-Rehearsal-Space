@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepairTech {
-    int employeeID;
-    String name;
-    double payAmt;
+    private int employeeID;
+    private String name;
+    private double payAmt;
 
-    double hoursWorked;
-    MusicStore store;
+    private double hoursWorked;
+    private MusicStore store;
 
     public RepairTech(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits
