@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 class CustomerTest {
 
     @Test
@@ -466,4 +468,6 @@ class CustomerTest {
 
         //add narrative for room cancellation when no prior transaction exists
     }
+    
+   
 }
