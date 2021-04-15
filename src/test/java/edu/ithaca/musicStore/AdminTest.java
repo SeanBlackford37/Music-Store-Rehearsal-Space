@@ -53,10 +53,10 @@ public class AdminTest {
     void raiseEmployeePay(){
         MusicStore ms = new MusicStore("ms");
         Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
-        Employee employeeTwo = new Employee(1234, "Toby", 15.00, ms);
+        Employee employeeTwo = new Employee(12345, "Toby", 15.00, ms);
         employeeOne.raisePay(employeeTwo, .10);
         assertEquals(16.50, employeeTwo.getPayAmt());
-        assertThrows(IllegalArgumentException.class,  ()->employeeOne.raisePay(employeeTwo, 10)); //Has to be less than 1
+        assertThrows(IllegalArgumentException.class,  ()->employeeOne.raisePay(employeeTwo, 1.01)); //Has to be less than 1
         assertThrows(IllegalArgumentException.class,  ()->employeeOne.raisePay(employeeTwo, -.10)); //Can't be negative
         assertThrows(IllegalArgumentException.class,  ()->employeeOne.raisePay(employeeTwo, .105)); //Only two decimal places
     }
