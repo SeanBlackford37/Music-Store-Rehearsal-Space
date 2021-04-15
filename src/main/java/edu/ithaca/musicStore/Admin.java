@@ -2,6 +2,8 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.ser.std.RawSerializer;
+
 public class Admin extends Employee {
 
     public Admin(int employeeID, String name,MusicStore store) {
@@ -42,6 +44,22 @@ public class Admin extends Employee {
 
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
+    }
+    public static boolean isAmountValid(double balance){
+        String s = "" + balance;
+        String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
+        if(balance <=1 && result[1].length() <= 2 && balance >=.01){
+          return true;
+        }
+       return false;
+    }
+    public void raisePay(Employee employeeIn, double raiseAmt){
+        if(isAmountValid(raiseAmt)){
+            employeeIn.setPayAmt(employeeIn.getPayAmt() + (employeeIn.getPayAmt() * raiseAmt)); 
+        }else{
+            throw new IllegalArgumentException("invalid amt to raise to employee");
+        }
+       
     }
 
 
