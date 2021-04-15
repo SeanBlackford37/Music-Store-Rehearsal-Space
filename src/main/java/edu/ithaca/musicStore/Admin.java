@@ -1,11 +1,17 @@
 package edu.ithaca.musicStore;
-
+import java.util.HashMap;
 import java.util.ArrayList;
 
 public class Admin extends Employee {
+    private HashMap<String,Double>repairPricing;
 
     public Admin(int employeeID, String name,MusicStore store) {
         super(employeeID, name,store);
+        repairPricing = new HashMap<>();
+        repairPricing.put("1-3 business days", 40.00);
+        repairPricing.put("3-5 business days", 60.00);
+        repairPricing.put("5-7 business days", 80.00);
+        repairPricing.put("7+ business days", 100.00);
     }
     public Admin(int employeeID, String name, double payAmt, MusicStore store) {
         super(employeeID, name, payAmt,store);
@@ -42,6 +48,13 @@ public class Admin extends Employee {
 
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
+    }
+
+    public double getRepairPricing(String repairTimeCategory) throws IllegalArgumentException{
+        return -1;
+    }
+    public void updateRepairPricing(String repairTimeCategory, double amount) throws IllegalArgumentException{
+        System.out.println("New pricing for "+repairTimeCategory+" is "+repairPricing.get(repairTimeCategory));
     }
 
 
