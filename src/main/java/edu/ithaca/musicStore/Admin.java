@@ -1,8 +1,7 @@
 package edu.ithaca.musicStore;
-
+import java.util.HashMap;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.databind.ser.std.RawSerializer;
 
 public class Admin extends Employee {
 
@@ -12,6 +11,10 @@ public class Admin extends Employee {
     public Admin(int employeeID, String name, double payAmt, MusicStore store) {
         super(employeeID, name, payAmt,store);
     }
+
+    /*public Admin(int employeeID, String name, double payAmt, MusicStore worksAt){
+        super(employeeID, name, payAmt, worksAt);
+    }*/
 
     public ArrayList<Room> cancelSpaceRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;
@@ -45,6 +48,30 @@ public class Admin extends Employee {
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
     }
+
+    public double getRepairPricing(RepairCategory rc) {
+        return store.getRepairPricing(rc);
+        
+    }
+    public void updateRepairPricing(RepairCategory rc, double amount) throws IllegalArgumentException{
+        if(MusicStore.isAmountValid(amount)){
+            store.updateRepairPricing(rc, amount);
+        }
+        else{throw new IllegalArgumentException("invalid amount for pricing");}
+    }
+
+        public void payEmployee(int employeeID) throws IllegalArgumentException{
+            if(store.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            else{
+            Employee toPay= store.getEmployee(store.findEmployee(employeeID));
+            double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+            toPay.getPaid(salary);
+            store.subtractFromStoreBalance(salary); 
+            }
+        }
+
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
         String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
@@ -63,5 +90,25 @@ public class Admin extends Employee {
     }
 
 
+        //use to raise or lower employee pay
+        public void changeEmployeePay(int employeeID, double newPayAmt) throws IllegalArgumentException{
+            if(MusicStore.isAmountValid(newPayAmt)== false){
+                throw new IllegalArgumentException("Enter a valid amount");
+            }
+            else if(store.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            else{
+            Employee toPay= store.getEmployee(store.findEmployee(employeeID));
+            toPay.setPayAmt(newPayAmt);
+            }
+        }
+
+        public void fireEmployee(int employeeID) throws IllegalArgumentException{
+            if(store.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            store.removeEmployee(employeeID);
+        }
     
 }

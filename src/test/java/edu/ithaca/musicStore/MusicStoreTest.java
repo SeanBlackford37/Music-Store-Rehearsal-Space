@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+
 public class MusicStoreTest {
     
     @Test
@@ -333,6 +334,7 @@ public class MusicStoreTest {
     }
 
     @Test
+
     void addToRepairTechListTest() {
         MusicStore store = new MusicStore("Fancy Store");
         //Add valid tech
@@ -390,6 +392,26 @@ public class MusicStoreTest {
         //Search for item that doesnt exist
         assertEquals(-1, store.findRepairTech(22345));
         assertEquals(-1, store.findRepairTech("James"));
+
+    void getRepairPricingTest(){
+        MusicStore ms = new MusicStore("ms");
+        assertEquals(80.0,ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
+    }
+
+    @Test
+    void updateRepairPricingTest(){
+        MusicStore ms = new MusicStore("ms");
+        assertEquals(80.0,ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120);
+        assertEquals(120.0, ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120.75);
+        assertEquals(120.75, ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.34));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.345));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, 20.394));
+        
+        
     }
 
 }
