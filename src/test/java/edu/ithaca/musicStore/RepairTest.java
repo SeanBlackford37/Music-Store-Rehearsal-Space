@@ -7,7 +7,16 @@ public class RepairTest {
 
     @Test
     void createQuoteTest(){
-        //TODO
+        MusicStore store = new MusicStore("Place");
+        store.addToInventory(new Item("string", 12.99));
+        Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
+        RepairTech tech = repair.getTech();
+        repair.setPrice(12);
+        System.out.println(repair.createQuote()+"\n");
+
+        repair.addItemToEquipmentUsed(tech.pullFromInventory("string"));
+        repair.setPrice(12.01);
+        System.out.println(repair.createQuote());
     }
 
     @Test

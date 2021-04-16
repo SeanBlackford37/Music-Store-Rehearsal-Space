@@ -20,11 +20,24 @@ public class Repair {
             this.tech = tech;
             isRepairFinished = false;
             equipmentUsed = new ArrayList<>();
+            price = 0.0;
         }
     }
 
-    public double createQuote(){
-        //TODO
+    //MUST RUN SET PRICE First or else cost will be 0
+    public String createQuote(){
+        String quote = "Repair Tech: " + tech.getName() + "\n" + "Customer: " + item.getClientName() + "\n" + "Damage Description: " + item.getDamageDescription();
+        if (!equipmentUsed.isEmpty()){
+            quote += "\nEquipment Used in Repair:";
+            for (int i =0; i < equipmentUsed.size(); i++){
+                quote += "\n";
+                quote += equipmentUsed.get(i).getName();
+                quote += "Cost $";
+                quote += equipmentUsed.get(i).getPrice();
+            }
+        }
+        quote += "\nTotal cost: $" + price.toString();
+        return quote;
     }
 
     public void setPrice(double estPrice){
@@ -42,6 +55,8 @@ public class Repair {
         else{
             throw new IllegalArgumentException("Not a valid est price");
         }
+        int num  = (int)(price * 100);
+        price = ((double)num) /100;
     }
 
     public void setRepairIsFinished(boolean bool){
