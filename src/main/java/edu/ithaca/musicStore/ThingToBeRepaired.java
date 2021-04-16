@@ -1,10 +1,10 @@
 package edu.ithaca.musicStore;
 
 public class ThingToBeRepaired {
-    String itemName;
-    String clientName;
-    Boolean isBroken;
-    String damageDescription;
+    private String itemName;
+    private String clientName;
+    private Boolean isBroken;
+    private String damageDescription;
    
     
     public ThingToBeRepaired(String itemName, String clientName, String damageDescription) {

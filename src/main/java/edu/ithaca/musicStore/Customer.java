@@ -148,7 +148,7 @@ public class Customer {
                 this.roomRented = r;
                 //figure out equipment for next sprint
                 Transaction t = new Transaction(this, seller, r);
-                transactionHistory.add(0,t);
+                transactionHistory.add(t);
                 //currentStore.removeFromRoomList(roomNumber);
                 return r.getRate();
             }
