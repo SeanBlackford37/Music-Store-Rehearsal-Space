@@ -94,5 +94,8 @@ public class Admin extends Employee {
             }
         }
 
+        public void fireEmployee(int employeeID) throws IllegalArgumentException{
+
+        }
     
 }
