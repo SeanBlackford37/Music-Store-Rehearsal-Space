@@ -104,5 +104,11 @@ public class Admin extends Employee {
             }
         }
 
+        public void fireEmployee(int employeeID) throws IllegalArgumentException{
+            if(store.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            store.removeEmployee(employeeID);
+        }
     
 }
