@@ -392,6 +392,7 @@ public class MusicStoreTest {
         //Search for item that doesnt exist
         assertEquals(-1, store.findRepairTech(22345));
         assertEquals(-1, store.findRepairTech("James"));
+    }
 
     void getRepairPricingTest(){
         MusicStore ms = new MusicStore("ms");
