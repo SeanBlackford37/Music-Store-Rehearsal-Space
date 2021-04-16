@@ -13,6 +13,10 @@ public class Admin extends Employee {
         super(employeeID, name, payAmt,store);
     }
 
+    /*public Admin(int employeeID, String name, double payAmt, MusicStore worksAt){
+        super(employeeID, name, payAmt, worksAt);
+    }*/
+
     public ArrayList<Room> cancelSpaceRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;
         for(int i = 0; i < rentedRooms.size(); i++){
@@ -45,6 +49,19 @@ public class Admin extends Employee {
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
     }
+
+        public void payEmployee(int employeeID) throws IllegalArgumentException{
+            if(worksAt.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            else{
+            Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
+            double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+            toPay.getPaid(salary);
+            worksAt.subtractFromStoreBalance(salary); 
+            }
+        }
+
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
         String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
@@ -62,6 +79,20 @@ public class Admin extends Employee {
        
     }
 
+
+        //use to raise or lower employee pay
+        public void changeEmployeePay(int employeeID, double newPayAmt) throws IllegalArgumentException{
+            if(MusicStore.isAmountValid(newPayAmt)== false){
+                throw new IllegalArgumentException("Enter a valid amount");
+            }
+            else if(worksAt.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            else{
+            Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
+            toPay.setPayAmt(newPayAmt);
+            }
+        }
 
     
 }

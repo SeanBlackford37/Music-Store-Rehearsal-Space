@@ -7,6 +7,8 @@ public class Employee {
     String name;
     double payAmt;
     double hoursWorked;
+    double wasPaid;
+    //MusicStore worksAt;
     MusicStore store;
 
     public Employee(int employeeID, String name, MusicStore store){
@@ -25,6 +27,7 @@ public class Employee {
         this.store=store;
         payAmt= 15.00;
         hoursWorked=0;
+        wasPaid=0;
     }
     public Employee(int employeeID, String name, double payAmt, MusicStore store){
         //check to make sure employeeID is 5 digits
@@ -45,6 +48,23 @@ public class Employee {
         this.payAmt= payAmt;
         this.store=store;
     }
+
+   /* public Employee(int employeeID, String name, double payAmt, MusicStore worksAt){
+        //check to make sure employeeID is 5 digits
+        if(isIdValid(employeeID) !=5){
+            throw new IllegalArgumentException("EmployeeID is not valid");
+        }
+        if(name.isEmpty()){
+            throw new IllegalArgumentException("You must enter a name");
+        }
+        if(!isAmountValid(payAmt)){
+            throw new IllegalArgumentException("You must enter a valid pay amount");
+        }
+        this.name= name;
+        this.employeeID= employeeID;
+        this.payAmt= payAmt;
+        this.worksAt= worksAt;
+    }*/
 
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
@@ -140,9 +160,24 @@ public class Employee {
     public double getPayAmt(){
         return payAmt;
     }
-    public void setPayAmt(double payAmtIn){
-        payAmt = payAmtIn;
+
+
+    public void setPayAmt(double newPay){
+        payAmt= newPay;
     }
+
+    public void getPaid(double payment){
+        wasPaid=payment;
+        hoursWorked=0;
+        //this currently reflects the most recent payment- could turn into a list to keep a record of all payments?
+        //Sets hours worked to zero so employee starts with no hours for the next week
+    }
+
+    public double seePayment(){
+        return wasPaid;
+    }
+
+
     public int isIdValid(int IDNumber){
         int count=0;
         while (IDNumber !=0){
