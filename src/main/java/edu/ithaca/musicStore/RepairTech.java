@@ -7,7 +7,7 @@ public class RepairTech {
     private int employeeID;
     private String name;
     private double payAmt;
-
+    private List<Repair> activeRepairs;
     private double hoursWorked;
     private MusicStore store;
 
@@ -25,7 +25,7 @@ public class RepairTech {
         this.name= name;
         this.employeeID= employeeID;
         payAmt= 15.00;
-        
+        activeRepairs = new ArrayList<>();
         hoursWorked=0;
         this.store = store;
     }
@@ -47,7 +47,7 @@ public class RepairTech {
         this.name= name;
         this.employeeID= employeeID;
         this.payAmt= payAmt;
-       
+        activeRepairs = new ArrayList<>();
         hoursWorked=0;
         this.store = store;
     
@@ -118,5 +118,22 @@ public class RepairTech {
             throw new IllegalArgumentException("Item not found");
         }
     }
+
+    public void addToActiveRepairList(String clientName){
+        //TODO
+    }
+
+    public void removeFromActiveRepairList(String clientName){
+        //TODO
+    }
+
+    public Repair getRepair(String clientName){
+        //TODO
+    }
+
+    public int findRepair(String clientName){
+        //TODO
+    }
+    
     
 }
