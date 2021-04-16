@@ -54,6 +54,10 @@ public class Admin extends Employee {
         
     }
     public void updateRepairPricing(RepairCategory rc, double amount) throws IllegalArgumentException{
+        if(MusicStore.isAmountValid(amount)){
+            store.updateRepairPricing(rc, amount);
+        }
+        else{throw new IllegalArgumentException("invalid amount for pricing");}
     }
 
         public void payEmployee(int employeeID) throws IllegalArgumentException{

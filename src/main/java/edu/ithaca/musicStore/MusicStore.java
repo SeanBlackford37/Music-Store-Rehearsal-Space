@@ -294,4 +294,11 @@ public class MusicStore {
     public double getRepairPricing(RepairCategory rc) {
         return repairPricings.get(rc);
     }
+
+    public void updateRepairPricing(RepairCategory rc,double amount) throws IllegalArgumentException{
+        if(isAmountValid(amount)){
+            repairPricings.replace(rc, amount);
+        }
+        else{throw new IllegalArgumentException("invalid amount for a repair pricing.");}
+    }
 }
