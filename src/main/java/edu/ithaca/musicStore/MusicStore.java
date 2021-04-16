@@ -14,14 +14,7 @@ public class MusicStore {
     //private List<RepairTech> repairTechList;
     private List<Room> roomList;
     private double storeBalance;
-    private EnumMap<RepairCategory,Double> repairPricing;
-
-    public enum RepairCategory{
-        ONETOTHREE,
-        THREETOFIVE,
-        FIVETOSEVEN,
-        SEVENPLUS;
-    }
+    private EnumMap<RepairCategory,Double> repairPricings;
 
     public MusicStore(String name){
         storeName = name;
@@ -31,11 +24,11 @@ public class MusicStore {
         //repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
-        repairPricing = new EnumMap<RepairCategory,Double>(RepairCategory.class);
-        repairPricing.put(RepairCategory.ONETOTHREE, 40.00);
-        repairPricing.put(RepairCategory.THREETOFIVE, 60.00);
-        repairPricing.put(RepairCategory.FIVETOSEVEN, 80.00);
-        repairPricing.put(RepairCategory.SEVENPLUS, 100.00);
+        repairPricings = new EnumMap<RepairCategory,Double>(RepairCategory.class);
+        repairPricings.put(RepairCategory.ONETOTHREE, 40.00);
+        repairPricings.put(RepairCategory.THREETOFIVE, 60.00);
+        repairPricings.put(RepairCategory.FIVETOSEVEN, 80.00);
+        repairPricings.put(RepairCategory.SEVENPLUS, 100.00);
     }
 
 
@@ -295,5 +288,10 @@ public class MusicStore {
 
     public ArrayList<Item> getInventory(){
         return (ArrayList<Item>) inventoryList;
+    }
+
+
+    public double getRepairPricing(RepairCategory rc) {
+        return repairPricings.get(rc);
     }
 }

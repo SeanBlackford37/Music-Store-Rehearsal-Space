@@ -332,4 +332,10 @@ public class MusicStoreTest {
 
     }
 
+    @Test
+    void getRepairPricingTest(){
+        MusicStore ms = new MusicStore("ms");
+        assertEquals(80.0,ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
+    }
+
 }
