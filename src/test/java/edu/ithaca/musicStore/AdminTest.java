@@ -56,9 +56,9 @@ public class AdminTest {
         MusicStore store= new MusicStore("Fancy Store", 10000);
         double currentBalance= store.getStoreBalance();
         Admin admin1= new Admin(56789, "Jack", 20.00, store);
-        Employee employee1= new Employee(12345, "Katherine");
-        Employee employee2= new Employee(23456, "David");
-        Employee employee3= new Employee(34567, "Joe");
+        Employee employee1= new Employee(12345, "Katherine", store);
+        Employee employee2= new Employee(23456, "David", store);
+        Employee employee3= new Employee(34567, "Joe", store);
         store.addEmployee(employee1);
         store.addEmployee(employee2);
         store.addEmployee(employee3);
@@ -90,9 +90,9 @@ public class AdminTest {
     void changeEmployeePayTest(){
         MusicStore store= new MusicStore("Fancy Store");
         Admin admin1= new Admin(56789, "Jack", 20.00, store);
-        Employee employee1= new Employee(12345, "Katherine");
-        Employee employee2= new Employee(23456, "David");
-        Employee employee3= new Employee(34567, "Joe");
+        Employee employee1= new Employee(12345, "Katherine", store);
+        Employee employee2= new Employee(23456, "David", store);
+        Employee employee3= new Employee(34567, "Joe", store);
         store.addEmployee(employee1);
         store.addEmployee(employee2);
         store.addEmployee(employee3);
@@ -104,7 +104,7 @@ public class AdminTest {
         assertEquals(employee2.getPayAmt(), 20.00);
         assertEquals(employee3.getPayAmt(), 15.00);
         admin1.changeEmployeePay(34567, 16.50);
-        
+    }
 
     @Test 
     void raiseEmployeePay(){

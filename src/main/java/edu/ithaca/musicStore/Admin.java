@@ -51,14 +51,14 @@ public class Admin extends Employee {
     }
 
         public void payEmployee(int employeeID) throws IllegalArgumentException{
-            if(worksAt.findEmployee(employeeID)==-1){
+            if(store.findEmployee(employeeID)==-1){
                 throw new IllegalArgumentException("Employee ID does not exist");
             }
             else{
-            Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
+            Employee toPay= store.getEmployee(store.findEmployee(employeeID));
             double salary= toPay.getHoursWorked()*toPay.getPayAmt();
             toPay.getPaid(salary);
-            worksAt.subtractFromStoreBalance(salary); 
+            store.subtractFromStoreBalance(salary); 
             }
         }
 
@@ -85,11 +85,11 @@ public class Admin extends Employee {
             if(MusicStore.isAmountValid(newPayAmt)== false){
                 throw new IllegalArgumentException("Enter a valid amount");
             }
-            else if(worksAt.findEmployee(employeeID)==-1){
+            else if(store.findEmployee(employeeID)==-1){
                 throw new IllegalArgumentException("Employee ID does not exist");
             }
             else{
-            Employee toPay= worksAt.getEmployee(worksAt.findEmployee(employeeID));
+            Employee toPay= store.getEmployee(store.findEmployee(employeeID));
             toPay.setPayAmt(newPayAmt);
             }
         }
