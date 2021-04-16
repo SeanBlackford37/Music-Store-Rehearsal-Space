@@ -10,7 +10,7 @@ public class MusicStore {
     private List<Item> inventoryList;
     private List<Item> rentedList;
     private List<Employee> employeeList;
-    //private List<RepairTech> repairTechList;
+    private List<RepairTech> repairTechList;
     private List<Room> roomList;
     private double storeBalance;
 
@@ -19,7 +19,7 @@ public class MusicStore {
         inventoryList = new ArrayList<>();
         rentedList = new ArrayList<>();
         employeeList = new ArrayList<>();
-        //repairTechList = new ArrayList<>();
+        repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
     }
@@ -34,9 +34,69 @@ public class MusicStore {
             inventoryList = new ArrayList<>();
             rentedList = new ArrayList<>();
             employeeList = new ArrayList<>();
-            //repairTechList = new ArrayList<>();
+            repairTechList = new ArrayList<>();
             roomList = new ArrayList<>();
             storeBalance =  balance;
+        }
+    }
+
+    public void addToRepairTechList(RepairTech techToAdd){
+        repairTechList.add(techToAdd);
+    }
+
+    public List<RepairTech> getRepairTechList(){
+        return repairTechList;
+    }
+
+    public void removeRepairTech(int id){
+        int found = 0;
+        for (int i = 0;i < repairTechList.size(); i++){
+            if (repairTechList.get(i).getID() == id){
+                repairTechList.remove(i);
+                found++;
+                break;
+            }
+        }
+        if (found == 0){
+            throw new IllegalArgumentException("Repair Tech does not exist");
+        }
+    }
+
+    public int findRepairTech(int id){
+        for (int i = 0;i < repairTechList.size(); i++){
+            if (repairTechList.get(i).getID() == id){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int findRepairTech(String name){
+        for (int i = 0;i < repairTechList.size(); i++){
+            if (repairTechList.get(i).getName().equalsIgnoreCase(name)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public RepairTech getRepairTech(int id){
+        int index = findRepairTech(id);
+        if (index != -1){
+            return repairTechList.get(index);
+        }
+        else{
+            throw new IllegalArgumentException("Repair Tech does not exist");
+        }
+    }
+
+    public RepairTech getRepairTech(String name){
+        int index = findRepairTech(name);
+        if (index != -1){
+            return repairTechList.get(index);
+        }
+        else{
+            throw new IllegalArgumentException("Repair Tech does not exist");
         }
     }
 
