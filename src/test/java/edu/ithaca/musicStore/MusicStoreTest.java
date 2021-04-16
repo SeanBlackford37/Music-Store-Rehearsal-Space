@@ -334,6 +334,65 @@ public class MusicStoreTest {
     }
 
     @Test
+
+    void addToRepairTechListTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        //Add valid tech
+        store.addToRepairTechList(new RepairTech(12345, "Nick", store));
+        assertEquals(1, store.getRepairTechList().size());
+        assertEquals("Nick", store.getRepairTech(12345).getName());
+
+        //Add same tech
+        store.addToRepairTechList(new RepairTech(12345, "Nick", store));
+        assertEquals(2, store.getRepairTechList().size());
+        assertEquals("Nick", store.getRepairTech(12345).getName());
+
+    }
+
+    @Test
+    void removeRepairTechTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addToRepairTechList(new RepairTech(12345, "Nick", store));
+        //remove valid item
+        store.removeRepairTech(12345);
+        assertEquals(0, store.getRepairTechList().size());
+
+        //Remove when items have same name but different price
+        store.addToRepairTechList(new RepairTech(12345, "Nick", store));
+        store.addToRepairTechList(new RepairTech(12346, "Nick", store));
+        store.removeRepairTech(12345);
+        assertEquals(1, store.getRepairTechList().size());
+        assertEquals(12346, store.getRepairTechList().get(0).getID());
+
+        //Remove an item that doesnt exist
+        assertThrows(IllegalArgumentException.class, ()->store.removeRepairTech(12345)); 
+    }
+
+    @Test
+    void searchForRepairTechTest() {
+        MusicStore store = new MusicStore("Fancy Store");
+        store.addToRepairTechList(new RepairTech(12345, "Nick", store));
+        store.addToRepairTechList(new RepairTech(12346, "Beck", store));
+        store.addToRepairTechList(new RepairTech(12349, "Beck", store));
+        store.addToRepairTechList(new RepairTech(12348, "Tasha", store));
+
+        //Search for valid item at front
+        assertEquals(0, store.findRepairTech(12345));
+        assertEquals(0, store.findRepairTech("Nick"));
+
+        //Search for item when there are two of the same
+        assertEquals(1, store.findRepairTech(12346));
+        assertEquals(2, store.findRepairTech(12349));
+        assertEquals(1, store.findRepairTech("Beck"));
+
+        //Search for item at the end
+        assertEquals(3, store.findRepairTech(12348));
+        assertEquals(3, store.findRepairTech("Tasha"));
+
+        //Search for item that doesnt exist
+        assertEquals(-1, store.findRepairTech(22345));
+        assertEquals(-1, store.findRepairTech("James"));
+
     void getRepairPricingTest(){
         MusicStore ms = new MusicStore("ms");
         assertEquals(80.0,ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
