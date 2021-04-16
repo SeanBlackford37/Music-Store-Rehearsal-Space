@@ -10,7 +10,7 @@ public class TransactionTest {
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms,"Bob");
         Item i = new Item("djembe",150,"Bob");
-        Employee e = new Employee(10101,"Todd");
+        Employee e = new Employee(10101,"Todd",ms);
         Transaction t = new Transaction(i,c,e);
 
         //case where customer only rents an item

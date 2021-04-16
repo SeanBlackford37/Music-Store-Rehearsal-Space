@@ -2,13 +2,15 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 
+import com.fasterxml.jackson.databind.ser.std.RawSerializer;
+
 public class Admin extends Employee {
 
-    public Admin(int employeeID, String name) {
-        super(employeeID, name);
+    public Admin(int employeeID, String name,MusicStore store) {
+        super(employeeID, name,store);
     }
-    public Admin(int employeeID, String name, double payAmt) {
-        super(employeeID, name, payAmt);
+    public Admin(int employeeID, String name, double payAmt, MusicStore store) {
+        super(employeeID, name, payAmt,store);
     }
 
     /*public Admin(int employeeID, String name, double payAmt, MusicStore worksAt){
@@ -47,6 +49,7 @@ public class Admin extends Employee {
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
     }
+
         public void payEmployee(int employeeID) throws IllegalArgumentException{
             if(worksAt.findEmployee(employeeID)==-1){
                 throw new IllegalArgumentException("Employee ID does not exist");
@@ -58,6 +61,24 @@ public class Admin extends Employee {
             worksAt.subtractFromStoreBalance(salary); 
             }
         }
+
+    public static boolean isAmountValid(double balance){
+        String s = "" + balance;
+        String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
+        if(balance <=1 && result[1].length() <= 2 && balance >=.01){
+          return true;
+        }
+       return false;
+    }
+    public void raisePay(Employee employeeIn, double raiseAmt){
+        if(isAmountValid(raiseAmt)){
+            employeeIn.setPayAmt(employeeIn.getPayAmt() + (employeeIn.getPayAmt() * raiseAmt)); 
+        }else{
+            throw new IllegalArgumentException("invalid amt to raise to employee");
+        }
+       
+    }
+
 
         //use to raise or lower employee pay
         public void changeEmployeePay(int employeeID, double newPayAmt) throws IllegalArgumentException{

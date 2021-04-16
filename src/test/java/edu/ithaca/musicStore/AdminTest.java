@@ -9,7 +9,8 @@ import java.util.ArrayList;
 public class AdminTest {
     @Test
     void constructorTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         assertEquals("Sean", employeeOne.getName());
         assertEquals(56789, employeeOne.getID());
         assertEquals(25, employeeOne.getPayAmt());
@@ -17,7 +18,8 @@ public class AdminTest {
     }
     @Test
     void cancelSpaceRentalTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         ArrayList<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 1, true, "Sadie"));
         rented.add(new Room(false, 5, true, "Carolyn"));
@@ -28,7 +30,8 @@ public class AdminTest {
     }
     @Test
     void addSpaceToRentalTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         ArrayList<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 5, true, "Carolyn"));
         rented.add(new Room(false, 9, true, "Sophia"));
@@ -37,7 +40,8 @@ public class AdminTest {
     }
     @Test
     void viewSpaceRentalTest(){
-        Admin employeeOne= new Admin(56789, "Sean", 25.00);
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
         ArrayList<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 1, true, "Sadie"));
         rented.add(new Room(false, 5, true, "Carolyn"));
@@ -45,6 +49,7 @@ public class AdminTest {
         String testView= employeeOne.viewSpaceSchedule(rented);
         System.out.println(testView);
     }
+
 
     @Test
     void payEmployeeTest(){
@@ -100,5 +105,17 @@ public class AdminTest {
         assertEquals(employee3.getPayAmt(), 15.00);
         admin1.changeEmployeePay(34567, 16.50);
         
+
+    @Test 
+    void raiseEmployeePay(){
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
+        Employee employeeTwo = new Employee(12345, "Toby", 15.00, ms);
+        employeeOne.raisePay(employeeTwo, .10);
+        assertEquals(16.50, employeeTwo.getPayAmt());
+        assertThrows(IllegalArgumentException.class,  ()->employeeOne.raisePay(employeeTwo, 1.01)); //Has to be less than 1
+        assertThrows(IllegalArgumentException.class,  ()->employeeOne.raisePay(employeeTwo, -.10)); //Can't be negative
+        assertThrows(IllegalArgumentException.class,  ()->employeeOne.raisePay(employeeTwo, .105)); //Only two decimal places
+
     }
 }
