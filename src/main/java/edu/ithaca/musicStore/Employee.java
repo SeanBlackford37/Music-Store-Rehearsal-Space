@@ -3,11 +3,11 @@ package edu.ithaca.musicStore;
 import java.util.ArrayList;
 
 public class Employee {
-    int employeeID;
-    String name;
-    double payAmt;
-    double hoursWorked;
-    MusicStore store;
+    private int employeeID;
+    private String name;
+    private double payAmt;
+    private double hoursWorked;
+    private MusicStore store;
 
     public Employee(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits

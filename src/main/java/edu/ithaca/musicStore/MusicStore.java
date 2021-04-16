@@ -2,6 +2,7 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.EnumMap;
 
 
 
@@ -13,6 +14,14 @@ public class MusicStore {
     //private List<RepairTech> repairTechList;
     private List<Room> roomList;
     private double storeBalance;
+    private EnumMap<RepairCategory,Double> repairPricing;
+
+    public enum RepairCategory{
+        ONETOTHREE,
+        THREETOFIVE,
+        FIVETOSEVEN,
+        SEVENPLUS;
+    }
 
     public MusicStore(String name){
         storeName = name;
@@ -22,6 +31,11 @@ public class MusicStore {
         //repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
+        repairPricing = new EnumMap<RepairCategory,Double>(RepairCategory.class);
+        repairPricing.put(RepairCategory.ONETOTHREE, 40.00);
+        repairPricing.put(RepairCategory.THREETOFIVE, 60.00);
+        repairPricing.put(RepairCategory.FIVETOSEVEN, 80.00);
+        repairPricing.put(RepairCategory.SEVENPLUS, 100.00);
     }
 
 
