@@ -3,13 +3,12 @@ package edu.ithaca.musicStore;
 import java.util.ArrayList;
 
 public class Employee {
-    int employeeID;
-    String name;
-    double payAmt;
-    double hoursWorked;
-    double wasPaid;
-    //MusicStore worksAt;
-    MusicStore store;
+    protected int employeeID;
+    protected String name;
+    protected double payAmt;
+    protected double hoursWorked;
+    protected MusicStore store;
+    protected double wasPaid;
 
     public Employee(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits

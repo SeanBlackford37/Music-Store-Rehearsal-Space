@@ -1,8 +1,7 @@
 package edu.ithaca.musicStore;
-
+import java.util.HashMap;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.databind.ser.std.RawSerializer;
 
 public class Admin extends Employee {
 
@@ -48,6 +47,17 @@ public class Admin extends Employee {
 
         rentedRooms.add(new Room(true, roomNumber, false, ""));
         return rentedRooms;
+    }
+
+    public double getRepairPricing(RepairCategory rc) {
+        return store.getRepairPricing(rc);
+        
+    }
+    public void updateRepairPricing(RepairCategory rc, double amount) throws IllegalArgumentException{
+        if(MusicStore.isAmountValid(amount)){
+            store.updateRepairPricing(rc, amount);
+        }
+        else{throw new IllegalArgumentException("invalid amount for pricing");}
     }
 
         public void payEmployee(int employeeID) throws IllegalArgumentException{

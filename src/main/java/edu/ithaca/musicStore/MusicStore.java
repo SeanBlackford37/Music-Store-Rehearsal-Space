@@ -2,6 +2,7 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.EnumMap;
 
 
 
@@ -13,6 +14,7 @@ public class MusicStore {
     //private List<RepairTech> repairTechList;
     private List<Room> roomList;
     private double storeBalance;
+    private EnumMap<RepairCategory,Double> repairPricings;
 
     public MusicStore(String name){
         storeName = name;
@@ -22,6 +24,11 @@ public class MusicStore {
         //repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
+        repairPricings = new EnumMap<RepairCategory,Double>(RepairCategory.class);
+        repairPricings.put(RepairCategory.ONETOTHREE, 40.00);
+        repairPricings.put(RepairCategory.THREETOFIVE, 60.00);
+        repairPricings.put(RepairCategory.FIVETOSEVEN, 80.00);
+        repairPricings.put(RepairCategory.SEVENPLUS, 100.00);
     }
 
 
@@ -281,5 +288,17 @@ public class MusicStore {
 
     public ArrayList<Item> getInventory(){
         return (ArrayList<Item>) inventoryList;
+    }
+
+
+    public double getRepairPricing(RepairCategory rc) {
+        return repairPricings.get(rc);
+    }
+
+    public void updateRepairPricing(RepairCategory rc,double amount) throws IllegalArgumentException{
+        if(isAmountValid(amount)){
+            repairPricings.replace(rc, amount);
+        }
+        else{throw new IllegalArgumentException("invalid amount for a repair pricing.");}
     }
 }

@@ -49,6 +49,28 @@ public class AdminTest {
         String testView= employeeOne.viewSpaceSchedule(rented);
         System.out.println(testView);
     }
+    @Test
+    void getRepairPricingTest(){
+        MusicStore ms = new MusicStore("ms");
+        Admin a = new Admin(12345, "Sam", ms);
+        assertEquals(80.0,a.getRepairPricing(RepairCategory.FIVETOSEVEN));
+    }
+    @Test
+    void updateRepairPricingTest(){
+        MusicStore ms = new MusicStore("ms");
+        Admin a = new Admin(12345, "Sam", ms);
+        assertEquals(80.0,a.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        a.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120);
+        assertEquals(120.0, a.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        a.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120.75);
+        assertEquals(120.75, a.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.34));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.345));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, 20.394));
+        
+        
+    }
 
 
     @Test
