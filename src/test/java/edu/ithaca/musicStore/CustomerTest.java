@@ -483,12 +483,14 @@ class CustomerTest {
         itemsToRent.add("Drums");
         itemsToRent.add("Guitar");
         customerOne.rentMutipleItems(itemsToRent, employeeOne);
-        assertEquals(110, customerOne.getTotalRentCost());
+        assertEquals(110, customerOne.getTransaction(0).getOrderAmount());
         assertEquals(4, customerOne.getRentedItemsSize());
         assertEquals(4, ms.getRentedSize());
-        assertEquals(4, customerOne.getTransactionHistorySize());
+        assertEquals(1, customerOne.getTransactionHistorySize());
         assertEquals("Bob", customerOne.getRentedItem(0).getRenterName());
         assertEquals("Bob", customerOne.getRentedItem(2).getRenterName());
+        itemsToRent.add("GuitarTwo");
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMutipleItems(itemsToRent, employeeOne));
         
     }
    
