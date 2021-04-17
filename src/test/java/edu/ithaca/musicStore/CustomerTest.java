@@ -491,10 +491,10 @@ class CustomerTest {
         assertEquals("Bob", ms.getRentedItem(0).getRenterName());
         assertEquals("Bob", customerOne.getRentedItem(2).getRenterName());
         itemsToRent.add("GuitarTwo");
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMutipleItems(itemsToRent, employeeOne));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMutipleItems(itemsToRent, null));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMutipleItems(null,employeeOne));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMutipleItems(null, null));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, null));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null,employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null, null));
         
     }
     @Test
@@ -532,34 +532,24 @@ class CustomerTest {
         customerOne.rentMultipleItems(itemsToRent, employeeOne);
         ArrayList<String> itemsToCancel = itemsToRent;
         //Removing all items
-        customerOne.cancelMultipleItemRentals(itemsToCancel);
-        itemsToRent = new ArrayList<String>();
-        itemsToRent.add("Piano");
-        itemsToRent.add("Saxophone");
-        itemsToRent.add("Drums");
-        itemsToRent.add("Guitar");
+        customerOne.cancelMultipleItemRentals(itemsToCancel, customerOne, employeeOne);
         assertEquals(0, ms.getRentedSize());
-        assertEquals("none", ms.getInventoryItem(0).getRenterName());
-        assertEquals("none", ms.getInventoryItem(1).getRenterName());
-        assertEquals("none", ms.getInventoryItem(2).getRenterName());
-        assertEquals("none", ms.getInventoryItem(3).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(2).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(3).getRenterName());
         assertEquals(0, customerOne.getTransactionHistory().size());
         assertEquals(4, ms.getInventorySize());
 
-        //Removing only two items
+        // //Removing only two items
         itemsToCancel = new ArrayList<String>();
         itemsToCancel.add("Piano");
         itemsToCancel.add("Saxophone");
         customerOne.rentMultipleItems(itemsToRent, employeeOne);
-        customerOne.cancelMultipleItemRentals(itemsToCancel);
+        assertEquals(1, customerOne.getTransactionHistory().size());
+        customerOne.cancelMultipleItemRentals(itemsToCancel, customerOne, employeeOne);
         assertEquals(2, ms.getRentedSize());
         assertEquals(65, customerOne.getTransaction(0).getOrderAmount());
         assertEquals(2, ms.getInventorySize());
-        
-        //Error if removing something not in the list
-        itemsToCancel = new ArrayList<String>();
-        itemsToCancel.add("Piano V2");
-        customerOne.rentMultipleItems(itemsToRent, employeeOne);
-        assertThrows(IllegalArgumentException.class, ()-> customerOne.cancelMultipleItemRentals(itemsToCancel));
     }
 }
