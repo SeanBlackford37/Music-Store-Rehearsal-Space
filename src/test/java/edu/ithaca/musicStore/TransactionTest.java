@@ -16,8 +16,8 @@ public class TransactionTest {
         //case where customer only rents an item
         assertNotEquals(null, t);
         assertThrows(IllegalArgumentException.class,()->new Transaction(i,null,null));
-        assertThrows(IllegalArgumentException.class,()->new Transaction(null,c,null));
-        assertThrows(IllegalArgumentException.class,()->new Transaction(null,null, e));
+        
+        
 
         assertEquals(150, t.getOrderAmount());
         assertEquals(i,t.getItemRented());
