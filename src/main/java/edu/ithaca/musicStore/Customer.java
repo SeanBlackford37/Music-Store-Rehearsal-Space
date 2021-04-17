@@ -41,6 +41,9 @@ public class Customer {
 
     public double rentMutipleItems(ArrayList<String> itemsToRent, Employee seller){
         int itemStock = 0;
+        if(itemsToRent == null){
+            throw new IllegalArgumentException("items to rent is empty!");
+        }
         for(int i = 0; i < itemsToRent.size(); i++){
             if(currentStore.searchForInventoryItem(itemsToRent.get(i)) != -1){
                 itemStock++;
@@ -72,6 +75,34 @@ public class Customer {
         }
         else{ throw new IllegalArgumentException("One or more items is out of inventory");}
        
+    }
+
+    public void rentItemAndRoom(String itemIn, int roomIn, Employee employeeIn){
+        int itemStockIndex = currentStore.searchForInventoryItem(itemIn);
+        int roomIndex=currentStore.findRoom(roomIn);
+        
+        if(itemStockIndex>=0 && roomIndex !=-1){
+            Room r = currentStore.getRoom(roomIndex);
+            if(employeeIn !=null){
+                Item rental = currentStore.getInventoryItem(itemStockIndex);
+                rental.setRenterName(customerName);
+                currentStore.moveToRented(itemIn);
+               
+                rentedItems.add(rental);
+                if(r.getIsEmptyRoom()&&!r.getHasEquipment()){
+                    r.setIsEmptyRoom(false);
+                    r.setRenterName(customerName);
+                    this.roomRented = r;
+                    currentStore.removeFromRoomList(roomIn);
+                }
+                Transaction t = new Transaction(rental, r, this, employeeIn);
+                transactionHistory.add(t);
+            }
+            else{throw new IllegalArgumentException("Invalid seller entered and/or invalid room number");}
+        }
+        else{ throw new IllegalArgumentException("Item is out of inventory");}
+       
+        
     }
     
     /**
