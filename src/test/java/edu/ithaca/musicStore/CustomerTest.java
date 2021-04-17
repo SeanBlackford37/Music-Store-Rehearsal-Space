@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 class CustomerTest {
 
     @Test
@@ -466,4 +468,30 @@ class CustomerTest {
 
         //add narrative for room cancellation when no prior transaction exists
     }
+    @Test
+    public void rentMutipleItems(){
+        MusicStore ms = new MusicStore("ms");
+        Customer customerOne = new Customer(ms, "Bob");
+        Employee employeeOne = new Employee(10101,"Todd",ms);
+        ms.addToInventory(new Item("Piano", 30, "none"));
+        ms.addToInventory(new Item("Saxophone", 15, "none"));
+        ms.addToInventory(new Item("Drums", 50, "none"));
+        ms.addToInventory(new Item("Guitar", 15, "none"));
+        ArrayList<String> itemsToRent = new ArrayList<String>();
+        itemsToRent.add("Piano");
+        itemsToRent.add("Saxophone");
+        itemsToRent.add("Drums");
+        itemsToRent.add("Guitar");
+        customerOne.rentMutipleItems(itemsToRent, employeeOne);
+        assertEquals(110, customerOne.getTransaction(0).getOrderAmount());
+        assertEquals(4, customerOne.getRentedItemsSize());
+        assertEquals(4, ms.getRentedSize());
+        assertEquals(1, customerOne.getTransactionHistorySize());
+        assertEquals("Bob", customerOne.getRentedItem(0).getRenterName());
+        assertEquals("Bob", customerOne.getRentedItem(2).getRenterName());
+        itemsToRent.add("GuitarTwo");
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMutipleItems(itemsToRent, employeeOne));
+        
+    }
+   
 }
