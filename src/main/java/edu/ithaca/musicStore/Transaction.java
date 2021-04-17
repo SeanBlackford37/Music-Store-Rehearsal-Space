@@ -109,7 +109,7 @@ public class Transaction {
         +"\nRoom Number: "+roomRented.getRoomNumber()+"\nTotal: $"+orderAmount;
         
     }
-
+    
     public Item getItemRented(){
         return itemRented;
     }
