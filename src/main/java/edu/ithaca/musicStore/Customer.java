@@ -39,7 +39,7 @@ public class Customer {
         else{ throw new IllegalArgumentException("Item is out of inventory");}
     }
 
-    public double rentMutipleItems(ArrayList<String> itemsToRent, Employee seller){
+    public double rentMultipleItems(ArrayList<String> itemsToRent, Employee seller){
         int itemStock = 0;
         if(itemsToRent == null){
             throw new IllegalArgumentException("items to rent is empty!");
@@ -120,6 +120,45 @@ public class Customer {
             }
         }
         throw new IllegalArgumentException("No transaction exists for this item");
+    }
+    public Transaction cancelMultipleItemRentals(ArrayList<String> itemsToCancel, Customer customerIn, Employee employeeIn) throws IllegalArgumentException{
+       
+        for(int i=transactionHistory.size()-1;i>=0;i--){
+            Transaction t = transactionHistory.get(i);
+            ArrayList<Item> itemsForUpdatedList = new ArrayList<Item>();
+            if(t.getItemsRented()!=null || !t.getItemsRented().isEmpty()){
+                ArrayList <Item> rentedList = t.getItemsRented();
+                int itemCount = 0;
+                for(int j = 0; j < rentedList.size(); j++){
+                    int num = 0;
+                    for(int m = 0; m < itemsToCancel.size(); m++){
+                        if(rentedList.get(j).getName().equalsIgnoreCase(itemsToCancel.get(m))){
+                            returnItem(itemsToCancel.get(m));
+                            itemCount++;
+                        }else{
+                            num++;
+                        }
+                            
+                    }
+                    if(num == itemsToCancel.size()){ //Item that isnt removed
+                    itemsForUpdatedList.add(rentedList.get(j));
+                    }
+                }
+                    if(itemCount == rentedList.size()){
+                        return transactionHistory.remove(i);
+                    }else{
+                        Transaction updatedTransaction = new Transaction(itemsForUpdatedList, customerIn, employeeIn);
+                        transactionHistory.remove(i);
+                        transactionHistory.add(i,updatedTransaction);
+                        
+                    }
+
+                
+            }
+        }
+        return null;
+        //throw new IllegalArgumentException("No transaction exists for this items");
+      
     }
 
     public Item returnItem(String itemName) throws IllegalArgumentException{
