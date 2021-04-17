@@ -47,7 +47,7 @@ public class Transaction {
         
     }
     public Transaction(ArrayList<Item> itemsIn, Customer buyerIn, Employee sellerIn) throws IllegalArgumentException{
-        if(itemsIn.isEmpty() || buyerIn==null||sellerIn==null){
+        if(itemsIn.isEmpty() || buyerIn==null||sellerIn==null || itemsIn == null){
             throw new IllegalArgumentException("null argument entered");
         }
         //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
@@ -93,7 +93,7 @@ public class Transaction {
     }*/
 
     public Transaction(Customer buyerIn, Employee sellerIn, Room roomIn) throws IllegalArgumentException{
-        if( buyerIn==null||roomIn==null||sellerIn==null){
+        if(buyerIn==null||roomIn==null||sellerIn==null){
             throw new IllegalArgumentException("invalid null argument");
         }
         //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );

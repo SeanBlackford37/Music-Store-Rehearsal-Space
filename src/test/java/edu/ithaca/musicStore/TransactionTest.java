@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+
 public class TransactionTest {
     @Test
     void constructorTest(){
@@ -17,8 +19,6 @@ public class TransactionTest {
         assertNotEquals(null, t);
         assertThrows(IllegalArgumentException.class,()->new Transaction(i,null,null));
         
-        
-
         assertEquals(150, t.getOrderAmount());
         assertEquals(i,t.getItemRented());
         assertEquals(c,t.getBuyer());
@@ -44,7 +44,31 @@ public class TransactionTest {
         assertTrue(rt.getDescription().contains(String.valueOf(1)));
         assertTrue(rt.getDescription().contains(String.valueOf(rt.getOrderAmount())));
         assertTrue(rt.getDescription().contains("Todd"));
+    }
 
-
+    @Test
+    void constructorTestMutipleItems(){
+        MusicStore ms = new MusicStore("ms");
+        ArrayList<Item> itemsToRent = new ArrayList<Item>();
+        itemsToRent.add(new Item("Piano", 30, "none"));
+        itemsToRent.add(new Item("Saxophone", 15, "none"));
+        itemsToRent.add(new Item("Drums", 50, "none"));
+        itemsToRent.add(new Item("Guitar", 15, "none"));
+        Transaction transactionOne = new Transaction(itemsToRent, new Customer(ms, "Bob"), new Employee(12345, "Jim", ms));
+        assertEquals("Bob", transactionOne.getBuyer().getCustomerName());
+        assertEquals(itemsToRent, transactionOne.getItemsRented());
+        assertEquals(110, transactionOne.getOrderAmount());
+        assertThrows(IllegalArgumentException.class,()->new Transaction(itemsToRent,null,null));
+    }
+    @Test
+    void constructorTestOneItemOneRoom(){
+        MusicStore ms = new MusicStore("ms");
+        Transaction transactionOne = new Transaction(new Item("Piano", 30, "none"), new Room(true,3,false,"none"), new Customer(ms, "Bob"), new Employee(12345, "Jim", ms));
+        assertEquals("Bob", transactionOne.getBuyer().getCustomerName());
+        assertEquals("Piano", transactionOne.getItemRented().getName());
+        assertEquals(3, transactionOne.getRoomRented().getRoomNumber());
+        assertEquals(80, transactionOne.getOrderAmount());
+        assertThrows(IllegalArgumentException.class,()->new Transaction(new Item("Piano", 30, "none"),null,null));
+        
     }
 }
