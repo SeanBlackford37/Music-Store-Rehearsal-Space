@@ -505,12 +505,14 @@ class CustomerTest {
         ms.addToInventory(new Item("Piano", 30, "none"));
         ms.addToInventory(new Item("Saxophone", 15, "none"));
         ms.addToRoomList(new Room(1));
+        ms.addToRoomList(new Room(2));
         customerOne.rentItemAndRoom("Piano",1,employeeOne);
         assertEquals("Bob", customerOne.getRentedItem(0).getRenterName());
         assertEquals(1, customerOne.getRoomRented().getRoomNumber());
         assertEquals("Bob", ms.getRentedItem(0).getRenterName());
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",1,null));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",1,employeeOne));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",1,null));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",1,employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",2,null));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,null));
     }
 }
