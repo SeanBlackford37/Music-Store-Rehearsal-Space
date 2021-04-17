@@ -569,21 +569,22 @@ class CustomerTest {
         itemsToRent.add("Guitar");
         customerOne.rentMultipleItems(itemsToRent, employeeOne);
         ArrayList<String> itemsToReturn = itemsToRent;
-        //Removing all items
+        //Returning all items
         customerOne.returnMultipleItems(itemsToReturn);
+        
         assertEquals(4, ms.getInventorySize());
+        
         assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
         assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
         assertEquals("n/a", ms.getInventoryItem(2).getRenterName());
         assertEquals("n/a", ms.getInventoryItem(3).getRenterName());
         assertEquals(0, customerOne.getRentedItemsSize());
         
-        //Return only two items 
+        //Returning only two items 
         itemsToReturn = new ArrayList<String>();
         itemsToReturn.add("Piano");
         itemsToReturn.add("Saxophone");
         customerOne.rentMultipleItems(itemsToRent, employeeOne);
-        assertEquals(1, customerOne.getTransactionHistory().size());
         customerOne.returnMultipleItems(itemsToReturn);
         assertEquals(2, ms.getRentedSize());
         assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
