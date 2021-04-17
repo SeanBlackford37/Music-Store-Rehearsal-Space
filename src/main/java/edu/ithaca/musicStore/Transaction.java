@@ -30,6 +30,22 @@ public class Transaction {
         +"\nRental Item: "+itemRented.getName()+"\nTotal: $"+orderAmount;
         
     }
+    public Transaction(Item itemIn, Room roomIn, Customer buyerIn, Employee sellerIn) throws IllegalArgumentException{
+        if(itemIn==null || roomIn==null || buyerIn==null||sellerIn==null){
+            throw new IllegalArgumentException("null argument entered");
+        }
+        //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
+        //dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
+        //+String.valueOf(cal.get(Calendar.YEAR));
+        itemRented=itemIn;
+        roomRented = roomIn;
+        buyer=buyerIn;
+        orderAmount=itemIn.getPrice() + roomIn.getRate();
+        seller = sellerIn;
+        description="\nTransaction\n\nSeller: "+seller.getName()+"\nCustomer: "+buyer.getCustomerName()
+        +"\nRental Item: "+itemRented.getName()+"\nRented Room number: "+roomRented.getRoomNumber()+"\nTotal: $"+orderAmount;
+        
+    }
     public Transaction(ArrayList<Item> itemsIn, Customer buyerIn, Employee sellerIn) throws IllegalArgumentException{
         if(itemsIn.isEmpty() || buyerIn==null||sellerIn==null){
             throw new IllegalArgumentException("null argument entered");
