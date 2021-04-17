@@ -541,7 +541,7 @@ class CustomerTest {
         assertEquals(0, customerOne.getTransactionHistory().size());
         assertEquals(4, ms.getInventorySize());
 
-        // //Removing only two items
+        //Removing only two items
         itemsToCancel = new ArrayList<String>();
         itemsToCancel.add("Piano");
         itemsToCancel.add("Saxophone");
@@ -550,6 +550,44 @@ class CustomerTest {
         customerOne.cancelMultipleItemRentals(itemsToCancel, customerOne, employeeOne);
         assertEquals(2, ms.getRentedSize());
         assertEquals(65, customerOne.getTransaction(0).getOrderAmount());
+        assertEquals(2, ms.getInventorySize());
+    }
+
+    @Test 
+    public void returnMultipleItems(){
+        MusicStore ms = new MusicStore("ms");
+        ms.addToInventory(new Item("Piano", 30, "none"));
+        ms.addToInventory(new Item("Saxophone", 15, "none"));
+        ms.addToInventory(new Item("Drums", 50, "none"));
+        ms.addToInventory(new Item("Guitar", 15, "none"));
+        Customer customerOne = new Customer(ms, "Bob");
+        Employee employeeOne = new Employee(10101,"Todd",ms);
+        ArrayList<String> itemsToRent = new ArrayList<String>();
+        itemsToRent.add("Piano");
+        itemsToRent.add("Saxophone");
+        itemsToRent.add("Drums");
+        itemsToRent.add("Guitar");
+        customerOne.rentMultipleItems(itemsToRent, employeeOne);
+        ArrayList<String> itemsToReturn = itemsToRent;
+        //Removing all items
+        customerOne.returnMultipleItems(itemsToReturn);
+        assertEquals(4, ms.getInventorySize());
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(2).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(3).getRenterName());
+        assertEquals(0, customerOne.getRentedItemsSize());
+        
+        //Return only two items 
+        itemsToReturn = new ArrayList<String>();
+        itemsToReturn.add("Piano");
+        itemsToReturn.add("Saxophone");
+        customerOne.rentMultipleItems(itemsToRent, employeeOne);
+        assertEquals(1, customerOne.getTransactionHistory().size());
+        customerOne.returnMultipleItems(itemsToReturn);
+        assertEquals(2, ms.getRentedSize());
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
         assertEquals(2, ms.getInventorySize());
     }
 }
