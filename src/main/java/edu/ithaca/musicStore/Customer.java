@@ -41,7 +41,7 @@ public class Customer {
 
     public double rentMultipleItems(ArrayList<String> itemsToRent, Employee seller){
         int itemStock = 0;
-        if(itemsToRent == null){
+        if(itemsToRent == null || itemsToRent.isEmpty()){
             throw new IllegalArgumentException("items to rent is empty!");
         }
         for(int i = 0; i < itemsToRent.size(); i++){
@@ -176,6 +176,63 @@ public class Customer {
             }
             throw new IllegalArgumentException("you haven't rented this item");
         }else{throw new IllegalArgumentException("we don't have any record of this item being rented out"); }
+    }
+    public ArrayList<Item> returnMultipleItems(ArrayList<String> itemsToReturn) throws IllegalArgumentException{
+        
+        int itemStock = 0;
+        if(itemsToReturn == null || itemsToReturn.isEmpty()){
+            throw new IllegalArgumentException("items to rent is empty!");
+        }
+        for(int i = 0; i < itemsToReturn.size(); i++){
+            if(currentStore.searchForRentedItem(itemsToReturn.get(i)) != -1){
+                itemStock++;
+            }
+       
+        }
+        
+        if(itemStock > 0){
+            ArrayList<Item> rentedItemsC = (ArrayList<Item>) rentedItems.clone();
+            for(int i=0;i<rentedItemsC.size();i++){
+                Item returnItem = rentedItemsC.get(i);
+               for(int j = 0; j < itemsToReturn.size(); j++){
+                    if(returnItem.getName().equalsIgnoreCase(itemsToReturn.get(j))){
+                        returnItem.setRenterName("n/a");
+                        rentedItems.remove(returnItem);
+                        currentStore.moveToInventory(returnItem.getName());
+                    }
+                }
+            }
+            
+           return rentedItems;
+        }else{throw new IllegalArgumentException("We don't have any record of any items being rented out"); }
+
+
+
+
+        // if(itemStock == itemsToRent.size()){
+        //     if(seller!=null){
+        //         int itemStockIndex = -1;
+        //         ArrayList <Item> rentedList = new ArrayList <Item>();
+
+        //         for(int i = 0; i < itemsToRent.size(); i++){
+        //             itemStockIndex = currentStore.searchForInventoryItem(itemsToRent.get(i));
+        //             Item rental = currentStore.getInventoryItem(itemStockIndex);
+        //             rental.setRenterName(customerName);
+                    
+        //             rentedItems.add(rental);
+        //             rentedList.add(rental);
+        //             }
+        //             transactionHistory.add(new Transaction(rentedList,this, seller));
+                
+        //         for(int i = 0; i < itemsToRent.size(); i++){
+        //             currentStore.moveToRented(itemsToRent.get(i));
+        //         }
+
+        //         return transactionHistory.get(transactionHistory.size()-1).getOrderAmount();
+        //     }
+        //     else{throw new IllegalArgumentException("Invalid seller entered");}
+        // }
+        // else{ throw new IllegalArgumentException("One or more items is out of inventory");}
     }
 
     public ArrayList<Transaction> getTransactionHistory(){
