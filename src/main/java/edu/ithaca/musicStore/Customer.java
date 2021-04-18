@@ -39,6 +39,41 @@ public class Customer {
         else{ throw new IllegalArgumentException("Item is out of inventory");}
     }
 
+    public double rentMutipleItems(ArrayList<String> itemsToRent, Employee seller){
+        int itemStock = 0;
+        for(int i = 0; i < itemsToRent.size(); i++){
+            if(currentStore.searchForInventoryItem(itemsToRent.get(i)) != -1){
+                itemStock++;
+            }
+       
+        }
+        if(itemStock == itemsToRent.size()){
+            if(seller!=null){
+                int itemStockIndex = -1;
+                ArrayList <Item> rentedList = new ArrayList <Item>();
+
+                for(int i = 0; i < itemsToRent.size(); i++){
+                    itemStockIndex = currentStore.searchForInventoryItem(itemsToRent.get(i));
+                    Item rental = currentStore.getInventoryItem(itemStockIndex);
+                    rental.setRenterName(customerName);
+                    
+                    rentedItems.add(rental);
+                    rentedList.add(rental);
+                    }
+                    transactionHistory.add(new Transaction(rentedList,this, seller));
+                
+                for(int i = 0; i < itemsToRent.size(); i++){
+                    currentStore.moveToRented(itemsToRent.get(i));
+                }
+
+                return transactionHistory.get(transactionHistory.size()-1).getOrderAmount();
+            }
+            else{throw new IllegalArgumentException("Invalid seller entered");}
+        }
+        else{ throw new IllegalArgumentException("One or more items is out of inventory");}
+       
+    }
+    
     /**
      * @pre transaction must be added to transactionList and store inventory
      * @param rentalToCancel
@@ -113,7 +148,7 @@ public class Customer {
                 this.roomRented = r;
                 //figure out equipment for next sprint
                 Transaction t = new Transaction(this, seller, r);
-                transactionHistory.add(0,t);
+                transactionHistory.add(t);
                 //currentStore.removeFromRoomList(roomNumber);
                 return r.getRate();
             }

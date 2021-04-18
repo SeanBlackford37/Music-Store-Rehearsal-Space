@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RepairTech {
-    int employeeID;
-    String name;
-    double payAmt;
+    private int employeeID;
+    private String name;
+    private double payAmt;
 
-    double hoursWorked;
-    MusicStore store;
+    private double hoursWorked;
+    private MusicStore store;
 
     public RepairTech(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits
@@ -108,9 +108,11 @@ public class RepairTech {
         }
     }
 
-    public void pullFromInventory(String itemName){
+    public Item pullFromInventory(String itemName){
         try{
+            Item temp = store.getInventoryItem(store.searchForInventoryItem(itemName));
             store.removeFromInventory(itemName);
+            return temp;
         }
         catch(Exception e){
             throw new IllegalArgumentException("Item not found");

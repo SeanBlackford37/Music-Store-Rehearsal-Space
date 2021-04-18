@@ -2,6 +2,7 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.EnumMap;
 
 
 
@@ -10,18 +11,24 @@ public class MusicStore {
     private List<Item> inventoryList;
     private List<Item> rentedList;
     private List<Employee> employeeList;
-    //private List<RepairTech> repairTechList;
+    private List<RepairTech> repairTechList;
     private List<Room> roomList;
     private double storeBalance;
+    private EnumMap<RepairCategory,Double> repairPricings;
 
     public MusicStore(String name){
         storeName = name;
         inventoryList = new ArrayList<>();
         rentedList = new ArrayList<>();
         employeeList = new ArrayList<>();
-        //repairTechList = new ArrayList<>();
+        repairTechList = new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
+        repairPricings = new EnumMap<RepairCategory,Double>(RepairCategory.class);
+        repairPricings.put(RepairCategory.ONETOTHREE, 40.00);
+        repairPricings.put(RepairCategory.THREETOFIVE, 60.00);
+        repairPricings.put(RepairCategory.FIVETOSEVEN, 80.00);
+        repairPricings.put(RepairCategory.SEVENPLUS, 100.00);
     }
 
 
@@ -34,9 +41,69 @@ public class MusicStore {
             inventoryList = new ArrayList<>();
             rentedList = new ArrayList<>();
             employeeList = new ArrayList<>();
-            //repairTechList = new ArrayList<>();
+            repairTechList = new ArrayList<>();
             roomList = new ArrayList<>();
             storeBalance =  balance;
+        }
+    }
+
+    public void addToRepairTechList(RepairTech techToAdd){
+        repairTechList.add(techToAdd);
+    }
+
+    public List<RepairTech> getRepairTechList(){
+        return repairTechList;
+    }
+
+    public void removeRepairTech(int id){
+        int found = 0;
+        for (int i = 0;i < repairTechList.size(); i++){
+            if (repairTechList.get(i).getID() == id){
+                repairTechList.remove(i);
+                found++;
+                break;
+            }
+        }
+        if (found == 0){
+            throw new IllegalArgumentException("Repair Tech does not exist");
+        }
+    }
+
+    public int findRepairTech(int id){
+        for (int i = 0;i < repairTechList.size(); i++){
+            if (repairTechList.get(i).getID() == id){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int findRepairTech(String name){
+        for (int i = 0;i < repairTechList.size(); i++){
+            if (repairTechList.get(i).getName().equalsIgnoreCase(name)){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public RepairTech getRepairTech(int id){
+        int index = findRepairTech(id);
+        if (index != -1){
+            return repairTechList.get(index);
+        }
+        else{
+            throw new IllegalArgumentException("Repair Tech does not exist");
+        }
+    }
+
+    public RepairTech getRepairTech(String name){
+        int index = findRepairTech(name);
+        if (index != -1){
+            return repairTechList.get(index);
+        }
+        else{
+            throw new IllegalArgumentException("Repair Tech does not exist");
         }
     }
 
@@ -281,5 +348,17 @@ public class MusicStore {
 
     public ArrayList<Item> getInventory(){
         return (ArrayList<Item>) inventoryList;
+    }
+
+
+    public double getRepairPricing(RepairCategory rc) {
+        return repairPricings.get(rc);
+    }
+
+    public void updateRepairPricing(RepairCategory rc,double amount) throws IllegalArgumentException{
+        if(isAmountValid(amount)){
+            repairPricings.replace(rc, amount);
+        }
+        else{throw new IllegalArgumentException("invalid amount for a repair pricing.");}
     }
 }
