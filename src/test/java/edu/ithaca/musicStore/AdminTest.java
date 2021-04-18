@@ -192,4 +192,20 @@ public class AdminTest {
         assertTrue(store.getRepairTechList().size()==3);
         assertEquals(store.getRepairTechList().get(0).getPayAmt(), 15.00);
     }
+
+    @Test
+    void hireEmployeesTest(){
+        MusicStore store= new MusicStore("Fancy Store", 10000);
+        Admin admin1= new Admin(56789, "Jack", 20.00, store);
+        admin1.hireEmployees(12345, "Katherine", store, "Employee");
+        admin1.hireEmployees(23456, "David", store, "RepairTech");
+        admin1.hireEmployees(34567, "Joe", store, "RepairTech");
+        admin1.hireEmployees(45678, "Corey", store, "Employee");
+        assertTrue(store.getEmployeeList().size()==2);
+        assertTrue(store.getRepairTechList().size()==2);
+        assertEquals(store.getEmployeeList().get(0).getName(), "Katherine");
+        assertEquals(store.getEmployeeList().get(1).getName(), "Corey");
+        assertEquals(store.getRepairTechList().get(0).getName(), "David");
+        assertEquals(store.getRepairTechList().get(1).getName(), "Joe");
+    }
 }

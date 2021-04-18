@@ -112,11 +112,25 @@ public class Admin extends Employee {
         }
 
         public void hireEmployee(int employeeID, String name, MusicStore store){
-
+            Employee toHire= new Employee(employeeID, name, store);
+            store.addEmployee(toHire);
         }
 
         public void hireRepairTech(int employeeID, String name, MusicStore store){
+            RepairTech toHire= new RepairTech(employeeID, name, store);
+            store.addToRepairTechList(toHire);
             
+        }
+
+        public void hireEmployees(int employeeID, String name, MusicStore store, String employeeType){
+            if(employeeType.equals("Employee")){
+                Employee toHire= new Employee(employeeID, name, store);
+                store.addEmployee(toHire);
+            }
+            else if(employeeType.equals("RepairTech")){
+                RepairTech toHire= new RepairTech(employeeID, name, store);
+                store.addToRepairTechList(toHire);
+            }
         }
     
 }
