@@ -158,4 +158,38 @@ public class AdminTest {
         assertEquals(store.findEmployee(12345), -1);
         assertEquals(store.getEmployeeList().size(), 1);
     }
+
+    @Test
+    void hireEmployeeTest(){
+        MusicStore store= new MusicStore("Fancy Store", 10000);
+        Admin admin1= new Admin(56789, "Jack", 20.00, store);
+        admin1.hireEmployee(12345, "Katherine", store);
+        admin1.hireEmployee(23456, "David", store);
+        admin1.hireEmployee(34567, "Joe", store);
+        assertEquals(store.getEmployeeList().get(0).getName(), "Katherine");
+        assertEquals(store.getEmployeeList().get(1).getName(), "David");
+        assertEquals(store.getEmployeeList().get(2).getName(), "Joe");
+        assertEquals(store.getEmployeeList().get(0).getID(), 12345);
+        assertEquals(store.getEmployeeList().get(1).getID(), 23456);
+        assertEquals(store.getEmployeeList().get(2).getID(), 34567);
+        assertTrue(store.getEmployeeList().size()==3);
+        assertEquals(store.getEmployeeList().get(0).getPayAmt(), 15.00);
+    }
+    
+    @Test
+    void hireRepairTechTest(){
+        MusicStore store= new MusicStore("Fancy Store", 10000);
+        Admin admin1= new Admin(56789, "Jack", 20.00, store);
+        admin1.hireRepairTech(12345, "Katherine", store);
+        admin1.hireRepairTech(23456, "David", store);
+        admin1.hireRepairTech(34567, "Joe", store);
+        assertEquals(store.getRepairTechList().get(0).getName(), "Katherine");
+        assertEquals(store.getRepairTechList().get(1).getName(), "David");
+        assertEquals(store.getRepairTechList().get(2).getName(), "Joe");
+        assertEquals(store.getRepairTechList().get(0).getID(), 12345);
+        assertEquals(store.getRepairTechList().get(1).getID(), 23456);
+        assertEquals(store.getRepairTechList().get(2).getID(), 34567);
+        assertTrue(store.getRepairTechList().size()==3);
+        assertEquals(store.getRepairTechList().get(0).getPayAmt(), 15.00);
+    }
 }

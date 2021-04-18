@@ -110,5 +110,13 @@ public class Admin extends Employee {
             }
             store.removeEmployee(employeeID);
         }
+
+        public void hireEmployee(int employeeID, String name, MusicStore store){
+
+        }
+
+        public void hireRepairTech(int employeeID, String name, MusicStore store){
+            
+        }
     
 }
