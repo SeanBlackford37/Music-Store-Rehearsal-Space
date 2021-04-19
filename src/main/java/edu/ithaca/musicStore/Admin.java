@@ -111,17 +111,6 @@ public class Admin extends Employee {
             store.removeEmployee(employeeID);
         }
 
-        public void hireEmployee(int employeeID, String name, MusicStore store){
-            Employee toHire= new Employee(employeeID, name, store);
-            store.addEmployee(toHire);
-        }
-
-        public void hireRepairTech(int employeeID, String name, MusicStore store){
-            RepairTech toHire= new RepairTech(employeeID, name, store);
-            store.addToRepairTechList(toHire);
-            
-        }
-
         public void hireEmployees(int employeeID, String name, MusicStore store, String employeeType){
             if(employeeType.equals("Employee")){
                 Employee toHire= new Employee(employeeID, name, store);
@@ -130,6 +119,11 @@ public class Admin extends Employee {
             else if(employeeType.equals("RepairTech")){
                 RepairTech toHire= new RepairTech(employeeID, name, store);
                 store.addToRepairTechList(toHire);
+            }
+            else if(employeeType.equals("Admin")){
+                Admin toHire= new Admin(employeeID, name, store);
+                //admin list in musicstore?
+
             }
         }
     
