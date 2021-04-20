@@ -298,7 +298,9 @@ public class MusicStore {
         }
        
     
-
+    public  List<Room> getRoomList(){
+        return roomList;
+    }
     public List<Employee> getEmployeeList(){
         return employeeList;
     }
