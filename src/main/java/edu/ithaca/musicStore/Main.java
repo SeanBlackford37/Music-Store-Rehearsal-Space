@@ -43,10 +43,10 @@ public class Main {
             }
         }
     }
-    public static void cancelRentingRoom(Customer custIn, Room room){
+    public static void returnRentingRoom(Customer custIn, Room room){
         if(custIn.getRoomRented() != null){
-            custIn.cancelRoom(room.getRoomNumber()); 
-            System.out.println("Canceled room " + room.getRoomNumber());
+            custIn.returnRoom(room.getRoomNumber());
+            System.out.println("return renting room " + room.getRoomNumber());
         }else{
             System.out.println("You are not currently renting a room");
         }
@@ -66,7 +66,7 @@ public class Main {
             }
             equipmentToReturn = scan.nextLine();
             if(store.searchForRentedItem(equipmentToReturn) != -1){
-                custIn.cancelItemRental(equipmentToReturn);
+                custIn.returnItem(equipmentToReturn);
                 System.out.println(equipmentToReturn + " has been returned");
             }else if(!equipmentToReturn.equalsIgnoreCase("done")){
                 System.out.println("You did not rent out that item");
@@ -77,7 +77,7 @@ public class Main {
     }
 
     public static boolean validChoice(String input){
-        String[] choices = {"rent room", "rent equipment", "cancel room rental", "return equipment", "done", "Display information", "transaction History"};
+        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", "done", "Display information", "transaction History"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -134,7 +134,7 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nCancel Room Rental\nReturn Equipment\nDone\nDisplay information\nTransaction History\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nDone\nDisplay information\nTransaction History\n");
             input = scan.nextLine();
            
             if (!validChoice(input)){
@@ -147,8 +147,8 @@ public class Main {
             else if(input.equalsIgnoreCase("rent equipment")){
                 rentingEquipment(store, custOne, employeeOne);
             }
-            else if(input.equalsIgnoreCase("cancel room rental")){
-                cancelRentingRoom(custOne, custOne.getRoomRented());
+            else if(input.equalsIgnoreCase("return room rental")){
+                returnRentingRoom(custOne, custOne.getRoomRented());
             }
             else if(input.equalsIgnoreCase("return equipment")){
                 returnEquipment(store, custOne);

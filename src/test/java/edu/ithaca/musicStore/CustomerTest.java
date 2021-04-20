@@ -4,6 +4,11 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.List;
+
+import java.util.ArrayList;
+
+
 class CustomerTest {
 
     @Test
@@ -466,4 +471,158 @@ class CustomerTest {
 
         //add narrative for room cancellation when no prior transaction exists
     }
+
+    @Test
+    void rentRoomAndEquipment(){
+        MusicStore IMstore = new MusicStore("Ithaca Music Store");
+        Customer customerOne = new Customer(IMstore, "Bob");
+        Employee employeeOne = new Employee(10101,"Todd",IMstore);
+        IMstore.addToRoomList(new Room(1));
+        IMstore.addToRoomList(new Room(2));
+        IMstore.addToInventory(new Item("Piano", 30, "none"));
+        IMstore.addToInventory(new Item("Saxophone", 15, "none"));
+        customerOne.rentRoom(1, employeeOne);
+        customerOne.rentItem("Piano", employeeOne);
+        assertEquals(false, IMstore.getRoom(0).getIsEmptyRoom()); //Room is not longer open 
+        assertEquals("Bob", IMstore.getRentedItem(0).getRenterName()); //Item is rented by customer
+        assertEquals(1, IMstore.getInventoryList().size());
+        assertEquals("Saxophone", IMstore.getInventoryList().get(0).getName());
+        customerOne.cancelRoom(1);
+        customerOne.cancelItemRental("Piano");
+        assertEquals(true, IMstore.getRoom(0).getIsEmptyRoom()); //Room is now open 
+        assertEquals(0, IMstore.getRentedSize()); //Nothing is being rented
+        assertEquals("n/a", IMstore.getInventoryItem(1).getRenterName()); //Item is nothing being rented
+        assertEquals(2, IMstore.getInventoryList().size());
+        assertEquals("Piano", IMstore.getInventoryList().get(1).getName()); //Item is back in the inventory list 
+        
+    }
+
+    @Test
+    public void rentMutipleItems(){
+        MusicStore ms = new MusicStore("ms");
+        Customer customerOne = new Customer(ms, "Bob");
+        Employee employeeOne = new Employee(10101,"Todd",ms);
+        ms.addToInventory(new Item("Piano", 30, "none"));
+        ms.addToInventory(new Item("Saxophone", 15, "none"));
+        ms.addToInventory(new Item("Drums", 50, "none"));
+        ms.addToInventory(new Item("Guitar", 15, "none"));
+        ArrayList<String> itemsToRent = new ArrayList<String>();
+        itemsToRent.add("Piano");
+        itemsToRent.add("Saxophone");
+        itemsToRent.add("Drums");
+        itemsToRent.add("Guitar");
+        customerOne.rentMultipleItems(itemsToRent, employeeOne);
+        assertEquals(110, customerOne.getTransaction(0).getOrderAmount());
+        assertEquals(4, customerOne.getRentedItemsSize());
+        assertEquals(4, ms.getRentedSize());
+        assertEquals(1, customerOne.getTransactionHistorySize());
+        assertEquals("Bob", customerOne.getRentedItem(0).getRenterName());
+        assertEquals("Bob", ms.getRentedItem(0).getRenterName());
+        assertEquals("Bob", customerOne.getRentedItem(2).getRenterName());
+        itemsToRent.add("GuitarTwo");
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, null));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null,employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null, null));
+        
+    }
+
+    @Test
+    public void rentItemAndARoom(){
+        MusicStore ms = new MusicStore("ms");
+        Customer customerOne = new Customer(ms, "Bob");
+        Employee employeeOne = new Employee(10101,"Todd",ms);
+        ms.addToInventory(new Item("Piano", 30, "none"));
+        ms.addToInventory(new Item("Saxophone", 15, "none"));
+        ms.addToRoomList(new Room(1));
+        ms.addToRoomList(new Room(2));
+        customerOne.rentItemAndRoom("Piano",1,employeeOne);
+        assertEquals("Bob", customerOne.getRentedItem(0).getRenterName());
+        assertEquals(1, customerOne.getRoomRented().getRoomNumber());
+        assertEquals("Bob", ms.getRentedItem(0).getRenterName());
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",1,employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",2,null));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,employeeOne));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,null));
+    }
+    @Test
+    public void cancelMultipleItems(){
+        MusicStore ms = new MusicStore("ms");
+        ms.addToInventory(new Item("Piano", 30, "none"));
+        ms.addToInventory(new Item("Saxophone", 15, "none"));
+        ms.addToInventory(new Item("Drums", 50, "none"));
+        ms.addToInventory(new Item("Guitar", 15, "none"));
+        Customer customerOne = new Customer(ms, "Bob");
+        Employee employeeOne = new Employee(10101,"Todd",ms);
+        ArrayList<String> itemsToRent = new ArrayList<String>();
+        itemsToRent.add("Piano");
+        itemsToRent.add("Saxophone");
+        itemsToRent.add("Drums");
+        itemsToRent.add("Guitar");
+        customerOne.rentMultipleItems(itemsToRent, employeeOne);
+        ArrayList<String> itemsToCancel = itemsToRent;
+        //Removing all items
+        customerOne.cancelMultipleItemRentals(itemsToCancel, customerOne, employeeOne);
+        assertEquals(0, ms.getRentedSize());
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(2).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(3).getRenterName());
+        assertEquals(0, customerOne.getTransactionHistory().size());
+        assertEquals(4, ms.getInventorySize());
+
+        //Removing only two items
+        itemsToCancel = new ArrayList<String>();
+        itemsToCancel.add("Piano");
+        itemsToCancel.add("Saxophone");
+        customerOne.rentMultipleItems(itemsToRent, employeeOne);
+        assertEquals(1, customerOne.getTransactionHistory().size());
+        customerOne.cancelMultipleItemRentals(itemsToCancel, customerOne, employeeOne);
+        assertEquals(2, ms.getRentedSize());
+        assertEquals(65, customerOne.getTransaction(0).getOrderAmount());
+        assertEquals(2, ms.getInventorySize());
+    }
+
+    @Test 
+    public void returnMultipleItems(){
+        MusicStore ms = new MusicStore("ms");
+        ms.addToInventory(new Item("Piano", 30, "none"));
+        ms.addToInventory(new Item("Saxophone", 15, "none"));
+        ms.addToInventory(new Item("Drums", 50, "none"));
+        ms.addToInventory(new Item("Guitar", 15, "none"));
+        Customer customerOne = new Customer(ms, "Bob");
+        Employee employeeOne = new Employee(10101,"Todd",ms);
+        ArrayList<String> itemsToRent = new ArrayList<String>();
+        itemsToRent.add("Piano");
+        itemsToRent.add("Saxophone");
+        itemsToRent.add("Drums");
+        itemsToRent.add("Guitar");
+        customerOne.rentMultipleItems(itemsToRent, employeeOne);
+        ArrayList<String> itemsToReturn = itemsToRent;
+        //Returning all items
+        customerOne.returnMultipleItems(itemsToReturn);
+        
+        assertEquals(4, ms.getInventorySize());
+        
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(2).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(3).getRenterName());
+        assertEquals(0, customerOne.getRentedItemsSize());
+        
+        //Returning only two items 
+        itemsToReturn = new ArrayList<String>();
+        itemsToReturn.add("Piano");
+        itemsToReturn.add("Saxophone");
+        customerOne.rentMultipleItems(itemsToRent, employeeOne);
+        customerOne.returnMultipleItems(itemsToReturn);
+        assertEquals(2, ms.getRentedSize());
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
+        assertEquals(2, ms.getInventorySize());
+    }
+
+   
+
+
 }

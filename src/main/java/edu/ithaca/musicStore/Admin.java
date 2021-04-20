@@ -1,8 +1,7 @@
 package edu.ithaca.musicStore;
-
+import java.util.HashMap;
 import java.util.ArrayList;
 
-import com.fasterxml.jackson.databind.ser.std.RawSerializer;
 
 public class Admin extends Employee {
 
@@ -50,15 +49,42 @@ public class Admin extends Employee {
         return rentedRooms;
     }
 
-        public void payEmployee(int employeeID) throws IllegalArgumentException{
-            if(store.findEmployee(employeeID)==-1){
-                throw new IllegalArgumentException("Employee ID does not exist");
-            }
-            else{
+    public double getRepairPricing(RepairCategory rc) {
+        return store.getRepairPricing(rc);
+        
+    }
+    public void updateRepairPricing(RepairCategory rc, double amount) throws IllegalArgumentException{
+        if(MusicStore.isAmountValid(amount)){
+            store.updateRepairPricing(rc, amount);
+        }
+        else{throw new IllegalArgumentException("invalid amount for pricing");}
+    }
+
+        public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
+            
+            if(employeeType.equals("Employee") || employeeType.equals("RepairTech")|| employeeType.equals("Admin")){
+                if(employeeType.equals("Employee")){
             Employee toPay= store.getEmployee(store.findEmployee(employeeID));
             double salary= toPay.getHoursWorked()*toPay.getPayAmt();
             toPay.getPaid(salary);
             store.subtractFromStoreBalance(salary); 
+                }
+                if(employeeType.equals("RepairTech")){
+                    RepairTech toPay= store.getRepairTech(employeeID);
+                    double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+                    toPay.getPaid(salary);
+                    store.subtractFromStoreBalance(salary);
+                }
+
+                if(employeeType.equals("Admin")){
+                    Employee toPay=store.getAdmin(store.findAdmin(employeeID));
+                    double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+                    toPay.getPaid(salary);
+                    store.subtractFromStoreBalance(salary);
+                }
+            }
+            else{
+                throw new IllegalArgumentException("Employee ID does not exist");
             }
         }
 
@@ -94,5 +120,55 @@ public class Admin extends Employee {
             }
         }
 
+        public void fireEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
+            if(employeeType.equals("Employee") || employeeType.equals("RepairTech")|| employeeType.equals("Admin")){
+             
+            if(employeeType.equals("Employee")){
+                if(store.findEmployee(employeeID)==-1){
+                    throw new IllegalArgumentException("Employee ID does not exist");
+                }
+                store.removeEmployee(employeeID);
+            }
+            else if(employeeType.equals("RepairTech")){
+                if(store.findRepairTech(employeeID)==-1){
+                    throw new IllegalArgumentException("Employee ID does not exist");
+                }
+                store.removeRepairTech(employeeID);
+            }
+
+            else if(employeeType.equals("Admin")){
+                if(store.findAdmin(employeeID)==-1){
+                    throw new IllegalArgumentException("Employee ID does not exist");
+                }
+                store.removeAdmin(employeeID);
+            
+            }
+        }
+        else{
+            throw new IllegalArgumentException("Invalid Employee Type");
+        }
+    }
+            
+            /*if(store.findEmployee(employeeID)==-1){
+                throw new IllegalArgumentException("Employee ID does not exist");
+            }
+            store.removeEmployee(employeeID);
+        }*/
+
+        public void hireEmployees(int employeeID, String name, MusicStore store, String employeeType){
+            if(employeeType.equals("Employee")){
+                Employee toHire= new Employee(employeeID, name, store);
+                store.addEmployee(toHire);
+            }
+            else if(employeeType.equals("RepairTech")){
+                RepairTech toHire= new RepairTech(employeeID, name, store);
+                store.addToRepairTechList(toHire);
+            }
+            else if(employeeType.equals("Admin")){
+                Admin toHire= new Admin(employeeID, name, store);
+                store.addAdmin(toHire);
+
+            }
+        }
     
 }

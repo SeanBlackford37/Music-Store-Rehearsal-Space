@@ -10,6 +10,7 @@ public class RepairTech {
     private List<Repair> activeRepairs;
     private double hoursWorked;
     private MusicStore store;
+    private double wasPaid;
 
     public RepairTech(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits
@@ -119,6 +120,7 @@ public class RepairTech {
         }
     }
 
+
     public void addToActiveRepairList(Repair repairToAdd){
         activeRepairs.add(repairToAdd);
     }
@@ -159,5 +161,13 @@ public class RepairTech {
         return activeRepairs;
     }
     
+
+    public void getPaid(double payment){
+        wasPaid=payment;
+        hoursWorked=0;
+        //this currently reflects the most recent payment- could turn into a list to keep a record of all payments?
+        //Sets hours worked to zero so employee starts with no hours for the next week
+    }
+
     
 }
