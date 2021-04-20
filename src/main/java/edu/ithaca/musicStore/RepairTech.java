@@ -12,6 +12,7 @@ public class RepairTech {
 
     private double hoursWorked;
     private MusicStore store;
+    private double wasPaid;
 
     public RepairTech(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits
@@ -121,6 +122,7 @@ public class RepairTech {
         }
     }
 
+
     public void tuner(){
         Scanner keyboard = new Scanner(System.in);
         Random random = new Random();
@@ -148,6 +150,14 @@ public class RepairTech {
                 }
             }
             keyboard.close();
+}
+
+    public void getPaid(double payment){
+        wasPaid=payment;
+        hoursWorked=0;
+        //this currently reflects the most recent payment- could turn into a list to keep a record of all payments?
+        //Sets hours worked to zero so employee starts with no hours for the next week
+
     }
     
 }
