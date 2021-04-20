@@ -1,6 +1,6 @@
 package edu.ithaca.musicStore;
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class Admin extends Employee {
@@ -16,7 +16,7 @@ public class Admin extends Employee {
         super(employeeID, name, payAmt, worksAt);
     }*/
 
-    public ArrayList<Room> cancelSpaceRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
+    public List<Room> cancelSpaceRental(int roomNumber, List<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;
         for(int i = 0; i < rentedRooms.size(); i++){
             if(roomNumber == rentedRooms.get(i).getRoomNumber()){
@@ -31,7 +31,7 @@ public class Admin extends Employee {
         }
         return rentedRooms;
     }
-    public ArrayList<Room> addSpaceToRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
+    public List<Room> addSpaceToRental(int roomNumber, List<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;
         for(int i = 0; i < rentedRooms.size(); i++){
             if(roomNumber == rentedRooms.get(i).getRoomNumber()){
