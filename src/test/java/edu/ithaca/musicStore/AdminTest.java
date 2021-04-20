@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdminTest {
     @Test
@@ -20,7 +21,7 @@ public class AdminTest {
     void cancelSpaceRentalTest(){
         MusicStore ms = new MusicStore("ms");
         Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
-        ArrayList<Room> rented= new ArrayList<Room>();
+        List<Room> rented= new ArrayList<Room>();
         rented.add(new Room(false, 1, true, "Sadie"));
         rented.add(new Room(false, 5, true, "Carolyn"));
         rented.add(new Room(false, 9, true, "Sophia"));
