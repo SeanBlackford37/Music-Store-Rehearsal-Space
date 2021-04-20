@@ -52,16 +52,17 @@ public class RepairTechTest {
         MusicStore store = new MusicStore("Place");
         RepairTech employee1= new RepairTech(12345, "Steve", store);
         employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
-        assertEquals("Sam", employee1.getActiveRepairList().get(0).getClientName());
+        assertEquals("Sam", employee1.getActiveRepairList().get(0).getItem().getClientName());
     }
 
     @Test
     void removeFromRepairListTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech employee1= new RepairTech(12345, "Steve", store);
-        employee1.addToRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
-        employee1.removeFromRepairList("guitar", "Sam");
-        assertEquals(0, employee1.getRepairList().size());
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
+        employee1.removeFromActiveRepairList("guitar", "Sam");
+        assertEquals(0, employee1.getActiveRepairList().size());
+        assertThrows(IllegalArgumentException.class, ()-> employee1.removeFromActiveRepairList("guitar", "Janet"));
         
     }
 
@@ -69,10 +70,10 @@ public class RepairTechTest {
     void findRepairTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech employee1= new RepairTech(12345, "Steve", store);
-        employee1.addToRepairList(new Repair(new ThingToBeRepaired("guitar", "John", "bonk"), employee1));
-        employee1.addToRepairList(new Repair(new ThingToBeRepaired("piano", "Beth", "bonk"), employee1));
-        employee1.addToRepairList(new Repair(new ThingToBeRepaired("flute", "John", "bonk"), employee1));
-        employee1.addToRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "John", "bonk"), employee1));
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("piano", "Beth", "bonk"), employee1));
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("flute", "John", "bonk"), employee1));
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
         assertEquals(0, employee1.findRepair("guitar", "John"));
         assertEquals(1, employee1.findRepair("piano", "Beth"));
         assertEquals(2, employee1.findRepair("flute", "John"));

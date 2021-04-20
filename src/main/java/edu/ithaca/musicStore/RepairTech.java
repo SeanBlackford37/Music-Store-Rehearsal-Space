@@ -124,13 +124,17 @@ public class RepairTech {
     }
 
     public void removeFromActiveRepairList(String itemName, String clientName){
+        int found = 0;
         for (int i =0; i < activeRepairs.size(); i++){
             if (activeRepairs.get(i).getItem().getClientName().equals(clientName) && activeRepairs.get(i).getItem().getItemName().equals(itemName) ){
                 activeRepairs.remove(i);
+                found++;
                 break;
             }
         }
-        throw new IllegalArgumentException("Repair does not exist");
+        if (found == 0){
+            throw new IllegalArgumentException("Repair does not exist");
+        }
     }
 
     public Repair getRepair(String itemName, String clientName){
@@ -149,6 +153,10 @@ public class RepairTech {
             }
         }
         return -1;
+    }
+
+    public List<Repair> getActiveRepairList(){
+        return activeRepairs;
     }
     
     
