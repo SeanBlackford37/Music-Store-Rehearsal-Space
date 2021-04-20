@@ -62,21 +62,21 @@ public class Admin extends Employee {
 
         public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
             
-            if(employeeType.equals("Employee") || employeeType.equals("RepairTech")|| employeeType.equals("Admin")){
-                if(employeeType.equals("Employee")){
+            if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
+                if(employeeType.equalsIgnoreCase("Employee")){
             Employee toPay= store.getEmployee(store.findEmployee(employeeID));
             double salary= toPay.getHoursWorked()*toPay.getPayAmt();
             toPay.getPaid(salary);
             store.subtractFromStoreBalance(salary); 
                 }
-                if(employeeType.equals("RepairTech")){
+                if(employeeType.equalsIgnoreCase("RepairTech")){
                     RepairTech toPay= store.getRepairTech(employeeID);
                     double salary= toPay.getHoursWorked()*toPay.getPayAmt();
                     toPay.getPaid(salary);
                     store.subtractFromStoreBalance(salary);
                 }
 
-                if(employeeType.equals("Admin")){
+                if(employeeType.equalsIgnoreCase("Admin")){
                     Employee toPay=store.getAdmin(store.findAdmin(employeeID));
                     double salary= toPay.getHoursWorked()*toPay.getPayAmt();
                     toPay.getPaid(salary);
@@ -121,22 +121,22 @@ public class Admin extends Employee {
         }
 
         public void fireEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
-            if(employeeType.equals("Employee") || employeeType.equals("RepairTech")|| employeeType.equals("Admin")){
+            if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
              
-            if(employeeType.equals("Employee")){
+            if(employeeType.equalsIgnoreCase("Employee")){
                 if(store.findEmployee(employeeID)==-1){
                     throw new IllegalArgumentException("Employee ID does not exist");
                 }
                 store.removeEmployee(employeeID);
             }
-            else if(employeeType.equals("RepairTech")){
+            else if(employeeType.equalsIgnoreCase("RepairTech")){
                 if(store.findRepairTech(employeeID)==-1){
                     throw new IllegalArgumentException("Employee ID does not exist");
                 }
                 store.removeRepairTech(employeeID);
             }
 
-            else if(employeeType.equals("Admin")){
+            else if(employeeType.equalsIgnoreCase("Admin")){
                 if(store.findAdmin(employeeID)==-1){
                     throw new IllegalArgumentException("Employee ID does not exist");
                 }
