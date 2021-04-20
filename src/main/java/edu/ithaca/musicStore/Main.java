@@ -108,24 +108,27 @@ public class Main {
             System.out.print(" Tag: " + mStoreIn.getEmployeeList().get(i).getClass().getSimpleName());
             System.out.println("");
         }
+        for(int i = 0; i < mStoreIn.getRepairTechList().size(); i++){
+            System.out.print("Name: " +   mStoreIn.getRepairTechList().get(i).getName() + ",");
+            System.out.print(" Employee ID: " +  mStoreIn.getRepairTechList().get(i).getID() + ",");
+            System.out.print(" Tag: " + mStoreIn.getRepairTechList().get(i).getClass().getSimpleName());
+            System.out.println("");
+        }
         System.out.println("Enter employee ID:");
         int employeeID = 0;
         employeeID = scan.nextInt();
         scan.nextLine();
-        int count = 0;
-        for(int i = 0; i < mStoreIn.getEmployeeList().size(); i++){
-            if(employeeID == mStoreIn.getEmployeeList().get(i).getID()){
-                adminIn.payEmployee(employeeID);
-            }else{
-                count++;
-            }
-        }
-        if(count == mStoreIn.getEmployeeList().size()){
-           System.out.println("Employee couldnt be found by the given ID"); 
-           
-        }else{
+        System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
+        String employeeType = scan.nextLine();
+        try{
+            adminIn.payEmployee(employeeID, employeeType);
             System.out.println("Employee Paid");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
+       
+            
+       
     }
     public static void hireEmployee(MusicStore mStoreIn){
     
@@ -134,7 +137,7 @@ public class Main {
         System.out.println("Enter pay amount:");
         int payAmt = scan.nextInt();
         scan.nextLine();
-        int employeeID = (int)(Math.random() * (99999- 10000) + 10000);
+        int employeeID = (int)(Math.random() * (99999 - 10000) + 10000);
         mStoreIn.addEmployee(new Employee(employeeID, newEmployee, payAmt, mStoreIn));
         System.out.println("New employee hire added to the system!");
     }
@@ -146,36 +149,31 @@ public class Main {
             System.out.print(" Tag: " + mStoreIn.getEmployeeList().get(i).getClass().getSimpleName());
             System.out.println("");
         }
-        int employeeListsize = mStoreIn.getEmployeeList().size();
+        for(int i = 0; i < mStoreIn.getRepairTechList().size(); i++){
+            System.out.print("Name: " +   mStoreIn.getRepairTechList().get(i).getName() + ",");
+            System.out.print(" Employee ID: " +  mStoreIn.getRepairTechList().get(i).getID() + ",");
+            System.out.print(" Tag: " + mStoreIn.getRepairTechList().get(i).getClass().getSimpleName());
+            System.out.println("");
+        }
+      
         System.out.println("Enter employee ID:");
         int employeeID = 0;
         employeeID = scan.nextInt();
         scan.nextLine();
-        int count = 0;
-        String input = "";
-        for(int i = 0; i < mStoreIn.getEmployeeList().size(); i++){
-            if(employeeID == mStoreIn.getEmployeeList().get(i).getID() && employeeID != adminIn.getID()){
-                System.out.println("Are you sure you want to terminate this employee(Y/N)");
-                input = scan.nextLine();
-                if(input.equalsIgnoreCase("Y")){
-                    adminIn.fireEmployee(employeeID);
-                }
+        System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
+        String employeeType = scan.nextLine();
+       
+        try{
+            
+            if(employeeID != adminIn.employeeID){
+                adminIn.fireEmployee(employeeID, employeeType);
+                System.out.println(employeeType + "has been terminate!");
+            }else{
+                System.out.println("Can'terminate self!");
             }
-            else{
-                count++;
+        }catch(Exception e){
+                System.out.println(e.getMessage());
             }
-        }if(input.equalsIgnoreCase("N")){
-            System.out.println("Employee not terminated");
-        }
-        else if(employeeID == adminIn.getID()){
-            System.out.println("You dont want to remove yourself!");        
-        }
-        else if(count == employeeListsize){
-            System.out.println("Employee couldnt be found by the given ID"); 
-        }
-        else{
-            System.out.println("Employee Removed");
-        }
     }
     public static void addRentalSpace(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Currently rented");
@@ -191,7 +189,7 @@ public class Main {
             adminIn.addSpaceToRental(roomNumber, mStoreIn.getRoomList());
             System.out.println("Room added!");
         }catch(Exception e){
-            System.out.println("Room can't have the same room number!");
+            System.out.println(e.getMessage());
         }
     }
     public static void cancelRentalSpace(MusicStore mStoreIn, Admin adminIn){
@@ -208,7 +206,7 @@ public class Main {
             adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
             System.out.println("Room canceled!");
         }catch(Exception e){
-            System.out.println("Room can't be found!");
+            System.out.println(e.getMessage());
         }
     }
     public static void employeeList(MusicStore mStoreIn){
@@ -216,6 +214,12 @@ public class Main {
             System.out.print("Name: " +   mStoreIn.getEmployeeList().get(i).getName() + ",");
             System.out.print(" Employee ID: " +  mStoreIn.getEmployeeList().get(i).getID() + ",");
             System.out.print(" Tag: " + mStoreIn.getEmployeeList().get(i).getClass().getSimpleName());
+            System.out.println("");
+        }
+        for(int i = 0; i < mStoreIn.getRepairTechList().size(); i++){
+            System.out.print("Name: " +   mStoreIn.getRepairTechList().get(i).getName() + ",");
+            System.out.print(" Employee ID: " +  mStoreIn.getRepairTechList().get(i).getID() + ",");
+            System.out.print(" Tag: " + mStoreIn.getRepairTechList().get(i).getClass().getSimpleName());
             System.out.println("");
         }
     }
