@@ -15,6 +15,7 @@ public class MusicStore {
     private List<Room> roomList;
     private double storeBalance;
     private EnumMap<RepairCategory,Double> repairPricings;
+    private List<Admin> adminList;
 
     public MusicStore(String name){
         storeName = name;
@@ -22,6 +23,7 @@ public class MusicStore {
         rentedList = new ArrayList<>();
         employeeList = new ArrayList<>();
         repairTechList = new ArrayList<>();
+        adminList= new ArrayList<>();
         roomList = new ArrayList<>();
         storeBalance = 0;
         repairPricings = new EnumMap<RepairCategory,Double>(RepairCategory.class);
@@ -42,6 +44,7 @@ public class MusicStore {
             rentedList = new ArrayList<>();
             employeeList = new ArrayList<>();
             repairTechList = new ArrayList<>();
+            adminList= new ArrayList<>();
             roomList = new ArrayList<>();
             storeBalance =  balance;
         }
@@ -306,6 +309,42 @@ public class MusicStore {
     public Employee getEmployee(int index){
         return employeeList.get(index);
     }
+
+    public void addAdmin(Admin toAdd){
+        adminList.add(toAdd);
+    }
+
+    public void removeAdmin(int adminID){
+        boolean contains= false;
+        for(int i=0; i<adminList.size(); i++){
+            if(employeeList.get(i).getID()== adminID){
+                contains= true;
+                adminList.remove(i);
+            }
+        }
+        if(contains== false){
+            throw new IllegalArgumentException("Admin does not exist");
+        }
+    }
+
+    public List<Admin> getAdminList(){
+        return adminList;
+    }
+
+    public Admin getAdmin(int index){
+        return adminList.get(index);
+    }
+
+    public int findAdmin(int ID){
+        for (int i = 0; i < adminList.size(); i++){
+            if (adminList.get(i).getID()==(ID)){
+                return i;
+            }
+        }
+        return -1;
+    
+    }
+
 
 
 

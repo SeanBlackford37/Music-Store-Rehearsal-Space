@@ -141,56 +141,22 @@ public class AdminTest {
 
     }
 
-    @Test
-    void fireEmployeeTest(){
+   @Test
+    void fireEmployeesTest(){
         MusicStore store= new MusicStore("Fancy Store", 10000);
         Admin admin1= new Admin(56789, "Jack", 20.00, store);
         Employee employee1= new Employee(12345, "Katherine", store);
-        Employee employee2= new Employee(23456, "David", store);
-        Employee employee3= new Employee(34567, "Joe", store);
+        RepairTech employee2= new RepairTech(23456, "David", store);
+        Admin employee3= new Admin(34567, "Joe", store);
         store.addEmployee(employee1);
-        store.addEmployee(employee2);
-        store.addEmployee(employee3);
-        admin1.fireEmployee(23456);
+        store.addToRepairTechList(employee2);
+        store.addAdmin(employee3);
+        admin1.fireEmployee(23456, "RepairTech");
         assertEquals(store.findEmployee(23456), -1);
-        assertThrows(IllegalArgumentException.class, ()->admin1.fireEmployee(55555));
-        admin1.fireEmployee(12345);
+        assertThrows(IllegalArgumentException.class, ()->admin1.fireEmployee(55555, ""));
+        admin1.fireEmployee(12345, "Employee");
         assertEquals(store.findEmployee(12345), -1);
-        assertEquals(store.getEmployeeList().size(), 1);
-    }
-
-    @Test
-    void hireEmployeeTest(){
-        MusicStore store= new MusicStore("Fancy Store", 10000);
-        Admin admin1= new Admin(56789, "Jack", 20.00, store);
-        admin1.hireEmployee(12345, "Katherine", store);
-        admin1.hireEmployee(23456, "David", store);
-        admin1.hireEmployee(34567, "Joe", store);
-        assertEquals(store.getEmployeeList().get(0).getName(), "Katherine");
-        assertEquals(store.getEmployeeList().get(1).getName(), "David");
-        assertEquals(store.getEmployeeList().get(2).getName(), "Joe");
-        assertEquals(store.getEmployeeList().get(0).getID(), 12345);
-        assertEquals(store.getEmployeeList().get(1).getID(), 23456);
-        assertEquals(store.getEmployeeList().get(2).getID(), 34567);
-        assertTrue(store.getEmployeeList().size()==3);
-        assertEquals(store.getEmployeeList().get(0).getPayAmt(), 15.00);
-    }
-    
-    @Test
-    void hireRepairTechTest(){
-        MusicStore store= new MusicStore("Fancy Store", 10000);
-        Admin admin1= new Admin(56789, "Jack", 20.00, store);
-        admin1.hireRepairTech(12345, "Katherine", store);
-        admin1.hireRepairTech(23456, "David", store);
-        admin1.hireRepairTech(34567, "Joe", store);
-        assertEquals(store.getRepairTechList().get(0).getName(), "Katherine");
-        assertEquals(store.getRepairTechList().get(1).getName(), "David");
-        assertEquals(store.getRepairTechList().get(2).getName(), "Joe");
-        assertEquals(store.getRepairTechList().get(0).getID(), 12345);
-        assertEquals(store.getRepairTechList().get(1).getID(), 23456);
-        assertEquals(store.getRepairTechList().get(2).getID(), 34567);
-        assertTrue(store.getRepairTechList().size()==3);
-        assertEquals(store.getRepairTechList().get(0).getPayAmt(), 15.00);
+        assertEquals(store.getEmployeeList().size(), 0);
     }
 
     @Test
@@ -207,5 +173,12 @@ public class AdminTest {
         assertEquals(store.getEmployeeList().get(1).getName(), "Corey");
         assertEquals(store.getRepairTechList().get(0).getName(), "David");
         assertEquals(store.getRepairTechList().get(1).getName(), "Joe");
+        admin1.hireEmployees(67890, "Jeremy", store, "Admin");
+        assertTrue(store.getAdminList().size()==1);
+        Admin admin2= store.getAdmin(0);
+        admin2.hireEmployees(11234, "Lillian", store, "Employee");
+        assertTrue(store.getEmployeeList().size()==3);
+
+        
     }
 }
