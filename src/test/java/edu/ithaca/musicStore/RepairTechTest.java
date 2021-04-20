@@ -47,7 +47,7 @@ public class RepairTechTest {
         assertThrows(IllegalArgumentException.class, ()-> tech.pullFromInventory("guitar"));
     }
 
-    Test
+    @Test
     void addActiveToRepairListTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech employee1= new RepairTech(12345, "Steve", store);
@@ -59,8 +59,8 @@ public class RepairTechTest {
     void removeFromRepairListTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech employee1= new RepairTech(12345, "Steve", store);
-        employee1.addToRepairList(new Item("guitar", 12, "John"));
-        employee1.removeFromRepairList("guitar", "John");
+        employee1.addToRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
+        employee1.removeFromRepairList("guitar", "Sam");
         assertEquals(0, employee1.getRepairList().size());
         
     }
@@ -69,10 +69,10 @@ public class RepairTechTest {
     void findRepairTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech employee1= new RepairTech(12345, "Steve", store);
-        employee1.addToRepairList(new Item("guitar", 12, "John"));
-        employee1.addToRepairList(new Item("piano", 12, "Beth"));
-        employee1.addToRepairList(new Item("flute", 12, "John"));
-        employee1.addToRepairList(new Item("guitar", 12, "Sam"));
+        employee1.addToRepairList(new Repair(new ThingToBeRepaired("guitar", "John", "bonk"), employee1));
+        employee1.addToRepairList(new Repair(new ThingToBeRepaired("piano", "Beth", "bonk"), employee1));
+        employee1.addToRepairList(new Repair(new ThingToBeRepaired("flute", "John", "bonk"), employee1));
+        employee1.addToRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
         assertEquals(0, employee1.findRepair("guitar", "John"));
         assertEquals(1, employee1.findRepair("piano", "Beth"));
         assertEquals(2, employee1.findRepair("flute", "John"));
