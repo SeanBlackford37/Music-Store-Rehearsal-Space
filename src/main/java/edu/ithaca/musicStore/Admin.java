@@ -60,15 +60,31 @@ public class Admin extends Employee {
         else{throw new IllegalArgumentException("invalid amount for pricing");}
     }
 
-        public void payEmployee(int employeeID) throws IllegalArgumentException{
-            if(store.findEmployee(employeeID)==-1){
-                throw new IllegalArgumentException("Employee ID does not exist");
-            }
-            else{
+        public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
+            
+            if(employeeType.equals("Employee") || employeeType.equals("RepairTech")|| employeeType.equals("Admin")){
+                if(employeeType.equals("Employee")){
             Employee toPay= store.getEmployee(store.findEmployee(employeeID));
             double salary= toPay.getHoursWorked()*toPay.getPayAmt();
             toPay.getPaid(salary);
             store.subtractFromStoreBalance(salary); 
+                }
+                if(employeeType.equals("RepairTech")){
+                    RepairTech toPay= store.getRepairTech(employeeID);
+                    double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+                    toPay.getPaid(salary);
+                    store.subtractFromStoreBalance(salary);
+                }
+
+                if(employeeType.equals("Admin")){
+                    Employee toPay=store.getAdmin(store.findAdmin(employeeID));
+                    double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+                    toPay.getPaid(salary);
+                    store.subtractFromStoreBalance(salary);
+                }
+            }
+            else{
+                throw new IllegalArgumentException("Employee ID does not exist");
             }
         }
 
