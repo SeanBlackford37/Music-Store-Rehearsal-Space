@@ -16,6 +16,7 @@ public class MusicStore {
     private double storeBalance;
     private EnumMap<RepairCategory,Double> repairPricings;
     private List<Admin> adminList;
+    private List<Equipment> equipmentForRepairsList;
 
     public MusicStore(String name){
         storeName = name;
@@ -25,6 +26,7 @@ public class MusicStore {
         repairTechList = new ArrayList<>();
         adminList= new ArrayList<>();
         roomList = new ArrayList<>();
+        equipmentForRepairsList = new ArrayList<>();
         storeBalance = 0;
         repairPricings = new EnumMap<RepairCategory,Double>(RepairCategory.class);
         repairPricings.put(RepairCategory.ONETOTHREE, 40.00);
@@ -46,6 +48,7 @@ public class MusicStore {
             repairTechList = new ArrayList<>();
             adminList= new ArrayList<>();
             roomList = new ArrayList<>();
+            equipmentForRepairsList = new ArrayList<>();
             storeBalance =  balance;
         }
     }
@@ -402,4 +405,37 @@ public class MusicStore {
         }
         else{throw new IllegalArgumentException("invalid amount for a repair pricing.");}
     }
+
+    public void addEquipment(Equipment e){
+        equipmentForRepairsList.add(e);
+    }
+    public void removeEquipment(int index) throws IllegalArgumentException{
+        try{
+        equipmentForRepairsList.remove(index);
+        }
+        catch(IndexOutOfBoundsException e){
+            throw new IllegalArgumentException("invalid index");
+        }
+    }
+    public Equipment getEquipment(int index)throws IllegalArgumentException{
+        try{
+        return equipmentForRepairsList.get(index);
+        }
+        catch(IndexOutOfBoundsException e){
+            throw new IllegalArgumentException("invalid index");
+        }
+    }
+    public int findEquipment(Equipment e){
+        for(int i=0;i<equipmentForRepairsList.size();i++){
+            if(equipmentForRepairsList.get(i)==e){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public int getEquipmentListSize(){
+        return equipmentForRepairsList.size();
+    }
+
 }
