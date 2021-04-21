@@ -7,7 +7,7 @@ public class Repair {
     private String timeCategory;
     private ThingToBeRepaired item;
     private RepairTech tech;
-    private List<Item> equipmentUsed;
+    private List<Equipment> equipmentUsed;
     private Double price;
     private boolean isRepairFinished;
 
@@ -63,14 +63,14 @@ public class Repair {
         isRepairFinished = bool;
     }
 
-    public void addItemToEquipmentUsed(Item itemToAdd){
+    public void addItemToEquipmentUsed(Equipment itemToAdd){
         equipmentUsed.add(itemToAdd);
     }
 
-    public Item removeItemFromEquipmentUsed(String itemName){
-        Item temp = null;
+    public Equipment removeItemFromEquipmentUsed(String itemName){
+        Equipment temp = null;
         for (int i= 0; i<equipmentUsed.size(); i++){
-            if (equipmentUsed.get(i).getName().equalsIgnoreCase(itemName)){
+            if (equipmentUsed.get(i).getEquipmentName().equalsIgnoreCase(itemName)){
                 temp = equipmentUsed.get(i);
                 equipmentUsed.remove(i);
                 break;
@@ -95,7 +95,7 @@ public class Repair {
         return tech;
     }
 
-    public List<Item> getEquipmentUsed() {
+    public List<Equipment> getEquipmentUsed() {
         return equipmentUsed;
     }
 
