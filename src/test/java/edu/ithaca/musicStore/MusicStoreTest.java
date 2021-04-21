@@ -418,17 +418,17 @@ public class MusicStoreTest {
     @Test
     void getEquipmentTest(){
         MusicStore ms = new MusicStore("ms");
-        assertThrows(IllegalAccessException.class, ()->ms.getEquipment(-1));
-        assertThrows(IllegalAccessException.class, ()->ms.getEquipment(0));
-        assertThrows(IllegalAccessException.class, ()->ms.getEquipment(1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(0));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1));
 
         Equipment e = new Equipment("guitar strings", 5.50);
         ms.addEquipment(e);
 
         assertEquals(e, ms.getEquipment(0));
 
-        assertThrows(IllegalAccessException.class, ()->ms.getEquipment(-1));
-        assertThrows(IllegalAccessException.class, ()->ms.getEquipment(1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1));
         
     }
 

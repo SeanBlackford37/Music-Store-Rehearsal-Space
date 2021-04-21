@@ -406,10 +406,33 @@ public class MusicStore {
         else{throw new IllegalArgumentException("invalid amount for a repair pricing.");}
     }
 
-    public void addEquipment(Equipment e){}
-    public void removeEquipment(int index){}
-    public Equipment getEquipment(int index)throws IllegalArgumentException{}
-    public int findEquipment(Equipment e){}
+    public void addEquipment(Equipment e){
+        equipmentForRepairsList.add(e);
+    }
+    public void removeEquipment(int index) throws IllegalArgumentException{
+        try{
+        equipmentForRepairsList.remove(index);
+        }
+        catch(IndexOutOfBoundsException e){
+            throw new IllegalArgumentException("invalid index");
+        }
+    }
+    public Equipment getEquipment(int index)throws IllegalArgumentException{
+        try{
+        return equipmentForRepairsList.get(index);
+        }
+        catch(IndexOutOfBoundsException e){
+            throw new IllegalArgumentException("invalid index");
+        }
+    }
+    public int findEquipment(Equipment e){
+        for(int i=0;i<equipmentForRepairsList.size();i++){
+            if(equipmentForRepairsList.get(i)==e){
+                return i;
+            }
+        }
+        return -1;
+    }
 
     public int getEquipmentListSize(){
         return equipmentForRepairsList.size();
