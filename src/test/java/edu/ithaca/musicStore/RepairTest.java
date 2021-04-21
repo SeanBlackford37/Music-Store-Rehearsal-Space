@@ -8,19 +8,19 @@ public class RepairTest {
     @Test
     void createQuoteTest(){
         MusicStore store = new MusicStore("Place");
-        store.addToInventory(new Item("string", 12.99));
+        store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
         System.out.println(repair.createQuote(2)+"\n");
 
-        repair.addItemToEquipmentUsed(new Equipment("Strings", 6));
+        repair.addItemToEquipmentUsed(tech.pullFromEquipInventory("string"));
         System.out.println(repair.createQuote(2));
     }
 
     @Test
     void setPriceTest(){
         MusicStore store = new MusicStore("Place");
-        store.addToInventory(new Item("string", 12.99));
+        store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
         repair.setPrice(12);
@@ -61,10 +61,10 @@ public class RepairTest {
     @Test
     void addItemToEquipmentUsedTest(){
         MusicStore store = new MusicStore("Place");
-        store.addToInventory(new Item("string", 12.99));
+        store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
-        repair.addItemToEquipmentUsed(tech.pullFromInventory("string"));
+        repair.addItemToEquipmentUsed(tech.pullFromEquipInventory("string"));
         assertEquals(-1, store.searchForInventoryItem("string"));
         assertEquals("string",repair.getEquipmentUsed().get(0).getEquipmentName());
     }
@@ -72,10 +72,10 @@ public class RepairTest {
     @Test
     void removeItemFromEquipmentUsedTest(){
         MusicStore store = new MusicStore("Place");
-        store.addToInventory(new Item("string", 12.99));
+        store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
-        repair.addItemToEquipmentUsed(tech.pullFromInventory("string"));
+        repair.addItemToEquipmentUsed(tech.pullFromEquipInventory("string"));
         assertEquals("string", repair.removeItemFromEquipmentUsed("string").getEquipmentName());
         assertEquals(0, repair.getEquipmentUsed().size());
     }

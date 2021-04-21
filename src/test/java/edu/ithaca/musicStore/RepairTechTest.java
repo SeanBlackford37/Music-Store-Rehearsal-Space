@@ -31,9 +31,9 @@ public class RepairTechTest {
     void checkInventoryTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech tech= new RepairTech(12345, "Steve", store);
-        store.addToInventory(new Item("guitar string", 12));
-        assertTrue(tech.checkInventory("guitar string"));
-        assertFalse(tech.checkInventory("guitar"));
+        store.addEquipment(new Equipment("guitar string", 12));
+        assertTrue(tech.checkEquipInventory("guitar string"));
+        assertFalse(tech.checkEquipInventory("guitar"));
     }
     
     //Integration Test
@@ -41,10 +41,10 @@ public class RepairTechTest {
     void pullFromInventoryTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech tech= new RepairTech(12345, "Steve", store);
-        store.addToInventory(new Item("guitar string", 12));
-        tech.pullFromInventory("guitar string");
+        store.addEquipment(new Equipment("guitar string", 12));
+        tech.pullFromEquipInventory("guitar string");
         assertEquals(0, store.getInventorySize());
-        assertThrows(IllegalArgumentException.class, ()-> tech.pullFromInventory("guitar"));
+        assertThrows(IllegalArgumentException.class, ()-> tech.pullFromEquipInventory("guitar"));
     }
 
 

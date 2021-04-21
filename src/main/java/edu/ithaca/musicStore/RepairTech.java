@@ -100,31 +100,9 @@ public class RepairTech {
         return hoursWorked;
     }
 
-    
-
-    public boolean checkInventory(String itemName){
-        if(store.searchForInventoryItem(itemName) == -1){
-            return false;
-        }
-        else{
-            return true;
-        }
-    }
-
-    public Item pullFromInventory(String itemName){
-        try{
-            Item temp = store.getInventoryItem(store.searchForInventoryItem(itemName));
-            store.removeFromInventory(itemName);
-            return temp;
-        }
-        catch(Exception e){
-            throw new IllegalArgumentException("Item not found");
-        }
-    }
-
-    //TODO
+ 
     public boolean checkEquipInventory(String itemName){
-        if(store.searchForInventoryEquip(itemName) == -1){
+        if(store.findEquipment(itemName) == -1){
             return false;
         }
         else{
@@ -132,10 +110,10 @@ public class RepairTech {
         }
     }
 
-    public Item pullFromEquipInventory(String itemName){
+    public Equipment pullFromEquipInventory(String itemName){
         try{
-            Item temp = store.getInventoryEquip(store.searchForInventoryEquip(itemName));
-            store.removeFromInventoryEquip(itemName);
+            Equipment temp = store.getEquipment(store.findEquipment(itemName));
+            store.removeEquipment(store.findEquipment(itemName));
             return temp;
         }
         catch(Exception e){

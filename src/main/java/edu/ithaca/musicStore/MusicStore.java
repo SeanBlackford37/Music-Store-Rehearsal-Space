@@ -425,9 +425,9 @@ public class MusicStore {
             throw new IllegalArgumentException("invalid index");
         }
     }
-    public int findEquipment(Equipment e){
+    public int findEquipment(String name){
         for(int i=0;i<equipmentForRepairsList.size();i++){
-            if(equipmentForRepairsList.get(i)==e){
+            if(equipmentForRepairsList.get(i).getEquipmentName().equalsIgnoreCase(name)){
                 return i;
             }
         }
