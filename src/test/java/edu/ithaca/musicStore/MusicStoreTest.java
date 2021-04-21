@@ -415,4 +415,57 @@ public class MusicStoreTest {
         
     }
 
+    @Test
+    void getEquipmentTest(){
+        MusicStore ms = new MusicStore("ms");
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(0));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1));
+
+        Equipment e = new Equipment("guitar strings", 5.50);
+        ms.addEquipment(e);
+
+        assertEquals(e, ms.getEquipment(0));
+
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1));
+        
+    }
+
+    @Test 
+    void addEquipmentTest(){
+        MusicStore ms = new MusicStore("ms");
+        assertEquals(0,ms.getEquipmentListSize());
+        Equipment e = new Equipment("guitar strings",5.50);
+        ms.addEquipment(e);
+        assertEquals(1,ms.getEquipmentListSize());
+        assertEquals(e,ms.getEquipment(0));
+
+    }
+
+    @Test
+    void removeEquipmentTest(){
+        MusicStore ms = new MusicStore("ms");
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(0));
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(-1));
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(1));
+
+        Equipment e = new Equipment("guitar strings",5.50);
+        ms.addEquipment(e);
+        assertEquals(1,ms.getEquipmentListSize());
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(-1));
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(1));
+        ms.removeEquipment(0);
+        assertEquals(0,ms.getEquipmentListSize());
+    }
+
+    @Test
+    void findEquipmentTest(){
+        MusicStore ms = new MusicStore("ms");
+        Equipment e = new Equipment("guitar strings",5.50);
+        assertEquals(-1,ms.findEquipment(e));
+        ms.addEquipment(e);
+        assertEquals(0,ms.findEquipment(e));
+    }
+
 }
