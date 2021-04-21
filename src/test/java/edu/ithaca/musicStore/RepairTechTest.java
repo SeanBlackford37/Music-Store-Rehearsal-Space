@@ -47,5 +47,42 @@ public class RepairTechTest {
         assertThrows(IllegalArgumentException.class, ()-> tech.pullFromInventory("guitar"));
     }
 
+
+    @Test
+    void addActiveToRepairListTest(){
+        MusicStore store = new MusicStore("Place");
+        RepairTech employee1= new RepairTech(12345, "Steve", store);
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
+        assertEquals("Sam", employee1.getActiveRepairList().get(0).getItem().getClientName());
+    }
+
+    @Test
+    void removeFromRepairListTest(){
+        MusicStore store = new MusicStore("Place");
+        RepairTech employee1= new RepairTech(12345, "Steve", store);
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
+        employee1.removeFromActiveRepairList("guitar", "Sam");
+        assertEquals(0, employee1.getActiveRepairList().size());
+        assertThrows(IllegalArgumentException.class, ()-> employee1.removeFromActiveRepairList("guitar", "Janet"));
+        
+    }
+
+    @Test
+    void findRepairTest(){
+        MusicStore store = new MusicStore("Place");
+        RepairTech employee1= new RepairTech(12345, "Steve", store);
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "John", "bonk"), employee1));
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("piano", "Beth", "bonk"), employee1));
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("flute", "John", "bonk"), employee1));
+        employee1.addToActiveRepairList(new Repair(new ThingToBeRepaired("guitar", "Sam", "bonk"), employee1));
+        assertEquals(0, employee1.findRepair("guitar", "John"));
+        assertEquals(1, employee1.findRepair("piano", "Beth"));
+        assertEquals(2, employee1.findRepair("flute", "John"));
+        assertEquals(3, employee1.findRepair("guitar", "Sam"));
+        assertEquals(-1, employee1.findRepair("guitar", "April"));
+        
+    }
+
+
     
 }

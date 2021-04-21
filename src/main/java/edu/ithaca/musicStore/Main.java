@@ -338,8 +338,17 @@ public class Main {
     }
 
     public static void main(String[] args)  {
+
         //customerInteraction();
         adminInterface();
+
+
+        //CAN UNCOMMENT TO SHOW TUNER
+        //MusicStore store = new MusicStore("Place");
+        //RepairTech tech= new RepairTech(12345, "Steve", store);
+        //tech.tuner();
+        customerInteraction();
+       
 
     }
 
