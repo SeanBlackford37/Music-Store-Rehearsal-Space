@@ -11,12 +11,10 @@ public class RepairTest {
         store.addToInventory(new Item("string", 12.99));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
-        repair.setPrice(12);
-        System.out.println(repair.createQuote()+"\n");
+        System.out.println(repair.createQuote(2)+"\n");
 
-        repair.addItemToEquipmentUsed(tech.pullFromInventory("string"));
-        repair.setPrice(12.01);
-        System.out.println(repair.createQuote());
+        repair.addItemToEquipmentUsed(new Equipment("Strings", 6));
+        System.out.println(repair.createQuote(2));
     }
 
     @Test
@@ -68,7 +66,7 @@ public class RepairTest {
         RepairTech tech = repair.getTech();
         repair.addItemToEquipmentUsed(tech.pullFromInventory("string"));
         assertEquals(-1, store.searchForInventoryItem("string"));
-        assertEquals("string",repair.getEquipmentUsed().get(0).getName());
+        assertEquals("string",repair.getEquipmentUsed().get(0).getEquipmentName());
     }
 
     @Test
@@ -78,7 +76,7 @@ public class RepairTest {
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
         repair.addItemToEquipmentUsed(tech.pullFromInventory("string"));
-        assertEquals("string", repair.removeItemFromEquipmentUsed("string").getName());
+        assertEquals("string", repair.removeItemFromEquipmentUsed("string").getEquipmentName());
         assertEquals(0, repair.getEquipmentUsed().size());
     }
     

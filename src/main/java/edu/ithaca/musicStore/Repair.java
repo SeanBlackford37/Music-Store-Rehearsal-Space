@@ -40,7 +40,7 @@ public class Repair {
             for (int i =0; i < equipmentUsed.size(); i++){
                 quote += "\n";
                 quote += equipmentUsed.get(i).getEquipmentName();
-                quote += "Cost $";
+                quote += " Cost $";
                 quote += equipmentUsed.get(i).getPrice();
             }
         }

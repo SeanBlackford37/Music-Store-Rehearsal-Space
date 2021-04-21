@@ -122,6 +122,27 @@ public class RepairTech {
         }
     }
 
+    //TODO
+    public boolean checkEquipInventory(String itemName){
+        if(store.searchForInventoryEquip(itemName) == -1){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+
+    public Item pullFromEquipInventory(String itemName){
+        try{
+            Item temp = store.getInventoryEquip(store.searchForInventoryEquip(itemName));
+            store.removeFromInventoryEquip(itemName);
+            return temp;
+        }
+        catch(Exception e){
+            throw new IllegalArgumentException("Item not found");
+        }
+    }
+
 
 
     public void tuner(){
