@@ -2,6 +2,8 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
 
 public class RepairTech {
     private int employeeID;
@@ -121,6 +123,36 @@ public class RepairTech {
     }
 
 
+
+    public void tuner(){
+        Scanner keyboard = new Scanner(System.in);
+        Random random = new Random();
+        int tuned =0;
+        
+            for (int i =1; i <7; i++){
+                System.out.print("Play your " + i + " string then hit enter: ");
+                keyboard.nextLine();
+                tuned = 0;
+                while(tuned != 2){
+                    tuned = random.nextInt(3);
+                    if (tuned == 0){
+                        System.out.println("The note is flat");
+                        System.out.print("Adjust your " + i + " string then hit enter: ");
+                        keyboard.nextLine();
+                    }
+                    else if (tuned == 1){
+                        System.out.println("The note is sharp");
+                        System.out.print("Adjust your " + i + " string then hit enter: ");
+                        keyboard.nextLine();
+                    }
+                    else{
+                        System.out.println("The note is in tune");
+                    }
+                }
+            }
+            keyboard.close();
+}
+
     public void addToActiveRepairList(Repair repairToAdd){
         activeRepairs.add(repairToAdd);
     }
@@ -162,11 +194,13 @@ public class RepairTech {
     }
     
 
+
     public void getPaid(double payment){
         wasPaid=payment;
         hoursWorked=0;
         //this currently reflects the most recent payment- could turn into a list to keep a record of all payments?
         //Sets hours worked to zero so employee starts with no hours for the next week
+
     }
 
     
