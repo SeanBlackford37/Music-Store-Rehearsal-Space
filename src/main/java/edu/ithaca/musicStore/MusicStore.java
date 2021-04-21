@@ -12,10 +12,11 @@ public class MusicStore {
     private List<Item> rentedList;
     private List<Employee> employeeList;
     private List<RepairTech> repairTechList;
+    private List<Admin> adminList;
     private List<Room> roomList;
     private double storeBalance;
     private EnumMap<RepairCategory,Double> repairPricings;
-    private List<Admin> adminList;
+   
 
     public MusicStore(String name){
         storeName = name;
