@@ -14,3 +14,5 @@ Sprint retrospective: https://docs.google.com/document/d/1R8s9SvEixdkvs95fgxC48-
 Sprint goal:Have a Rental UI that can interact with renting rooms and leasing items, and we can also hire and pay functional employees and repair techs. 
 
 Link to class diagram: https://drive.google.com/file/d/1eApzCzlzqhEjJf8CRLRgbhmxXOLqydeL/view?usp=sharing
+
+Sprint review/demo agenda: https://docs.google.com/document/d/1H3A3zAwCvpKL3tHtcX-XB9cz_P_IHj84nHr9fffXTTA/edit?usp=sharing
