@@ -203,5 +203,24 @@ public class RepairTech {
 
     }
 
+    public double getPriceFromCategory(double timeEst){
+        if (timeEst <= 0){
+            throw new IllegalArgumentException("Invalid time est");
+        }
+        else if (timeEst > 0 && timeEst < 3){
+            return store.getRepairPricing(RepairCategory.ONETOTHREE);
+        }
+        else if(timeEst >= 3 && timeEst < 5) {
+            return store.getRepairPricing(RepairCategory.THREETOFIVE);
+        }
+        else if(timeEst >= 5 && timeEst < 7) {
+            return store.getRepairPricing(RepairCategory.FIVETOSEVEN);
+        }
+        else{
+            return store.getRepairPricing(RepairCategory.SEVENPLUS);
+        }
+
+    }
+
     
 }

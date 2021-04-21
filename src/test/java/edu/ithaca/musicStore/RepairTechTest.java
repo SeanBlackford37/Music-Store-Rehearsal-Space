@@ -83,6 +83,31 @@ public class RepairTechTest {
         
     }
 
+    @Test
+    void getPriceFromCategoryTest(){
+        MusicStore store = new MusicStore("Place");
+        RepairTech employee1= new RepairTech(12345, "Steve", store);
+        assertEquals(40, employee1.getPriceFromCategory(1));
+        assertEquals(40, employee1.getPriceFromCategory(0.1));
+        assertEquals(40, employee1.getPriceFromCategory(2.99));
+
+        assertEquals(60, employee1.getPriceFromCategory(3));
+        assertEquals(60, employee1.getPriceFromCategory(4));
+        assertEquals(60, employee1.getPriceFromCategory(4.99));
+
+        assertEquals(80, employee1.getPriceFromCategory(5));
+        assertEquals(80, employee1.getPriceFromCategory(6));
+        assertEquals(80, employee1.getPriceFromCategory(6.99));
+
+        assertEquals(100, employee1.getPriceFromCategory(7));
+        assertEquals(100, employee1.getPriceFromCategory(10));
+        assertEquals(100, employee1.getPriceFromCategory(24));
+
+        assertThrows(IllegalArgumentException.class, ()-> employee1.getPriceFromCategory(0));
+        assertThrows(IllegalArgumentException.class, ()-> employee1.getPriceFromCategory(-10));
+
+    }
+
 
     
 }

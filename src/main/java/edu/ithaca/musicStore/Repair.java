@@ -24,14 +24,22 @@ public class Repair {
         }
     }
 
-    //MUST RUN SET PRICE First or else cost will be 0
-    public String createQuote(){
+    
+    
+    public String createQuote(double timeEst){
+        if (timeEst <= 0){
+            throw new IllegalArgumentException("Invalid time est");
+        }
+        else {
+            setPrice(getTech().getPriceFromCategory(timeEst));
+        }
+        
         String quote = "Repair Tech: " + tech.getName() + "\n" + "Customer: " + item.getClientName() + "\n" + "Damage Description: " + item.getDamageDescription();
         if (!equipmentUsed.isEmpty()){
             quote += "\nEquipment Used in Repair:";
             for (int i =0; i < equipmentUsed.size(); i++){
                 quote += "\n";
-                quote += equipmentUsed.get(i).getName();
+                quote += equipmentUsed.get(i).getEquipmentName();
                 quote += "Cost $";
                 quote += equipmentUsed.get(i).getPrice();
             }
