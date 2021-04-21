@@ -37,7 +37,12 @@ public class Equipment {
     }
 
     public void setRepairTechName(String name) throws IllegalArgumentException{
-
+        if(name.length()==0){
+            throw new IllegalArgumentException("invalid repair tech name entered");
+        }
+        else{
+            this.repairTechName=name;
+        }
     }
 
     public String getEquipmentName() {
