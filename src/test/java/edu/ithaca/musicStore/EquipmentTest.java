@@ -51,4 +51,14 @@ public class EquipmentTest {
 
     }
 
+    @Test
+    void setRepairTechNameTest(){
+        Equipment e = new Equipment("trumpet valve", 15.50);
+        assertEquals("n/a",e.getRepairTechName());
+        assertThrows(IllegalArgumentException.class, ()->e.setRepairTechName(""));
+        assertEquals("n/a",e.getRepairTechName());
+        e.setRepairTechName("Barnes");
+        assertEquals("Barnes",e.getRepairTechName());
+    }
+
 }

@@ -36,6 +36,10 @@ public class Equipment {
         }
     }
 
+    public void setRepairTechName(String name) throws IllegalArgumentException{
+
+    }
+
     public String getEquipmentName() {
         return equipmentName;
     }
