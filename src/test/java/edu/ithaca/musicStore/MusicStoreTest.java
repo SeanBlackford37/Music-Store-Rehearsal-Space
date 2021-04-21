@@ -463,9 +463,9 @@ public class MusicStoreTest {
     void findEquipmentTest(){
         MusicStore ms = new MusicStore("ms");
         Equipment e = new Equipment("guitar strings",5.50);
-        assertEquals(-1,ms.findEquipment(e));
+        assertEquals(-1,ms.findEquipment("ms"));
         ms.addEquipment(e);
-        assertEquals(0,ms.findEquipment(e));
+        assertEquals(0,ms.findEquipment("guitar strings"));
     }
 
 }
