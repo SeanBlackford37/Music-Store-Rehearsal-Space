@@ -10,7 +10,7 @@ public class EquipmentTest {
         Equipment e =  new Equipment("guitar strings",5.25);
         assertNotEquals(null,e);
         assertEquals("guitar strings", e.getEquipmentName());
-        assertEquals(5.0, e.getPrice());
+        assertEquals(5.25, e.getPrice());
         assertEquals("n/a", e.getRepairTechName());
 
         assertThrows(IllegalArgumentException.class, ()->new Equipment("guitar strings",-5));
