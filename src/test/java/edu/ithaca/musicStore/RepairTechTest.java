@@ -31,9 +31,9 @@ public class RepairTechTest {
     void checkInventoryTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech tech= new RepairTech(12345, "Steve", store);
-        store.addToInventory(new Item("guitar string", 12));
-        assertTrue(tech.checkInventory("guitar string"));
-        assertFalse(tech.checkInventory("guitar"));
+        store.addEquipment(new Equipment("guitar string", 12));
+        assertTrue(tech.checkEquipInventory("guitar string"));
+        assertFalse(tech.checkEquipInventory("guitar"));
     }
     
     //Integration Test
@@ -41,10 +41,10 @@ public class RepairTechTest {
     void pullFromInventoryTest(){
         MusicStore store = new MusicStore("Place");
         RepairTech tech= new RepairTech(12345, "Steve", store);
-        store.addToInventory(new Item("guitar string", 12));
-        tech.pullFromInventory("guitar string");
+        store.addEquipment(new Equipment("guitar string", 12));
+        tech.pullFromEquipInventory("guitar string");
         assertEquals(0, store.getInventorySize());
-        assertThrows(IllegalArgumentException.class, ()-> tech.pullFromInventory("guitar"));
+        assertThrows(IllegalArgumentException.class, ()-> tech.pullFromEquipInventory("guitar"));
     }
 
 
@@ -81,6 +81,31 @@ public class RepairTechTest {
         assertEquals(3, employee1.findRepair("guitar", "Sam"));
         assertEquals(-1, employee1.findRepair("guitar", "April"));
         
+    }
+
+    @Test
+    void getPriceFromCategoryTest(){
+        MusicStore store = new MusicStore("Place");
+        RepairTech employee1= new RepairTech(12345, "Steve", store);
+        assertEquals(40, employee1.getPriceFromCategory(1));
+        assertEquals(40, employee1.getPriceFromCategory(0.1));
+        assertEquals(40, employee1.getPriceFromCategory(2.99));
+
+        assertEquals(60, employee1.getPriceFromCategory(3));
+        assertEquals(60, employee1.getPriceFromCategory(4));
+        assertEquals(60, employee1.getPriceFromCategory(4.99));
+
+        assertEquals(80, employee1.getPriceFromCategory(5));
+        assertEquals(80, employee1.getPriceFromCategory(6));
+        assertEquals(80, employee1.getPriceFromCategory(6.99));
+
+        assertEquals(100, employee1.getPriceFromCategory(7));
+        assertEquals(100, employee1.getPriceFromCategory(10));
+        assertEquals(100, employee1.getPriceFromCategory(24));
+
+        assertThrows(IllegalArgumentException.class, ()-> employee1.getPriceFromCategory(0));
+        assertThrows(IllegalArgumentException.class, ()-> employee1.getPriceFromCategory(-10));
+
     }
 
 

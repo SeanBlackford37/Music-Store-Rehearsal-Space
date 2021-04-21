@@ -100,10 +100,9 @@ public class RepairTech {
         return hoursWorked;
     }
 
-    
-
-    public boolean checkInventory(String itemName){
-        if(store.searchForInventoryItem(itemName) == -1){
+ 
+    public boolean checkEquipInventory(String itemName){
+        if(store.findEquipment(itemName) == -1){
             return false;
         }
         else{
@@ -111,10 +110,10 @@ public class RepairTech {
         }
     }
 
-    public Item pullFromInventory(String itemName){
+    public Equipment pullFromEquipInventory(String itemName){
         try{
-            Item temp = store.getInventoryItem(store.searchForInventoryItem(itemName));
-            store.removeFromInventory(itemName);
+            Equipment temp = store.getEquipment(store.findEquipment(itemName));
+            store.removeEquipment(store.findEquipment(itemName));
             return temp;
         }
         catch(Exception e){
@@ -200,6 +199,25 @@ public class RepairTech {
         hoursWorked=0;
         //this currently reflects the most recent payment- could turn into a list to keep a record of all payments?
         //Sets hours worked to zero so employee starts with no hours for the next week
+
+    }
+
+    public double getPriceFromCategory(double timeEst){
+        if (timeEst <= 0){
+            throw new IllegalArgumentException("Invalid time est");
+        }
+        else if (timeEst > 0 && timeEst < 3){
+            return store.getRepairPricing(RepairCategory.ONETOTHREE);
+        }
+        else if(timeEst >= 3 && timeEst < 5) {
+            return store.getRepairPricing(RepairCategory.THREETOFIVE);
+        }
+        else if(timeEst >= 5 && timeEst < 7) {
+            return store.getRepairPricing(RepairCategory.FIVETOSEVEN);
+        }
+        else{
+            return store.getRepairPricing(RepairCategory.SEVENPLUS);
+        }
 
     }
 
