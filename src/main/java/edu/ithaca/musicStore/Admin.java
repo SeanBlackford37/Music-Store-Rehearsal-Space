@@ -1,6 +1,6 @@
 package edu.ithaca.musicStore;
-import java.util.HashMap;
-import java.util.ArrayList;
+import java.util.List;
+
 
 
 public class Admin extends Employee {
@@ -16,7 +16,7 @@ public class Admin extends Employee {
         super(employeeID, name, payAmt, worksAt);
     }*/
 
-    public ArrayList<Room> cancelSpaceRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
+    public List<Room> cancelSpaceRental(int roomNumber, List<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;
         for(int i = 0; i < rentedRooms.size(); i++){
             if(roomNumber == rentedRooms.get(i).getRoomNumber()){
@@ -31,7 +31,7 @@ public class Admin extends Employee {
         }
         return rentedRooms;
     }
-    public ArrayList<Room> addSpaceToRental(int roomNumber, ArrayList<Room> rentedRooms) throws IllegalArgumentException{
+    public List<Room> addSpaceToRental(int roomNumber, List<Room> rentedRooms) throws IllegalArgumentException{
         int count = 0;
         for(int i = 0; i < rentedRooms.size(); i++){
             if(roomNumber == rentedRooms.get(i).getRoomNumber()){
@@ -62,21 +62,21 @@ public class Admin extends Employee {
 
         public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
             
-            if(employeeType.equals("Employee") || employeeType.equals("RepairTech")|| employeeType.equals("Admin")){
-                if(employeeType.equals("Employee")){
+            if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
+                if(employeeType.equalsIgnoreCase("Employee")){
             Employee toPay= store.getEmployee(store.findEmployee(employeeID));
             double salary= toPay.getHoursWorked()*toPay.getPayAmt();
             toPay.getPaid(salary);
             store.subtractFromStoreBalance(salary); 
                 }
-                if(employeeType.equals("RepairTech")){
+                if(employeeType.equalsIgnoreCase("RepairTech")){
                     RepairTech toPay= store.getRepairTech(employeeID);
                     double salary= toPay.getHoursWorked()*toPay.getPayAmt();
                     toPay.getPaid(salary);
                     store.subtractFromStoreBalance(salary);
                 }
 
-                if(employeeType.equals("Admin")){
+                if(employeeType.equalsIgnoreCase("Admin")){
                     Employee toPay=store.getAdmin(store.findAdmin(employeeID));
                     double salary= toPay.getHoursWorked()*toPay.getPayAmt();
                     toPay.getPaid(salary);
@@ -121,22 +121,22 @@ public class Admin extends Employee {
         }
 
         public void fireEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
-            if(employeeType.equals("Employee") || employeeType.equals("RepairTech")|| employeeType.equals("Admin")){
+            if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
              
-            if(employeeType.equals("Employee")){
+            if(employeeType.equalsIgnoreCase("Employee")){
                 if(store.findEmployee(employeeID)==-1){
                     throw new IllegalArgumentException("Employee ID does not exist");
                 }
                 store.removeEmployee(employeeID);
             }
-            else if(employeeType.equals("RepairTech")){
+            else if(employeeType.equalsIgnoreCase("RepairTech")){
                 if(store.findRepairTech(employeeID)==-1){
                     throw new IllegalArgumentException("Employee ID does not exist");
                 }
                 store.removeRepairTech(employeeID);
             }
 
-            else if(employeeType.equals("Admin")){
+            else if(employeeType.equalsIgnoreCase("Admin")){
                 if(store.findAdmin(employeeID)==-1){
                     throw new IllegalArgumentException("Employee ID does not exist");
                 }
