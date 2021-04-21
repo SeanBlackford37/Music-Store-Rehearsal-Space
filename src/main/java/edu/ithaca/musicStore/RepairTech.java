@@ -7,7 +7,7 @@ public class RepairTech {
     private int employeeID;
     private String name;
     private double payAmt;
-
+    private List<Repair> activeRepairs;
     private double hoursWorked;
     private MusicStore store;
     private double wasPaid;
@@ -26,7 +26,7 @@ public class RepairTech {
         this.name= name;
         this.employeeID= employeeID;
         payAmt= 15.00;
-        
+        activeRepairs = new ArrayList<>();
         hoursWorked=0;
         this.store = store;
     }
@@ -48,7 +48,7 @@ public class RepairTech {
         this.name= name;
         this.employeeID= employeeID;
         this.payAmt= payAmt;
-       
+        activeRepairs = new ArrayList<>();
         hoursWorked=0;
         this.store = store;
     
@@ -120,11 +120,54 @@ public class RepairTech {
         }
     }
 
+
+    public void addToActiveRepairList(Repair repairToAdd){
+        activeRepairs.add(repairToAdd);
+    }
+
+    public void removeFromActiveRepairList(String itemName, String clientName){
+        int found = 0;
+        for (int i =0; i < activeRepairs.size(); i++){
+            if (activeRepairs.get(i).getItem().getClientName().equals(clientName) && activeRepairs.get(i).getItem().getItemName().equals(itemName) ){
+                activeRepairs.remove(i);
+                found++;
+                break;
+            }
+        }
+        if (found == 0){
+            throw new IllegalArgumentException("Repair does not exist");
+        }
+    }
+
+    public Repair getRepair(String itemName, String clientName){
+        for (int i =0; i < activeRepairs.size(); i++){
+            if (activeRepairs.get(i).getItem().getClientName().equals(clientName) && activeRepairs.get(i).getItem().getItemName().equals(itemName) ){
+                return activeRepairs.get(i);
+            }
+        }
+        throw new IllegalArgumentException("Repair does not exist");
+    }
+
+    public int findRepair(String itemName, String clientName){
+        for (int i =0; i < activeRepairs.size(); i++){
+            if (activeRepairs.get(i).getItem().getClientName().equals(clientName) && activeRepairs.get(i).getItem().getItemName().equals(itemName) ){
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public List<Repair> getActiveRepairList(){
+        return activeRepairs;
+    }
+    
+
     public void getPaid(double payment){
         wasPaid=payment;
         hoursWorked=0;
         //this currently reflects the most recent payment- could turn into a list to keep a record of all payments?
         //Sets hours worked to zero so employee starts with no hours for the next week
     }
+
     
 }
