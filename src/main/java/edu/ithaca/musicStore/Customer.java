@@ -296,6 +296,7 @@ public class Customer {
             if(!r.getIsEmptyRoom()&&r.getRenterName().equals(customerName)){
                 r.setIsEmptyRoom(true);
                 r.setRenterName("n/a");
+                roomRented = null;
                 return r;
             }
             else if(r.getIsEmptyRoom()){
