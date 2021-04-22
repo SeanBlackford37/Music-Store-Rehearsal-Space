@@ -123,9 +123,9 @@ public class AdminTest {
         admin1.changeEmployeePay(23456, 20.00);
         assertThrows(IllegalArgumentException.class, ()-> admin1.changeEmployeePay(34567, -16.59));
         assertThrows(IllegalArgumentException.class, ()-> admin1.changeEmployeePay(55555, 16.59));
-        assertEquals(employee1.getPayAmt(), 16.50);
-        assertEquals(employee2.getPayAmt(), 20.00);
-        assertEquals(employee3.getPayAmt(), 15.00);
+        assertEquals(16.50, employee1.getPayAmt());
+        assertEquals(20.00, employee2.getPayAmt());
+        assertEquals(15.00, employee3.getPayAmt());
         admin1.changeEmployeePay(34567, 16.50);
     }
 
@@ -153,11 +153,11 @@ public class AdminTest {
         store.addToRepairTechList(employee2);
         store.addAdmin(employee3);
         admin1.fireEmployee(23456, "RepairTech");
-        assertEquals(store.findEmployee(23456), -1);
+        assertEquals(-1, (store.findEmployee(23456)));
         assertThrows(IllegalArgumentException.class, ()->admin1.fireEmployee(55555, ""));
         admin1.fireEmployee(12345, "Employee");
-        assertEquals(store.findEmployee(12345), -1);
-        assertEquals(store.getEmployeeList().size(), 0);
+        assertEquals(-1, store.findEmployee(12345));
+        assertEquals(0, store.getEmployeeList().size());
     }
 
     @Test
@@ -168,18 +168,21 @@ public class AdminTest {
         admin1.hireEmployees(23456, "David", store, "RepairTech");
         admin1.hireEmployees(34567, "Joe", store, "RepairTech");
         admin1.hireEmployees(45678, "Corey", store, "Employee");
-        assertTrue(store.getEmployeeList().size()==2);
-        assertTrue(store.getRepairTechList().size()==2);
-        assertEquals(store.getEmployeeList().get(0).getName(), "Katherine");
-        assertEquals(store.getEmployeeList().get(1).getName(), "Corey");
-        assertEquals(store.getRepairTechList().get(0).getName(), "David");
-        assertEquals(store.getRepairTechList().get(1).getName(), "Joe");
+        assertEquals(2, store.getEmployeeList().size());
+        assertEquals(2, store.getRepairTechList().size());
+        assertEquals("Katherine", store.getEmployeeList().get(0).getName());
+        assertEquals("Corey",store.getEmployeeList().get(1).getName() );
+        assertEquals("David", store.getRepairTechList().get(0).getName());
+        assertEquals("Joe", store.getRepairTechList().get(1).getName());
         admin1.hireEmployees(67890, "Jeremy", store, "Admin");
-        assertTrue(store.getAdminList().size()==1);
+        assertEquals(1, store.getAdminList().size());
         Admin admin2= store.getAdmin(0);
         admin2.hireEmployees(11234, "Lillian", store, "Employee");
-        assertTrue(store.getEmployeeList().size()==3);
-
+        assertEquals(3, store.getEmployeeList().size());
+        admin1.hireEmployees(12349, "Katherine", 15.5, store, "Employee");
+        assertEquals(15.5, store.getEmployeeList().get(3).getPayAmt());
+        assertThrows(IllegalArgumentException.class, ()->admin1.hireEmployees(12349, "Katherine", -15.5, store, "Employee"));
+        assertThrows(IllegalArgumentException.class, ()->admin1.hireEmployees(12349, "Katherine", 15.555, store, "Employee"));
         
     }
 }
