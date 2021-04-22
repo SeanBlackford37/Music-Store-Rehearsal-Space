@@ -301,7 +301,7 @@ public class Main {
         String input = "go";
         System.out.println("Enter your name");
         String name = "Sean Blackford";
-        //name = scan.nextLine();
+        name = scan.nextLine();
         Admin adminOne = new Admin(12345,  name, mStore);
         mStore.addAdmin(adminOne);
 
