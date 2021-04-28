@@ -20,3 +20,10 @@ Sprint review/demo agenda: https://docs.google.com/document/d/1H3A3zAwCvpKL3tHtc
 Sprint retrospective: https://docs.google.com/document/d/1zNwDEn4QRrMWhCU5g4xcWha4v3VM3vxSCOWSvdBGS_I/edit
 
 ## Sprint Three
+Sprint goal: Finishing UIs for different use cases and users and more functionality for rentals
+
+Link to class diagram:https://drive.google.com/file/d/1okZgdjYoQ3xhobRgUdCf9HKkcqBrxmHD/view?usp=sharing
+
+Sprint review/demo agenda:
+
+Sprint retrospective: 
