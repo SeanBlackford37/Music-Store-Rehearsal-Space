@@ -1,5 +1,5 @@
 # Music-Store-Rehearsal-Space
-Clone and run the main method in Main.java
+Clone and run the main method in Main.java \ 
 Narrative/scenarios document: https://docs.google.com/document/d/1clUWzP2B5oCUBiwhsKCfPovN4zQN43pQIjzBysRx-fs/edit
 
 ## Sprint One
