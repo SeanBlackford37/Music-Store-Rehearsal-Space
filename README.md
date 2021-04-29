@@ -2,7 +2,7 @@
 Clone and run the main method in Main.java <br />
 Narrative/scenarios document: https://docs.google.com/document/d/1clUWzP2B5oCUBiwhsKCfPovN4zQN43pQIjzBysRx-fs/edit <br />
 Sequence Diagram 1 (Morgan): https://drive.google.com/file/d/1gfzlaKgeMF1ayHRmIRy7fjLXDdbE_b0e/view?usp=sharing <br />
-Sequence Diagram 2 (Sean):  <br />
+Sequence Diagram 2 (Sean):  https://drive.google.com/file/d/1AMmt1AuU0Azyw4_MEtORvI-ShZ6HN8e0/view?usp=sharing <br />
 Sequence Diagram 3 (Emma): <br />
 Sequence Diagram 4 (Dani): <br />
 State Diagram: <br />
