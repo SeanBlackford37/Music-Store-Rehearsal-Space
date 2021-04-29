@@ -1,6 +1,6 @@
 package edu.ithaca.musicStore;
 
-public enum RepairCategory {
+public enum RepairBusinessDayCategory {
     ONETOTHREE,
     THREETOFIVE,
     FIVETOSEVEN,

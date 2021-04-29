@@ -19,9 +19,6 @@ public class Transaction {
         if(itemIn==null || buyerIn==null||sellerIn==null){
             throw new IllegalArgumentException("null argument entered");
         }
-        //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
-        //dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-        //+String.valueOf(cal.get(Calendar.YEAR));
         itemRented=itemIn;
         buyer=buyerIn;
         orderAmount=itemIn.getPrice();
@@ -34,9 +31,7 @@ public class Transaction {
         if(itemIn==null || roomIn==null || buyerIn==null||sellerIn==null){
             throw new IllegalArgumentException("null argument entered");
         }
-        //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
-        //dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-        //+String.valueOf(cal.get(Calendar.YEAR));
+
         itemRented=itemIn;
         roomRented = roomIn;
         buyer=buyerIn;
@@ -50,9 +45,6 @@ public class Transaction {
         if(itemsIn.isEmpty() || buyerIn==null||sellerIn==null || itemsIn == null){
             throw new IllegalArgumentException("null argument entered");
         }
-        //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
-        //dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-        //+String.valueOf(cal.get(Calendar.YEAR));
        
         buyer=buyerIn;
         itemsRented = new ArrayList <Item>();
@@ -96,10 +88,7 @@ public class Transaction {
         if(buyerIn==null||roomIn==null||sellerIn==null){
             throw new IllegalArgumentException("invalid null argument");
         }
-        //Calendar cal = Calendar.getInstance(TimeZone.getTimeZone("America/Philadelphia") );
-        //dateTime=String.valueOf(cal.get(Calendar.MONTH))+String.valueOf(cal.get(Calendar.DAY_OF_MONTH))
-        //+String.valueOf(cal.get(Calendar.YEAR));
-        
+    
         buyer=buyerIn;
         
         orderAmount=roomIn.getRate();

@@ -396,21 +396,21 @@ public class MusicStoreTest {
 
     void getRepairPricingTest(){
         MusicStore ms = new MusicStore("ms");
-        assertEquals(80.0,ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        assertEquals(80.0,ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
     }
 
     @Test
     void updateRepairPricingTest(){
         MusicStore ms = new MusicStore("ms");
-        assertEquals(80.0,ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
-        ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120);
-        assertEquals(120.0, ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
-        ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120.75);
-        assertEquals(120.75, ms.getRepairPricing(RepairCategory.FIVETOSEVEN));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.34));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.345));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairCategory.FIVETOSEVEN, 20.394));
+        assertEquals(80.0,ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 120);
+        assertEquals(120.0, ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 120.75);
+        assertEquals(120.75, ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.34));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.345));
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 20.394));
         
         
     }

@@ -54,21 +54,21 @@ public class AdminTest {
     void getRepairPricingTest(){
         MusicStore ms = new MusicStore("ms");
         Admin a = new Admin(12345, "Sam", ms);
-        assertEquals(80.0,a.getRepairPricing(RepairCategory.FIVETOSEVEN));
+        assertEquals(80.0,a.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
     }
     @Test
     void updateRepairPricingTest(){
         MusicStore ms = new MusicStore("ms");
         Admin a = new Admin(12345, "Sam", ms);
-        assertEquals(80.0,a.getRepairPricing(RepairCategory.FIVETOSEVEN));
-        a.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120);
-        assertEquals(120.0, a.getRepairPricing(RepairCategory.FIVETOSEVEN));
-        a.updateRepairPricing(RepairCategory.FIVETOSEVEN, 120.75);
-        assertEquals(120.75, a.getRepairPricing(RepairCategory.FIVETOSEVEN));
-        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120));
-        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.34));
-        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, -120.345));
-        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairCategory.FIVETOSEVEN, 20.394));
+        assertEquals(80.0,a.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        a.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 120);
+        assertEquals(120.0, a.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        a.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 120.75);
+        assertEquals(120.75, a.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.34));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.345));
+        assertThrows(IllegalArgumentException.class,()->a.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 20.394));
         
         
     }

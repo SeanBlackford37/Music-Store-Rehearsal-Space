@@ -48,59 +48,59 @@ public class Admin extends Employee {
         return rentedRooms;
     }
 
-    public double getRepairPricing(RepairCategory rc) {
+    public double getRepairPricing(RepairBusinessDayCategory rc) {
         return store.getRepairPricing(rc);
         
     }
-    public void updateRepairPricing(RepairCategory rc, double amount) throws IllegalArgumentException{
+    public void updateRepairPricing(RepairBusinessDayCategory rc, double amount) throws IllegalArgumentException{
         if(MusicStore.isAmountValid(amount)){
             store.updateRepairPricing(rc, amount);
         }
         else{throw new IllegalArgumentException("invalid amount for pricing");}
     }
 
-        public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
+    public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
             
-            if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
+        if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
+            
+            if(employeeType.equalsIgnoreCase("Employee")){
+                try{
+                    Employee toPay= store.getEmployee(store.findEmployee(employeeID));
+                    double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+                    toPay.getPaid(salary);
+                    store.subtractFromStoreBalance(salary); 
+                }catch(Exception e){
+                    throw new IllegalArgumentException("Employee with the employeeID could not be found!");
+                }
                 
-                if(employeeType.equalsIgnoreCase("Employee")){
-                    try{
-                        Employee toPay= store.getEmployee(store.findEmployee(employeeID));
-                        double salary= toPay.getHoursWorked()*toPay.getPayAmt();
-                        toPay.getPaid(salary);
-                        store.subtractFromStoreBalance(salary); 
-                    }catch(Exception e){
-                        throw new IllegalArgumentException("Employee with the employeeID could not be found!");
-                    }
-                   
-                }
-                else if(employeeType.equalsIgnoreCase("RepairTech")){
-                    try{
-                        RepairTech toPay= store.getRepairTech(employeeID);
-                        double salary= toPay.getHoursWorked()*toPay.getPayAmt();
-                        toPay.getPaid(salary);
-                        store.subtractFromStoreBalance(salary);
-                    }catch(Exception e){
-                        throw new IllegalArgumentException("RepairTech with the employeeID could not be found!");
-                    }
-                    
-                }
-                else if(employeeType.equalsIgnoreCase("Admin")){
-                    try{
-                        Employee toPay=store.getAdmin(store.findAdmin(employeeID));
-                        double salary= toPay.getHoursWorked()*toPay.getPayAmt();
-                        toPay.getPaid(salary);
-                        store.subtractFromStoreBalance(salary);
-                    }catch(Exception e){
-                        throw new IllegalArgumentException("Admin with the employeeID could not be found!");
-                    }
-                   
-                }
             }
-            else{
-                throw new IllegalArgumentException("Employee Type could not be found");
+            else if(employeeType.equalsIgnoreCase("RepairTech")){
+                try{
+                    RepairTech toPay= store.getRepairTech(employeeID);
+                    double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+                    toPay.getPaid(salary);
+                    store.subtractFromStoreBalance(salary);
+                }catch(Exception e){
+                    throw new IllegalArgumentException("RepairTech with the employeeID could not be found!");
+                }
+                
+            }
+            else if(employeeType.equalsIgnoreCase("Admin")){
+                try{
+                    Employee toPay=store.getAdmin(store.findAdmin(employeeID));
+                    double salary= toPay.getHoursWorked()*toPay.getPayAmt();
+                    toPay.getPaid(salary);
+                    store.subtractFromStoreBalance(salary);
+                }catch(Exception e){
+                    throw new IllegalArgumentException("Admin with the employeeID could not be found!");
+                }
+                
             }
         }
+        else{
+            throw new IllegalArgumentException("Employee Type could not be found");
+        }
+    }
 
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
@@ -121,7 +121,7 @@ public class Admin extends Employee {
 
 
         //use to raise or lower employee pay
-        public void changeEmployeePay(int employeeID, double newPayAmt) throws IllegalArgumentException{
+    public void changeEmployeePay(int employeeID, double newPayAmt) throws IllegalArgumentException{
             if(MusicStore.isAmountValid(newPayAmt)== false){
                 throw new IllegalArgumentException("Enter a valid amount");
             }
@@ -134,8 +134,8 @@ public class Admin extends Employee {
             }
         }
 
-        public void fireEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
-            if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
+    public void fireEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
+        if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
              
             if(employeeType.equalsIgnoreCase("Employee")){
                 if(store.findEmployee(employeeID)==-1){
@@ -149,27 +149,23 @@ public class Admin extends Employee {
                 }
                 store.removeRepairTech(employeeID);
             }
-
             else if(employeeType.equalsIgnoreCase("Admin")){
                 if(store.findAdmin(employeeID)==-1){
                     throw new IllegalArgumentException("Employee ID does not exist for employee type");
                 }
                 store.removeAdmin(employeeID);
-            
             }
         }
         else{
             throw new IllegalArgumentException("Invalid Employee Type");
         }
-    }
-            
-            /*if(store.findEmployee(employeeID)==-1){
+        /*if(store.findEmployee(employeeID)==-1){
                 throw new IllegalArgumentException("Employee ID does not exist");
             }
-            store.removeEmployee(employeeID);
-        }*/
+            store.removeEmployee(employeeID);*/
+    }
 
-        public void hireEmployees(int employeeID, String name, double payAmt, MusicStore store, String employeeType){
+    public void hireEmployees(int employeeID, String name, double payAmt, MusicStore store, String employeeType){
             if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
                 if(employeeType.equalsIgnoreCase("Employee")){
                    Employee toHire= new Employee(employeeID, name, payAmt, store);

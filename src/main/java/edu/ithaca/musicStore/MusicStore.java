@@ -15,7 +15,7 @@ public class MusicStore {
     private List<Admin> adminList;
     private List<Room> roomList;
     private double storeBalance;
-    private EnumMap<RepairCategory,Double> repairPricings;
+    private EnumMap<RepairBusinessDayCategory,Double> repairPricings;
     private List<Equipment> equipmentForRepairsList;
 
 
@@ -29,11 +29,11 @@ public class MusicStore {
         roomList = new ArrayList<>();
         equipmentForRepairsList = new ArrayList<>();
         storeBalance = 0;
-        repairPricings = new EnumMap<RepairCategory,Double>(RepairCategory.class);
-        repairPricings.put(RepairCategory.ONETOTHREE, 40.00);
-        repairPricings.put(RepairCategory.THREETOFIVE, 60.00);
-        repairPricings.put(RepairCategory.FIVETOSEVEN, 80.00);
-        repairPricings.put(RepairCategory.SEVENPLUS, 100.00);
+        repairPricings = new EnumMap<RepairBusinessDayCategory,Double>(RepairBusinessDayCategory.class);
+        repairPricings.put(RepairBusinessDayCategory.ONETOTHREE, 40.00);
+        repairPricings.put(RepairBusinessDayCategory.THREETOFIVE, 60.00);
+        repairPricings.put(RepairBusinessDayCategory.FIVETOSEVEN, 80.00);
+        repairPricings.put(RepairBusinessDayCategory.SEVENPLUS, 100.00);
     }
 
 
@@ -396,11 +396,11 @@ public class MusicStore {
     }
 
 
-    public double getRepairPricing(RepairCategory rc) {
+    public double getRepairPricing(RepairBusinessDayCategory rc) {
         return repairPricings.get(rc);
     }
 
-    public void updateRepairPricing(RepairCategory rc,double amount) throws IllegalArgumentException{
+    public void updateRepairPricing(RepairBusinessDayCategory rc,double amount) throws IllegalArgumentException{
         if(isAmountValid(amount)){
             repairPricings.replace(rc, amount);
         }
