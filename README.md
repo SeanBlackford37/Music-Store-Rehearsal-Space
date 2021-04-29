@@ -5,7 +5,7 @@ Sequence Diagram 1 (Morgan): https://drive.google.com/file/d/1gfzlaKgeMF1ayHRmIR
 Sequence Diagram 2 (Sean):  https://drive.google.com/file/d/1AMmt1AuU0Azyw4_MEtORvI-ShZ6HN8e0/view?usp=sharing <br />
 Sequence Diagram 3 (Emma): <br />
 Sequence Diagram 4 (Dani): <br />
-State Diagram: <br />
+State Diagram: https://drive.google.com/file/d/1YYNuBpuXux-i0tVVA3hhjCQBD7CsHh2n/view?usp=sharing <br />
 
 ## Sprint One
 Sprint goal: Develop a functional rental system for rooms and equipment where customers can create or cancel a rental
