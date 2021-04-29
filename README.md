@@ -1,7 +1,11 @@
 # Music-Store-Rehearsal-Space
 Clone and run the main method in Main.java <br />
 Narrative/scenarios document: https://docs.google.com/document/d/1clUWzP2B5oCUBiwhsKCfPovN4zQN43pQIjzBysRx-fs/edit <br />
-Sequence Diagram for Giving a Quote (Morgan): https://drive.google.com/file/d/1gfzlaKgeMF1ayHRmIRy7fjLXDdbE_b0e/view?usp=sharing <br />
+Sequence Diagram 1 (Morgan): https://drive.google.com/file/d/1gfzlaKgeMF1ayHRmIRy7fjLXDdbE_b0e/view?usp=sharing <br />
+Sequence Diagram 2 (Sean):  <br />
+Sequence Diagram 3 (Emma): <br />
+Sequence Diagram 4 (Dani): <br />
+State Diagram: <br />
 
 ## Sprint One
 Sprint goal: Develop a functional rental system for rooms and equipment where customers can create or cancel a rental
