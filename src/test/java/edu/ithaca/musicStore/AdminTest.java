@@ -47,6 +47,7 @@ public class AdminTest {
         rented.add(new Room(false, 1, true, "Sadie"));
         rented.add(new Room(false, 5, true, "Carolyn"));
         rented.add(new Room(false, 9, true, "Sophia"));
+        assertEquals(3,rented.size());
         String testView= employeeOne.viewSpaceSchedule(rented);
         System.out.println(testView);
     }
