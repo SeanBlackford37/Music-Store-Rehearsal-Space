@@ -91,8 +91,21 @@ public class Main {
             for(int i =0; i < rentedItems.size(); i++){
                 System.out.println(rentedItems.get(i).getName());
             }
+        orderTotal(customerIn);
         }else{
             System.out.println("You have no rented equipment");
+        }
+    }
+    public static void orderTotal(Customer customerIn){
+        ArrayList<Transaction> transactions =  customerIn.getTransactionHistory();
+        double total = 0;
+        if(!transactions.isEmpty()){
+            for(int i = transactions.size()-1; i >= 0; i--){
+                total += transactions.get(i).getOrderAmount();
+            }
+            System.out.println("Total: $" + total);
+        }else{
+            System.out.println("Total: $0.00");
         }
     }
     public static void transactionHistory(Customer customerIn){
@@ -222,7 +235,7 @@ public class Main {
     }
     
     public static boolean validChoice(String input){
-        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", "done", "Display information", "transaction History"};
+        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", "done", "Display information", "order total", "transaction History"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -253,7 +266,7 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nDisplay information\nTransaction History\nDone\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nDisplay information\nOrder Total\nTransaction History\nDone\n");
             input = scan.nextLine();
            
             if (!validChoice(input)){
@@ -273,6 +286,9 @@ public class Main {
               
             }else if(input.equalsIgnoreCase("Display information")){
                 displayInformation(custOne);
+            }
+            else if(input.equalsIgnoreCase("order total")){
+                orderTotal(custOne);
             }
             else if(input.equalsIgnoreCase("transaction History")){
                 transactionHistory(custOne);
