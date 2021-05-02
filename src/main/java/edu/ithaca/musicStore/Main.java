@@ -44,11 +44,20 @@ public class Main {
             }
         }
     }
+    
     public static void returnRentingRoom(Customer custIn, Room room){
         if(custIn.getRoomRented() != null){
             custIn.returnRoom(room.getRoomNumber());
-            
             System.out.println("Returning rented room number: " + room.getRoomNumber());
+        }else{
+            System.out.println("You are not currently renting a room");
+        }
+       
+    }
+    public static void cancelRentingRoom(Customer custIn, Room room){
+        if(custIn.getRoomRented() != null){
+            custIn.cancelRoom(room.getRoomNumber());
+            System.out.println("Canceling rented room number: " + room.getRoomNumber());
         }else{
             System.out.println("You are not currently renting a room");
         }
@@ -72,6 +81,31 @@ public class Main {
             if(store.searchForRentedItem(equipmentToReturn) != -1){
                 custIn.returnItem(equipmentToReturn);
                 System.out.println(equipmentToReturn + " has been returned");
+            }else if(!equipmentToReturn.equalsIgnoreCase("done")){
+                System.out.println("You did not rent out that item");
+                System.out.println("Please enter a valid rented item");
+            }
+            
+        }
+    }
+    public static void cancelEquipment(MusicStore store, Customer custIn){
+        ArrayList<Item> rentedItems = custIn.getRentedList();
+        String equipmentToReturn = "";
+        if(rentedItems.isEmpty()){
+            System.out.println("No equipment to cancel");
+        }else{
+            System.out.println("What item would you like to cancel?");
+        }
+        while(!equipmentToReturn.equalsIgnoreCase("done") && !rentedItems.isEmpty()){
+            System.out.println("Rented items:");
+            for(int i = rentedItems.size()-1; i >= 0; i--){
+                System.out.println(rentedItems.get(i).getName());
+            }
+            System.out.println("Or enter 'done' to be finished");
+            equipmentToReturn = scan.nextLine();
+            if(store.searchForRentedItem(equipmentToReturn) != -1){
+                custIn.cancelItemRental(equipmentToReturn);
+                System.out.println(equipmentToReturn + " has been canceled");
             }else if(!equipmentToReturn.equalsIgnoreCase("done")){
                 System.out.println("You did not rent out that item");
                 System.out.println("Please enter a valid rented item");
@@ -222,7 +256,7 @@ public class Main {
     }
     
     public static boolean validChoice(String input){
-        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", "done", "Display information", "transaction History"};
+        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", "cancel equipment", "cancel room rental", "done", "Display information", "transaction History"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -253,7 +287,7 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nDisplay information\nTransaction History\nDone\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nDisplay information\nTransaction History\nDone\n");
             input = scan.nextLine();
            
             if (!validChoice(input)){
@@ -270,8 +304,13 @@ public class Main {
             }
             else if(input.equalsIgnoreCase("return equipment")){
                 returnEquipment(store, custOne);
-              
-            }else if(input.equalsIgnoreCase("Display information")){
+            }
+            else if(input.equalsIgnoreCase("cancel room rental")){
+                cancelRentingRoom(custOne, custOne.getRoomRented());
+            }else if(input.equalsIgnoreCase("cancel equipment")){
+                cancelEquipment(store, custOne);
+            }
+            else if(input.equalsIgnoreCase("Display information")){
                 displayInformation(custOne);
             }
             else if(input.equalsIgnoreCase("transaction History")){
@@ -295,7 +334,7 @@ public class Main {
         MusicStore mStore = new MusicStore("Ithaca Music Store");
         mStore.addEmployee(new Employee(12346, "Sean", mStore));
         mStore.addEmployee(new Employee(12347, "Toby", mStore));
-        mStore.addToRepairTechList(new RepairTech(12347, "Doug", mStore));
+        mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
         System.out.println("Welcome to the Admin interface");
         
         String input = "go";

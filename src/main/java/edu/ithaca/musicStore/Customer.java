@@ -313,7 +313,7 @@ public class Customer {
             Transaction t = transactionHistory.get(i);
             if(t.getRoomRented()!=null){
                 Room r = t.getRoomRented();
-                if(r.getRoomNumber()==roomNum&&r.getRenterName()==customerName){
+                if(r.getRoomNumber()==roomNum && r.getRenterName()==customerName){
                     returnRoom(roomNum);
                     return transactionHistory.remove(i);
                 }
