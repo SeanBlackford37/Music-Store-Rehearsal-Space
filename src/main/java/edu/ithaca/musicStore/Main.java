@@ -1,8 +1,11 @@
 package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.core.exc.InputCoercionException;
 
 public class Main {
     static Scanner scan = new Scanner(System.in);
@@ -17,11 +20,21 @@ public class Main {
                 System.out.println("Room number: " + availableRoomList.get(i).getRoomNumber());
             }
             int roomNum = -1;
-            roomNum = scan.nextInt();
-            scan.nextLine();
-            if(store.findRoom(roomNum) != -1){
-                custIn.rentRoom(roomNum, employeeIn);
-            } 
+            boolean isCorrectType = true;
+            do{
+                isCorrectType = true;
+                try{
+                    roomNum = scan.nextInt();
+                    scan.nextLine();
+                    if(store.findRoom(roomNum) != -1){
+                        custIn.rentRoom(roomNum, employeeIn);
+                    } 
+                }catch(InputMismatchException e){
+                    System.out.println("Input entered is not a number. Try again below.");
+                    isCorrectType=false;
+                }
+            }
+            while(isCorrectType==false);
         }else{
             System.out.println("Can't rent more than one room at a time!");
         }
@@ -56,23 +69,23 @@ public class Main {
     }
     public static void returnEquipment(MusicStore store, Customer custIn){
         ArrayList<Item> rentedItems = custIn.getRentedList();
-        String equipmentToReturn = "";
+        String equipmentToReturnOrDone = "";
         if(rentedItems.isEmpty()){
             System.out.println("No equipment to return");
         }else{
             System.out.println("What item would you like to return?");
         }
-        while(!equipmentToReturn.equalsIgnoreCase("done") && !rentedItems.isEmpty()){
+        while(!equipmentToReturnOrDone.equalsIgnoreCase("done") && !rentedItems.isEmpty()){
             System.out.println("Rented items:");
             for(int i = rentedItems.size()-1; i >= 0; i--){
                 System.out.println(rentedItems.get(i).getName());
             }
             System.out.println("Or enter 'done' to be finished");
-            equipmentToReturn = scan.nextLine();
-            if(store.searchForRentedItem(equipmentToReturn) != -1){
-                custIn.returnItem(equipmentToReturn);
-                System.out.println(equipmentToReturn + " has been returned");
-            }else if(!equipmentToReturn.equalsIgnoreCase("done")){
+            equipmentToReturnOrDone = scan.nextLine();
+            if(store.searchForRentedItem(equipmentToReturnOrDone) != -1){
+                custIn.returnItem(equipmentToReturnOrDone);
+                System.out.println(equipmentToReturnOrDone + " has been returned");
+            }else if(!equipmentToReturnOrDone.equalsIgnoreCase("done")){
                 System.out.println("You did not rent out that item");
                 System.out.println("Please enter a valid rented item");
             }
@@ -111,16 +124,25 @@ public class Main {
 
         System.out.println("Enter employee ID:");
         int employeeID = 0;
-        employeeID = scan.nextInt();
-        scan.nextLine();
-        System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
-        String employeeType = scan.nextLine();
-        try{
-            adminIn.payEmployee(employeeID, employeeType);
-            System.out.println("Employee Paid");
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        boolean correctTypeEntered = true;
+        do{
+            correctTypeEntered=true;
+            try{
+                employeeID = scan.nextInt();
+                scan.nextLine();
+                System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
+                String employeeType = scan.nextLine();
+                try{
+                    adminIn.payEmployee(employeeID, employeeType);
+                    System.out.println("Employee Paid");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }catch(InputMismatchException ime){
+                System.out.println("A number was not entered for an employee ID. Try Again.");
+                correctTypeEntered=false;
+            }
+        }while(correctTypeEntered==false);
        
             
        
@@ -129,17 +151,26 @@ public class Main {
         System.out.println("Enter name of the new hire:");
         String newEmployeeName = scan.nextLine();
         System.out.println("Enter pay amount:");
-        double payAmt = scan.nextDouble();
-        scan.nextLine();
-        System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
-        String employeeType = scan.nextLine();
-        int employeeID = (int)(Math.random() * (99999 - 10000) + 10000);
-        try{
-            adminIn.hireEmployees(employeeID, newEmployeeName, payAmt, mStoreIn, employeeType);
-            System.out.println("New " + employeeType + " hired and added to the system");
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        boolean isGoodInputType=true;
+        do{
+            isGoodInputType=true;
+            try{
+                double payAmt = scan.nextDouble();
+                scan.nextLine();
+                System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
+                String employeeType = scan.nextLine();
+                int employeeID = (int)(Math.random() * (99999 - 10000) + 10000);
+                try{
+                    adminIn.hireEmployees(employeeID, newEmployeeName, payAmt, mStoreIn, employeeType);
+                    System.out.println("New " + employeeType + " hired and added to the system");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }catch(InputMismatchException ime){
+                isGoodInputType=false;
+                System.out.println("Invalid pay amount entered. Try again.");
+            }
+        }while(isGoodInputType==false);
         
         
     }
@@ -149,21 +180,30 @@ public class Main {
       
         System.out.println("Enter employee ID:");
         int employeeID = 0;
-        employeeID = scan.nextInt();
-        scan.nextLine();
-        System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
-        String employeeType = scan.nextLine();
-       
-        try{
-            if(employeeID != adminIn.employeeID){
-                adminIn.fireEmployee(employeeID, employeeType);
-                System.out.println(employeeType + "has been terminate!");
-            }else{
-                System.out.println("Can'terminate self!");
+        boolean isGoodInputType=true;
+        do{
+            isGoodInputType=true;
+            try{
+                employeeID = scan.nextInt();
+                scan.nextLine();
+                System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
+                String employeeType = scan.nextLine();
+            
+                try{
+                    if(employeeID != adminIn.employeeID){
+                        adminIn.fireEmployee(employeeID, employeeType);
+                        System.out.println(employeeType + "has been terminate!");
+                    }else{
+                        System.out.println("Can'terminate self!");
+                    }
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }catch(InputMismatchException ime){
+                System.out.println("Invalid employee ID entered. Try again.");
+                isGoodInputType=false;
             }
-        }catch(Exception e){
-                System.out.println(e.getMessage());
-            }
+        }while(isGoodInputType==false);
     }
     public static void addRentalSpace(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Currently rented");
@@ -173,14 +213,23 @@ public class Main {
             System.out.println("");
         }
         System.out.println("Enter the new room number:");
-        int roomNumber = scan.nextInt();
-        scan.nextLine();
-        try{
-            adminIn.addSpaceToRental(roomNumber, mStoreIn.getRoomList());
-            System.out.println("Room added!");
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        boolean isGoodInputType=true;
+        do{
+            isGoodInputType=true;
+            try{
+                int roomNumber = scan.nextInt();
+                scan.nextLine();
+                try{
+                    adminIn.addSpaceToRental(roomNumber, mStoreIn.getRoomList());
+                    System.out.println("Room added!");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }catch(InputMismatchException ime){
+                System.out.println("Input entered for room number was not a valid number. Try again.");
+                isGoodInputType=false;
+            }
+        }while(isGoodInputType==false);
     }
     public static void cancelRentalSpace(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Currently rented");
@@ -191,14 +240,23 @@ public class Main {
             System.out.println("");
         }
         System.out.println("Enter the room number to cancel:");
-        int roomNumber = scan.nextInt();
-        scan.nextLine();
-        try{
-            adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
-            System.out.println("Room canceled!");
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        boolean isGoodInputType = true;
+        do{
+            isGoodInputType = true;
+            try{
+                int roomNumber = scan.nextInt();
+                scan.nextLine();
+                try{
+                    adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
+                    System.out.println("Room canceled!");
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }catch(InputMismatchException ime){
+                System.out.println("Input entered for room number was not a valid number. Try again.");
+                isGoodInputType = false;
+            }
+        }while(isGoodInputType == false);
     }
     public static void employeeList(MusicStore mStoreIn){
         for(int i = 0; i < mStoreIn.getAdminList().size(); i++){
@@ -230,6 +288,51 @@ public class Main {
         }
         return false;
     }
+    public static boolean validIntChoice(String input, int numChoices){
+        int intInput = 0;
+        try{
+            intInput = Integer.parseInt(input);
+        }
+        catch(InputMismatchException e){
+            return false;
+        }
+        //indexed @ 1
+        if(intInput<1&&intInput>numChoices){
+            return false;
+        }
+        else{
+            return true;
+        }
+    }
+    public static boolean hasInvalidCharacters(String input){
+        for(int i=0;i<input.length();i++){
+            char letter = input.charAt(i);
+            if(letter<65&&letter!=32&&letter!=39){
+                return true;
+            }
+            else if(letter>90&&letter<97||letter>122){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static boolean isInvalidName(String name){
+        if(name.length()<2){
+            System.out.println("Name is too short");
+            return true;
+        }
+        int spaceCount=0;
+        for(int i=0;i<name.length();i++){
+            if(name.charAt(i)==32){
+                spaceCount++;
+            }
+        }
+        if(spaceCount==name.length()){
+            System.out.println("Name entered cannot be all spaces");
+            return true;
+        }
+        return false;
+    }
     public static void customerInteraction(){
         MusicStore store = new MusicStore("Ithaca Music Store");
         store.addToRoomList(new Room(true,1,false,"none"));
@@ -247,8 +350,12 @@ public class Main {
         String input = "go";
         Employee employeeOne = new Employee(12345, "Toby", store);
         System.out.println("Enter your name");
-        String name = "Sean Blackford";
-        name = scan.nextLine();
+        String name = scan.nextLine();
+        while(hasInvalidCharacters(name)&&isInvalidName(name)){
+            System.out.println("Invalid Name: characters entered are numbers or i");
+            System.out.println("Enter your name");
+            name = scan.nextLine();
+        }
         
         Customer custOne= new Customer(store, name);
 
