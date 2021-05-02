@@ -5,7 +5,6 @@ import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
-import com.fasterxml.jackson.core.exc.InputCoercionException;
 
 public class Main {
     static Scanner scan = new Scanner(System.in);
