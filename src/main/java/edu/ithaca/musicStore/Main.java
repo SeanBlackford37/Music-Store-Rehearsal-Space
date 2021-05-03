@@ -270,7 +270,8 @@ public class Main {
     
     public static boolean validChoice(String input){
 
-        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", "cancel equipment", "cancel room rental", "order total", "done", "Display information", "transaction History"};
+        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", 
+        "cancel equipment", "cancel room rental", "order total", "done", "Display information", "transaction History"};
 
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
@@ -302,7 +303,7 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\n\nOrder Total\nDisplay information\nTransaction History\nDone\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nOrder Total\nDisplay information\nTransaction History\nDone\n");
 
             input = scan.nextLine();
            
