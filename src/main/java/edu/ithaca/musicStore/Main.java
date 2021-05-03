@@ -125,8 +125,24 @@ public class Main {
             for(int i =0; i < rentedItems.size(); i++){
                 System.out.println(rentedItems.get(i).getName());
             }
+        orderTotal(customerIn);
         }else{
             System.out.println("You have no rented equipment");
+        }
+    }
+    public static void orderTotal(Customer customerIn){
+        ArrayList<Item> itemsList =  customerIn.getRentedList();
+        double total = 0;
+        if(customerIn.getRoomRented() != null){
+            total += customerIn.getRoomRented().getRate();
+        }
+        if(!itemsList.isEmpty()){
+            for(int i = itemsList.size()-1; i >= 0; i--){
+                total += itemsList.get(i).getPrice();
+            }
+            System.out.println("Total: $" + total);
+        }else{
+            System.out.println("Total: $" + total);
         }
     }
     public static void transactionHistory(Customer customerIn){
@@ -256,7 +272,10 @@ public class Main {
     }
     
     public static boolean validChoice(String input){
-        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", "cancel equipment", "cancel room rental", "done", "Display information", "transaction History"};
+
+        String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", 
+        "cancel equipment", "cancel room rental", "order total", "done", "Display information", "transaction History"};
+
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -287,7 +306,8 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nDisplay information\nTransaction History\nDone\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nOrder Total\nDisplay information\nTransaction History\nDone\n");
+
             input = scan.nextLine();
            
             if (!validChoice(input)){
@@ -307,11 +327,15 @@ public class Main {
             }
             else if(input.equalsIgnoreCase("cancel room rental")){
                 cancelRentingRoom(custOne, custOne.getRoomRented());
+              
             }else if(input.equalsIgnoreCase("cancel equipment")){
                 cancelEquipment(store, custOne);
             }
             else if(input.equalsIgnoreCase("Display information")){
                 displayInformation(custOne);
+            }
+            else if(input.equalsIgnoreCase("order total")){
+                orderTotal(custOne);
             }
             else if(input.equalsIgnoreCase("transaction History")){
                 transactionHistory(custOne);
