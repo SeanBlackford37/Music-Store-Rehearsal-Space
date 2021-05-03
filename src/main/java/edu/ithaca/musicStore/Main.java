@@ -131,15 +131,18 @@ public class Main {
         }
     }
     public static void orderTotal(Customer customerIn){
-        ArrayList<Transaction> transactions =  customerIn.getTransactionHistory();
+        ArrayList<Item> itemsList =  customerIn.getRentedList();
         double total = 0;
-        if(!transactions.isEmpty()){
-            for(int i = transactions.size()-1; i >= 0; i--){
-                total += transactions.get(i).getOrderAmount();
+        if(customerIn.getRoomRented() != null){
+            total += customerIn.getRoomRented().getRate();
+        }
+        if(!itemsList.isEmpty()){
+            for(int i = itemsList.size()-1; i >= 0; i--){
+                total += itemsList.get(i).getPrice();
             }
             System.out.println("Total: $" + total);
         }else{
-            System.out.println("Total: $0.00");
+            System.out.println("Total: $" + total);
         }
     }
     public static void transactionHistory(Customer customerIn){
