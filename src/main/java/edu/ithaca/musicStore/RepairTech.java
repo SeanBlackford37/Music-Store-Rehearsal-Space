@@ -5,16 +5,25 @@ import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
 
-public class RepairTech {
-    private int employeeID;
-    private String name;
-    private double payAmt;
+public class RepairTech extends Employee{
+    //private int employeeID;
+    //private String name;
+    //private double payAmt;
     private List<Repair> activeRepairs;
-    private double hoursWorked;
-    private MusicStore store;
-    private double wasPaid;
+    //private double hoursWorked;
+    //private MusicStore store;
+    //private double wasPaid;
 
-    public RepairTech(int employeeID, String name, MusicStore store){
+    public RepairTech(int employeeID, String name,MusicStore store) {
+        super(employeeID, name,store);
+        activeRepairs = new ArrayList<>();
+    }
+    public RepairTech(int employeeID, String name, double payAmt, MusicStore store) {
+        super(employeeID, name, payAmt,store);
+        activeRepairs = new ArrayList<>();
+    }
+    
+    /*public RepairTech(int employeeID, String name, MusicStore store){
         //check to make sure employeeID is 5 digits
         if(isIdValid(employeeID) !=5){
             throw new IllegalArgumentException("EmployeeID is not valid");
@@ -31,9 +40,9 @@ public class RepairTech {
         activeRepairs = new ArrayList<>();
         hoursWorked=0;
         this.store = store;
-    }
+    }*/
 
-    public RepairTech(int employeeID, String name, double payAmt, MusicStore store){
+    /*public RepairTech(int employeeID, String name, double payAmt, MusicStore store){
         //check to make sure employeeID is 5 digits
         if(isIdValid(employeeID) !=5){
             throw new IllegalArgumentException("EmployeeID is not valid");
@@ -54,39 +63,39 @@ public class RepairTech {
         hoursWorked=0;
         this.store = store;
     
-    }
+    }*/
 
-    public int isIdValid(int IDNumber){
+    /*public int isIdValid(int IDNumber){
         int count=0;
         while (IDNumber !=0){
             IDNumber/=10;
             count++;
         }
         return count;
-    }
+    }*/
 
-    public int getID(){
+   /*public int getID(){
         return employeeID;
-    }
-
-    public String getName(){
+    }*/    
+    
+    /*public String getName(){
         return name;
-    }
+    }*/
 
-    public double getPayAmt(){
+   /* public double getPayAmt(){
         return payAmt;
-    }
+    }*/
 
-    public static boolean isAmountValid(double balance){
+    /*public static boolean isAmountValid(double balance){
         String s = "" + balance;
         String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
         if(balance >=0 && result[1].length() <= 2){
           return true;
         }
        return false;
-    }
+    }*/
 
-    public void addHours(double hrsWorked){
+    /*public void addHours(double hrsWorked){
         if(hrsWorked<0){
             throw new IllegalArgumentException("Must enter a valid amount of hours");
         }
@@ -94,11 +103,11 @@ public class RepairTech {
         hoursWorked+= hrsWorked;
         }
         
-    }
+    }*/
 
-    public double getHoursWorked(){
+    /*public double getHoursWorked(){
         return hoursWorked;
-    }
+    }*/
 
  
     public boolean checkEquipInventory(String itemName){
