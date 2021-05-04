@@ -60,7 +60,7 @@ public class Admin extends Employee {
     }
 
     public void addEquipmentToInventory(Item itemIn, MusicStore musicStoreIn){
-        //NA
+        musicStoreIn.addToInventory(itemIn);
     }
     public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
             
