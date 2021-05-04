@@ -564,19 +564,48 @@ public class Main {
     public static void main(String[] args)  {
         Scanner scan = new Scanner(System.in);
         MusicStore mStore = new MusicStore("Ithaca Music Store");
-        System.out.println("Welcome to Ithaca Music Store\n");
-        System.out.println("--------User Menu--------");
-        System.out.println("Customer (1)");
-        System.out.println("Admin (2)");
-        System.out.println("RepairTech (3)");
-        System.out.println("Employee(4)");
-        System.out.println("\nEnter a number for the user menu you'd like to use or 'done' to exit: ");
-
+        int menuNum=-1;
+        int numMenus=4;
+        boolean isCorrectType = true;
+        while(isCorrectType==false||menuNum<0||menuNum>numMenus){
+            System.out.println("--------User Menu--------");
+            System.out.println("Customer              (1)");
+            System.out.println("Admin                 (2)");
+            System.out.println("RepairTech            (3)");
+            System.out.println("Employee              (4)");
+            try{
+                System.out.println("\nEnter a number for the user menu you'd like to use or '0' to exit: ");
+                menuNum = Integer.parseInt(scan.nextLine());
+                if(menuNum==1){
+                    customerInteraction(mStore);
+                    menuNum=-1;
+                }
+                else if(menuNum==2){
+                    adminInterface(mStore);
+                    menuNum=-1;
+                }
+                else if(menuNum==3){
+                    repairInterface(mStore);
+                    menuNum=-1;
+                }
+                else if(menuNum==4){
+                    System.out.println("Our employee menu is still under development, but you may try any of the others.");
+                    menuNum=-1;
+                }
+                else if (menuNum==0){
+                    System.out.println("Thank you for coming to the Ithaca Music Store. Come back soon.");
+                }
+                else{
+                    System.out.println("Invalid menu number provided. Try again.\n");
+                }
+                isCorrectType=true;
+            }catch(NumberFormatException e){
+                System.out.println("Input entered is not a number. Try again.\n");
+                isCorrectType=false;
+            }
+        }
+        scan.close();
         
-        //customerInteraction(mStore);
-
-        //adminInterface(mStore);
-        repairInterface(mStore);
 
 
         //CAN UNCOMMENT TO SHOW TUNER
