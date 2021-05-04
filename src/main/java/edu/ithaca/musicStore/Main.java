@@ -530,7 +530,7 @@ public class Main {
         catch(Exception e){
             System.out.println("Cannot find the Repair");
         }
-        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX 
         boolean isCorrectType=true;
         do{
             try{
@@ -636,8 +636,12 @@ public class Main {
         
         String input = "go";
         System.out.println("Enter your name");
-        String name = "Sean Blackford";
-        name = scan.nextLine();
+        String name = scan.nextLine();
+        while(hasInvalidCharacters(name) || isInvalidName(name)){
+            System.out.println("Invalid Name: characters entered are numbers or invalid");
+            System.out.println("Enter your name");
+            name = scan.nextLine();
+        }
         RepairTech currTech;
         if (mStore.findRepairTech(name)!=-1){
             currTech = mStore.getRepairTech(name);
