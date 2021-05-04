@@ -298,6 +298,12 @@ public class Main {
             
         }
     }
+
+    public static void displayRepairPricingInfo(MusicStore storeIn){
+        System.out.println("\nBusiness Days \tPrice");
+        storeIn.printRepairPricings();
+        System.out.println("\n");
+    }
     
     public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
         //TODO
