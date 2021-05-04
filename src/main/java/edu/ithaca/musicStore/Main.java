@@ -271,11 +271,11 @@ public class Main {
     public static void addEquipmentToInventory(MusicStore mStoreIn, Admin adminIn){
         //ToDo for loop to add as many items as wanted
         
-        String equipmentToAdd = "";
+        String itemName = "";
         System.out.println("What Item would you like to add?");
-        while(!equipmentToAdd.equalsIgnoreCase("done")){
+        while(!itemName.equalsIgnoreCase("done")){
             System.out.println("What is the name of the product?");
-            String itemName = scan.nextLine();
+            itemName = scan.nextLine();
             
             System.out.println("What is the price?");
             double price = scan.nextDouble();
@@ -292,8 +292,8 @@ public class Main {
             }
 
 
-            System.out.println("Enter 'done' to be finished");
-            equipmentToAdd = scan.nextLine();
+            System.out.println("Enter 'done' to be finished or press enter to add another item");
+            itemName = scan.nextLine();
             
             
         }
