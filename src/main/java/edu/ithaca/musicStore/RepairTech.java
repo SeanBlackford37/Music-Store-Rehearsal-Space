@@ -181,11 +181,18 @@ public class RepairTech extends Employee{
 
     public Repair getRepair(String itemName, String clientName){
         for (int i =0; i < activeRepairs.size(); i++){
-            if (activeRepairs.get(i).getItem().getClientName().equals(clientName) && activeRepairs.get(i).getItem().getItemName().equals(itemName) ){
+            if (activeRepairs.get(i).getItem().getClientName().equalsIgnoreCase(clientName) && activeRepairs.get(i).getItem().getItemName().equalsIgnoreCase(itemName) ){
                 return activeRepairs.get(i);
             }
         }
         throw new IllegalArgumentException("Repair does not exist");
+    }
+
+    public Repair getRepair(int index){
+            if (index <= activeRepairs.size()-1 && index> -1){
+                return activeRepairs.get(index);
+            }
+        throw new IllegalArgumentException("Out of bounds");
     }
 
     public int findRepair(String itemName, String clientName){
