@@ -59,6 +59,9 @@ public class Admin extends Employee {
         else{throw new IllegalArgumentException("invalid amount for pricing");}
     }
 
+    public void addEquipmentToInventory(Item itemIn, MusicStore musicStoreIn){
+        musicStoreIn.addToInventory(itemIn);
+    }
     public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
             
         if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
