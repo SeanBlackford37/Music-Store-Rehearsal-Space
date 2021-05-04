@@ -283,8 +283,7 @@ public class Main {
         }
         return false;
     }
-    public static void customerInteraction(){
-        MusicStore store = new MusicStore("Ithaca Music Store");
+    public static void customerInteraction(MusicStore store){
         store.addToRoomList(new Room(true,1,false,"none"));
         store.addToRoomList(new Room(false,2,true,"Joe Smith"));
         store.addToRoomList(new Room(true,3,false,"none"));
@@ -354,8 +353,7 @@ public class Main {
         }
         return false;
     }
-    public static void adminInterface(){
-        MusicStore mStore = new MusicStore("Ithaca Music Store");
+    public static void adminInterface(MusicStore mStore){
         mStore.addEmployee(new Employee(12346, "Sean", mStore));
         mStore.addEmployee(new Employee(12347, "Toby", mStore));
         mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
@@ -395,12 +393,56 @@ public class Main {
             }
             
         }
+
+        public static void repairInterface(MusicStore mStore){
+            
+            mStore.addEmployee(new Employee(12346, "Sean", mStore));
+            mStore.addEmployee(new Employee(12347, "Toby", mStore));
+            mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
+            System.out.println("Welcome to the Repair Tech interface");
+            
+            String input = "go";
+            System.out.println("Enter your name");
+            String name = "Sean Blackford";
+            name = scan.nextLine();
+            Admin adminOne = new Admin(12345,  name, mStore);
+            mStore.addAdmin(adminOne);
+    
+            while(!input.equalsIgnoreCase("done")){
+                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nDone\n");
+                input = scan.nextLine();
+    
+                if (!validChoiceAdmin(input)){
+                    System.out.println("Please enter a valid choice");
+                } 
+                else if(input.equalsIgnoreCase("pay employee")){
+                    payEmployee(mStore, adminOne);
+                }
+                else if(input.equalsIgnoreCase("hire employee")){
+                    hireEmployee(mStore, adminOne);
+                }
+                else if(input.equalsIgnoreCase("terminate employee")){
+                   fireEmployee(mStore, adminOne);
+                }
+                // else if(input.equalsIgnoreCase("add rental space")){
+                //     addRentalSpace(mStore, adminOne);
+                // }
+                // else if(input.equalsIgnoreCase("cancel rental space")){
+                //     cancelRentalSpace(mStore, adminOne);
+                // }
+                else if(input.equalsIgnoreCase("View Employee list")){
+                    employeeList(mStore);
+                }
+                
+            }
     }
 
     public static void main(String[] args)  {
+        MusicStore mStore = new MusicStore("Ithaca Music Store");
+        //customerInteraction(MusicStore mStore);
 
-        customerInteraction();
-        //adminInterface();
+        //adminInterface(MusicStore mStore);
+        repairInterface(MusicStore mStore);
 
 
         //CAN UNCOMMENT TO SHOW TUNER
