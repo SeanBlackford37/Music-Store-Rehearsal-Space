@@ -77,7 +77,7 @@ public class Employee {
     public boolean checkStock(String searchItem, ArrayList<Item> inventory){
         //change boolean
         for(int i=0; i<inventory.size(); i++){
-            if(inventory.get(i).getName().equals(searchItem)){
+            if(inventory.get(i).getName().equalsIgnoreCase(searchItem)){
                 return true;
             }
         }
