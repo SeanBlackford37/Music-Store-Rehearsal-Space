@@ -2,7 +2,10 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.EnumMap;
+import java.util.Iterator;
 
 
 
@@ -405,6 +408,15 @@ public class MusicStore {
             repairPricings.replace(rc, amount);
         }
         else{throw new IllegalArgumentException("invalid amount for a repair pricing.");}
+    }
+
+    public void printRepairPricings(){
+        Set<Entry<RepairBusinessDayCategory,Double>> entries = repairPricings.entrySet();
+        Iterator<Entry<RepairBusinessDayCategory,Double>> eI = entries.iterator();
+        while(eI.hasNext()){
+            System.out.println(eI.next().getKey().name()+"\t"+eI.next().getValue());
+        }
+        
     }
 
     public void addEquipment(Equipment e){

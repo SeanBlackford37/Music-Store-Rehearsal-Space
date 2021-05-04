@@ -250,6 +250,11 @@ public class Main {
             System.out.println(e.getMessage());
         }
     }
+    public void displayRepairPricingInfo(MusicStore storeIn){
+        System.out.println("\nBusiness Days \tPrice");
+        storeIn.printRepairPricings();
+        System.out.println("\n");
+    }
     public static void employeeList(MusicStore mStoreIn){
         for(int i = 0; i < mStoreIn.getAdminList().size(); i++){
             System.out.print("Name: " +   mStoreIn.getAdminList().get(i).getName() + ",");
