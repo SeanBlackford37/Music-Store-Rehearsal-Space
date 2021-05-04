@@ -21,15 +21,15 @@ public class Main {
             int roomNum = -1;
             boolean isCorrectType = true;
             do{
-                isCorrectType = true;
                 try{
-                    roomNum = scan.nextInt();
-                    scan.nextLine();
+                    System.out.println("Enter room num:");
+                    roomNum = Integer.parseInt(scan.nextLine());
                     if(store.findRoom(roomNum) != -1){
                         custIn.rentRoom(roomNum, employeeIn);
-                    } 
-                }catch(InputMismatchException e){
-                    System.out.println("Input entered is not a number. Try again below.");
+                    }
+                    isCorrectType=true;
+                }catch(NumberFormatException e){
+                    System.out.println("Input entered is not a number. Try again.");
                     isCorrectType=false;
                 }
             }
@@ -159,10 +159,8 @@ public class Main {
         int employeeID = 0;
         boolean correctTypeEntered = true;
         do{
-            correctTypeEntered=true;
             try{
-                employeeID = scan.nextInt();
-                scan.nextLine();
+                employeeID = Integer.parseInt(scan.nextLine());
                 System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
                 String employeeType = scan.nextLine();
                 try{
@@ -171,7 +169,8 @@ public class Main {
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
-            }catch(InputMismatchException ime){
+                correctTypeEntered=true;
+            }catch(NumberFormatException ime){
                 System.out.println("A number was not entered for an employee ID. Try Again.");
                 correctTypeEntered=false;
             }
@@ -186,10 +185,8 @@ public class Main {
         System.out.println("Enter pay amount:");
         boolean isGoodInputType=true;
         do{
-            isGoodInputType=true;
             try{
-                double payAmt = scan.nextDouble();
-                scan.nextLine();
+                double payAmt = Double.parseDouble(scan.nextLine());
                 System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
                 String employeeType = scan.nextLine();
                 int employeeID = (int)(Math.random() * (99999 - 10000) + 10000);
@@ -199,7 +196,8 @@ public class Main {
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
-            }catch(InputMismatchException ime){
+                isGoodInputType=true;
+            }catch(NumberFormatException ime){
                 isGoodInputType=false;
                 System.out.println("Invalid pay amount entered. Try again.");
             }
@@ -215,10 +213,8 @@ public class Main {
         int employeeID = 0;
         boolean isGoodInputType=true;
         do{
-            isGoodInputType=true;
             try{
-                employeeID = scan.nextInt();
-                scan.nextLine();
+                employeeID = Integer.parseInt(scan.nextLine());
                 System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
                 String employeeType = scan.nextLine();
             
@@ -232,7 +228,8 @@ public class Main {
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
-            }catch(InputMismatchException ime){
+                isGoodInputType=true;
+            }catch(NumberFormatException ime){
                 System.out.println("Invalid employee ID entered. Try again.");
                 isGoodInputType=false;
             }
@@ -248,17 +245,16 @@ public class Main {
         System.out.println("Enter the new room number:");
         boolean isGoodInputType=true;
         do{
-            isGoodInputType=true;
             try{
-                int roomNumber = scan.nextInt();
-                scan.nextLine();
+                int roomNumber = Integer.parseInt(scan.nextLine());
                 try{
                     adminIn.addSpaceToRental(roomNumber, mStoreIn.getRoomList());
                     System.out.println("Room added!");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
-            }catch(InputMismatchException ime){
+                isGoodInputType=true;
+            }catch(NumberFormatException ime){
                 System.out.println("Input entered for room number was not a valid number. Try again.");
                 isGoodInputType=false;
             }
@@ -275,17 +271,16 @@ public class Main {
         System.out.println("Enter the room number to cancel:");
         boolean isGoodInputType = true;
         do{
-            isGoodInputType = true;
             try{
-                int roomNumber = scan.nextInt();
-                scan.nextLine();
+                int roomNumber = Integer.parseInt(scan.nextLine());
                 try{
                     adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
                     System.out.println("Room canceled!");
                 }catch(Exception e){
                     System.out.println(e.getMessage());
                 }
-            }catch(InputMismatchException ime){
+                isGoodInputType = true;
+            }catch(NumberFormatException ime){
                 System.out.println("Input entered for room number was not a valid number. Try again.");
                 isGoodInputType = false;
             }
@@ -384,8 +379,8 @@ public class Main {
         Employee employeeOne = new Employee(12345, "Toby", store);
         System.out.println("Enter your name");
         String name = scan.nextLine();
-        while(hasInvalidCharacters(name)&&isInvalidName(name)){
-            System.out.println("Invalid Name: characters entered are numbers or i");
+        while(hasInvalidCharacters(name) || isInvalidName(name)){
+            System.out.println("Invalid Name: characters entered are numbers or invalid");
             System.out.println("Enter your name");
             name = scan.nextLine();
         }
@@ -445,8 +440,14 @@ public class Main {
         
         String input = "go";
         System.out.println("Enter your name");
-        String name = "Sean Blackford";
-        name = scan.nextLine();
+        String name = scan.nextLine();
+        while(hasInvalidCharacters(name) || isInvalidName(name)){
+            System.out.println("Invalid Name: characters entered are numbers or invalid");
+            System.out.println("Enter your name");
+            name = scan.nextLine();
+        }
+        
+        
         Admin adminOne = new Admin(12345,  name, mStore);
         mStore.addAdmin(adminOne);
 
@@ -481,8 +482,8 @@ public class Main {
 
     public static void main(String[] args)  {
 
-        customerInteraction();
-        //adminInterface();
+        //customerInteraction();
+        adminInterface();
 
 
         //CAN UNCOMMENT TO SHOW TUNER
