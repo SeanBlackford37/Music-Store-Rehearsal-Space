@@ -391,6 +391,7 @@ public class Main {
             else if(input.equalsIgnoreCase("View Employee list")){
                 employeeList(mStore);
             }
+        }
             
             
         }
@@ -561,7 +562,17 @@ public class Main {
     }
 
     public static void main(String[] args)  {
+        Scanner scan = new Scanner(System.in);
         MusicStore mStore = new MusicStore("Ithaca Music Store");
+        System.out.println("Welcome to Ithaca Music Store\n");
+        System.out.println("--------User Menu--------");
+        System.out.println("Customer (1)");
+        System.out.println("Admin (2)");
+        System.out.println("RepairTech (3)");
+        System.out.println("Employee(4)");
+        System.out.println("\nEnter a number for the user menu you'd like to use or 'done' to exit: ");
+
+        
         //customerInteraction(mStore);
 
         //adminInterface(mStore);
