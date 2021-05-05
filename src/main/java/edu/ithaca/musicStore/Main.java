@@ -268,34 +268,33 @@ public class Main {
         
     }
     
-    public static void addEquipmentToInventory(MusicStore mStoreIn, Admin adminIn){
-        //ToDo for loop to add as many items as wanted
+    public static void orderItem(Admin adminIn){
+        System.out.println("Enter name of item you want to add: ");
+        String itemName = scan.nextLine();
+        System.out.println("Enter price of item you want to add: ");
+        double price = scan.nextDouble();
+        scan.nextLine();
+        try{
+            adminIn.orderItem(itemName, price);
+            System.out.println("Item ordered");
+        } catch(Exception e){
+            System.out.println(e.getMessage());
+        }
         
-        String itemName = "";
-        System.out.println("What Item would you like to add?");
-        while(!itemName.equalsIgnoreCase("done")){
-            System.out.println("What is the name of the product?");
-            itemName = scan.nextLine();
-            
-            System.out.println("What is the price?");
-            double price = scan.nextDouble();
-            scan.nextLine();
-            
-            if(isAmountValid(price)){
-                adminIn.addEquipmentToInventory(new Item(itemName, price), mStoreIn);
-                System.out.println(itemName + " added to the inventory to rent");
-            }else{
-                System.out.println("Please make sure to enter a valid amount");
-            }
-            for(int i = 0; i < mStoreIn.getInventorySize(); i++){
-                System.out.println(mStoreIn.getInventoryList().get(i).getName());
-            }
+        
 
-
-            System.out.println("Enter 'done' to be finished or press enter to add another item");
-            itemName = scan.nextLine();
-            
-            
+    }
+    public static void orderEquipment(Admin adminIn){
+        System.out.println("Enter name of equipment you want to add: ");
+        String itemName = scan.nextLine();
+        System.out.println("Enter price of equipment you want to add: ");
+        double price = scan.nextDouble();
+        scan.nextLine();
+        try{
+            adminIn.orderEquipment(itemName, price);
+            System.out.println("Equipment ordered");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
     }
 
@@ -305,9 +304,6 @@ public class Main {
         System.out.println("");
     }
     
-    // public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
-    // }
-
     public static void updateRepairPricing(MusicStore mStoreIn, Admin adminIn){
         displayRepairPricingInfo(mStoreIn);
         System.out.println("Enter the number for the kind of repair of which you'd like to update the price:");
@@ -450,7 +446,7 @@ public class Main {
     }
     public static boolean validChoiceAdmin(String input){
         String[] choices = {"Pay employee", "Hire employee", "Terminate Employee", "View Employee List", 
-        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Add Item to Inventory","Done"};
+        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Order Item", "Order Equipment", "Done"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -464,20 +460,14 @@ public class Main {
         if(uiPick.equalsIgnoreCase("client")){
             employeeInterface(mStore, customerIn);
         }else if(uiPick.equalsIgnoreCase("admin")){
-            mStore.addEmployee(new Employee(12346, "Sean", mStore));
+            mStore.addAdmin(new Admin(12346, "Sean", mStore));
             mStore.addEmployee(new Employee(12347, "Toby", mStore));
             mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
             System.out.println("Welcome to the Admin interface");
-            
             String input = "go";
-            System.out.println("Enter your name");
-            String name = "Sean Blackford";
-            name = scan.nextLine();
-            Admin adminOne = new Admin(12345,  name, mStore);
-            Customer customerOne = new Customer(mStore, "Joe");
-            mStore.addAdmin(adminOne);
-
-            while(!input.equals("valid")){
+            Admin adminOne = null;
+          
+           while(!input.equals("valid")){
                 System.out.println("Enter your employee ID");
                 int employeeID = 0;
                 employeeID = scan.nextInt();
@@ -497,7 +487,7 @@ public class Main {
                 
             System.out.println("Welcome: " + adminOne.getName());
             while(!input.equalsIgnoreCase("done")){
-                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nAdd Item to Inventory\nDone\n");
+                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nOrder Item\nOrder Equipment\nDisplay Repair Pricing Info\nUpdate a Repair Price\nDone\n");
                 input = scan.nextLine();
 
                 if (!validChoiceAdmin(input)){
@@ -518,8 +508,10 @@ public class Main {
                 else if(input.equalsIgnoreCase("cancel rental space")){
                     cancelRentalSpace(mStore, adminOne);
                 }
-                else if(input.equalsIgnoreCase("add item to inventory")){
-                    addEquipmentToInventory(mStore, adminOne);
+                else if(input.equalsIgnoreCase("order item")){
+                    orderItem(adminOne);
+                }else if(input.equalsIgnoreCase("order equipment")){
+                    orderEquipment(adminOne);
                 }
                 else if(input.equalsIgnoreCase("display repair pricing info")){
                     displayRepairPricingInfo(mStore);
