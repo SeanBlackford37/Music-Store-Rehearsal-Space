@@ -305,13 +305,50 @@ public class Main {
         System.out.println("\n");
     }
     
-    public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
-        //TODO
-        
-        
-    }
+    // public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
+    // }
+
     public static void updateRepairPricing(MusicStore mStoreIn, Admin adminIn){
-        //TODO
+        displayRepairPricingInfo(mStoreIn);
+        System.out.println("Enter the number for the kind of repair of which you'd like to update the price:");
+        RepairBusinessDayCategory rc=null;
+        boolean isIntType=true;
+        do{
+            try{
+                //-1 since key set is indexed at 0
+                int i = Integer.parseInt(scan.nextLine())-1;
+                try{
+                rc = mStoreIn.getRepairBusinessCategory(i);
+                }
+                catch(Exception e){
+                    System.out.println("Invalid number entered");
+                }
+                isIntType=true;
+            }catch(NumberFormatException nfe){
+                isIntType=false;
+                System.out.println("Input entered was not a number. Try again.");
+            }
+        }while(rc==null||isIntType==false);
+        boolean isCorrectType = true;
+        double amount=-1;
+        do{
+            System.out.println("Enter the price you'd like to set for a repair that's "+rc.toString()+" business days: ");
+            try{
+                amount = Double.parseDouble(scan.nextLine());
+                try{
+                    adminIn.updateRepairPricing(rc, amount);
+                }catch(Exception e){
+                    System.out.println("Invalid price entered");
+                }
+                isCorrectType=true;
+            }catch(NumberFormatException nfe){
+                System.out.println("Price entered contains nonnumerical input outside of a '.' ... Try again.");
+                isCorrectType=false;
+            }
+        }while(isCorrectType==false||amount==-1);
+
+        System.out.println("Pricing for "+rc.toString()+" business day repairs has been updated to $"+amount);
+        
     }
 
     public static void employeeList(MusicStore mStoreIn){
