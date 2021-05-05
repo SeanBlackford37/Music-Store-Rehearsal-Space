@@ -409,6 +409,25 @@ public class MusicStore {
         return repairPricings.get(rc);
     }
 
+    public RepairBusinessDayCategory getRepairBusinessCategory(int i) {
+        Set<RepairBusinessDayCategory> keys = repairPricings.keySet();
+        Iterator<RepairBusinessDayCategory> iter = keys.iterator();
+        if(i<0||i>=keys.size()){
+            throw new IndexOutOfBoundsException("number entered is too large or negative");
+        }
+        else{
+            int x =0;
+            while(iter.hasNext()){
+                RepairBusinessDayCategory rc = iter.next();
+                if(x==i){
+                    return rc;
+                }
+                x++;
+            }
+            throw new RuntimeException("Error: no repair business day category was found");
+        }
+    }
+
     public void updateRepairPricing(RepairBusinessDayCategory rc,double amount) throws IllegalArgumentException{
         if(isAmountValid(amount)){
             repairPricings.replace(rc, amount);
@@ -419,8 +438,11 @@ public class MusicStore {
     public void printRepairPricings(){
         Set<Entry<RepairBusinessDayCategory,Double>> entries = repairPricings.entrySet();
         Iterator<Entry<RepairBusinessDayCategory,Double>> eI = entries.iterator();
+        int i=1;
         while(eI.hasNext()){
-            System.out.println(eI.next().getKey().name()+"\t"+eI.next().getValue());
+            Entry<RepairBusinessDayCategory,Double> entry = eI.next();
+            System.out.println("("+i+") "+entry.getKey().name()+"\t"+entry.getValue());
+            i++;
         }
         
     }
