@@ -368,9 +368,13 @@ public class MusicStore {
     }
 
     public void subtractFromStoreBalance(double cost) throws IllegalArgumentException{
-        if(!isAmountValid(cost) || cost > storeBalance){
+        if(!isAmountValid(cost) ){
             throw new IllegalArgumentException("invalid argument");
-        }else{
+        }
+        else if(cost > storeBalance){
+            throw new IllegalArgumentException("Not enough money");
+        }
+        else{
             storeBalance -= cost;
             int num  = (int)(storeBalance * 100);
             storeBalance = ((double)num) /100;

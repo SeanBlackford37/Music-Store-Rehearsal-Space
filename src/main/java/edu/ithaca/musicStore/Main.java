@@ -223,6 +223,11 @@ public class Main {
                 System.out.println(e.getMessage());
             }
     }
+
+    public static void viewStoreBalance(MusicStore mStoreIn){
+        System.out.println("Store balance: " + mStoreIn.getStoreBalance());
+    }
+
     public static void addRentalSpace(MusicStore mStoreIn, Admin adminIn){
         
         if(mStoreIn.getRoomList().isEmpty()){
@@ -404,7 +409,7 @@ public class Main {
     }
     public static boolean validChoiceAdmin(String input){
         String[] choices = {"Pay employee", "Hire employee", "Terminate Employee", "View Employee List", 
-        "Add Rental Space", "Cancel Rental space", "Get Repair Pricing", "Add Item to Inventory","Done"};
+        "Add Rental Space", "Cancel Rental space", "Get Repair Pricing", "Add Item to Inventory","View Store Balance","Done"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -444,7 +449,7 @@ public class Main {
             
             System.out.println("Welcome: " + adminOne.getName());
             while(!input.equalsIgnoreCase("done")){
-                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nAdd Item to Inventory\nDone\n");
+                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nAdd Item to Inventory\nView Store Balance\nDone\n");
                 input = scan.nextLine();
 
                 if (!validChoiceAdmin(input)){
@@ -455,6 +460,9 @@ public class Main {
                 }
                 else if(input.equalsIgnoreCase("hire employee")){
                     hireEmployee(mStore, adminOne);
+                }
+                else if(input.equalsIgnoreCase("View Store balance")){
+                    viewStoreBalance(mStore);
                 }
                 else if(input.equalsIgnoreCase("terminate employee")){
                 fireEmployee(mStore, adminOne);
