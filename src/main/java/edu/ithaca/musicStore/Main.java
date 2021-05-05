@@ -25,6 +25,7 @@ public class Main {
                 System.out.println("Room number: " + availableRoomList.get(i).getRoomNumber());
             }
             int roomNum = -1;
+            //TYPE CHECK HERE EMMA!!!! <3 XOXOX
             roomNum = scan.nextInt();
             scan.nextLine();
             if(store.findRoom(roomNum) != -1){
@@ -183,10 +184,38 @@ public class Main {
             
        
     }
+
+    public static void giveEmployeeHours(MusicStore mStoreIn, Admin adminIn){
+        System.out.println("Which employee do you want to give hours?");
+        employeeList(mStoreIn);
+
+        System.out.println("Enter employee ID:");
+        int employeeID = 0;
+        employeeID = scan.nextInt();
+        scan.nextLine();
+        System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
+        String employeeType = scan.nextLine();
+        System.out.println("Enter the amount of hours:");
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
+        double hours = scan.nextDouble();
+        scan.nextLine();
+
+        try{
+            adminIn.hoursEmployee(employeeID, employeeType, hours);
+            System.out.println("Employee Given Hours");
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
+       
+            
+       
+    }
+
     public static void hireEmployee(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Enter name of the new hire:");
         String newEmployeeName = scan.nextLine();
         System.out.println("Enter pay amount:");
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
         double payAmt = scan.nextDouble();
         scan.nextLine();
         System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
@@ -207,6 +236,7 @@ public class Main {
       
         System.out.println("Enter employee ID:");
         int employeeID = 0;
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
         employeeID = scan.nextInt();
         scan.nextLine();
         System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
@@ -236,6 +266,7 @@ public class Main {
             }
         }
         System.out.println("Enter the new room number:");
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
         int roomNumber = scan.nextInt();
         scan.nextLine();
         try{
@@ -256,6 +287,7 @@ public class Main {
                 System.out.println("");
             }
             System.out.println("Enter the room number to cancel:");
+            //TYPE CHECK HERE EMMA!!!! <3 XOXOX
             int roomNumber = scan.nextInt();
             scan.nextLine();
             try{
@@ -272,6 +304,7 @@ public class Main {
         System.out.println("Enter name of item you want to add: ");
         String itemName = scan.nextLine();
         System.out.println("Enter price of item you want to add: ");
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
         double price = scan.nextDouble();
         scan.nextLine();
         try{
@@ -288,6 +321,7 @@ public class Main {
         System.out.println("Enter name of equipment you want to add: ");
         String itemName = scan.nextLine();
         System.out.println("Enter price of equipment you want to add: ");
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
         double price = scan.nextDouble();
         scan.nextLine();
         try{
@@ -446,7 +480,7 @@ public class Main {
     }
     public static boolean validChoiceAdmin(String input){
         String[] choices = {"Pay employee", "Hire employee", "Terminate Employee", "View Employee List", 
-        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Order Item", "Order Equipment", "Done"};
+        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Order Item", "Order Equipment", "Set Employee Hours", "Done"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -470,6 +504,7 @@ public class Main {
            while(!input.equals("valid")){
                 System.out.println("Enter your employee ID");
                 int employeeID = 0;
+                //TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 employeeID = scan.nextInt();
                 scan.nextLine();
                 
@@ -484,7 +519,7 @@ public class Main {
             }
             System.out.println("Welcome: " + adminOne.getName());
             while(!input.equalsIgnoreCase("done")){
-                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nOrder Item\nOrder Equipment\nDisplay Repair Pricing Info\nUpdate a Repair Price\nDone\n");
+                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nSet Employee Hours\nView Employee list\nAdd Rental space\nCancel Rental Space\nOrder Item\nOrder Equipment\nDisplay Repair Pricing Info\nUpdate a Repair Price\nDone\n");
                 input = scan.nextLine();
 
                 if (!validChoiceAdmin(input)){
@@ -492,6 +527,9 @@ public class Main {
                 } 
                 else if(input.equalsIgnoreCase("pay employee")){
                     payEmployee(mStore, adminOne);
+                }
+                else if(input.equalsIgnoreCase("Set Employee Hours")){
+                    giveEmployeeHours(mStore, adminOne);
                 }
                 else if(input.equalsIgnoreCase("hire employee")){
                     hireEmployee(mStore, adminOne);
@@ -712,6 +750,7 @@ public class Main {
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
                 System.out.println("Enter number of room:");
+                //TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 int roomNumber = scan.nextInt();
                 scan.nextLine();
                 try{
@@ -738,6 +777,7 @@ public class Main {
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
                 System.out.println("Enter number of room:");
+                //TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 int roomNumber = scan.nextInt();
                 scan.nextLine();
                 try{
@@ -812,6 +852,7 @@ public class Main {
         while(!input.equals("valid")){
             System.out.println("Enter your employee ID");
             int employeeID = 0;
+            //TYPE CHECK HERE EMMA!!!! <3 XOXOX
             employeeID = scan.nextInt();
             scan.nextLine();
             
