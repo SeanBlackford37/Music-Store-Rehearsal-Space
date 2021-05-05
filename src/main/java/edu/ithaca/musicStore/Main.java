@@ -7,6 +7,14 @@ import java.util.Scanner;
 public class Main {
     static Scanner scan = new Scanner(System.in);
     
+    public static boolean isAmountValid(double balance){
+        String s = "" + balance;
+        String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
+        if(result[1].length() <= 2 && balance >=.01){
+          return true;
+        }
+       return false;
+    }
     public static void rentingRoom(MusicStore store , Customer custIn, Employee employeeIn){
         
         List<Room> availableRoomList =  store.availableRoomList();
@@ -216,11 +224,16 @@ public class Main {
             }
     }
     public static void addRentalSpace(MusicStore mStoreIn, Admin adminIn){
-        System.out.println("Currently rented");
-        for(int i = 0; i < mStoreIn.getRoomList().size(); i++ ){
-            System.out.print("Room number: " + mStoreIn.getRoomList().get(i).getRoomNumber() + ", ");
-            System.out.print(" Rent name: " + mStoreIn.getRoomList().get(i).getRenterName());
-            System.out.println("");
+        
+        if(mStoreIn.getRoomList().isEmpty()){
+            System.out.println("No rooms are currently being rented!");
+        }else{
+            System.out.println("Currently rented");
+            for(int i = 0; i < mStoreIn.getRoomList().size(); i++ ){
+                System.out.print("Room number: " + mStoreIn.getRoomList().get(i).getRoomNumber() + ", ");
+                System.out.print(" Rent name: " + mStoreIn.getRoomList().get(i).getRenterName());
+                System.out.println("");
+            }
         }
         System.out.println("Enter the new room number:");
         int roomNumber = scan.nextInt();
@@ -234,22 +247,113 @@ public class Main {
     }
     public static void cancelRentalSpace(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Currently rented");
-    
-        for(int i = 0; i < mStoreIn.getRoomList().size(); i++ ){
-            System.out.print("Room number: " + mStoreIn.getRoomList().get(i).getRoomNumber() + ", ");
-            System.out.print(" Rent name: " + mStoreIn.getRoomList().get(i).getRenterName());
-            System.out.println("");
+        if(mStoreIn.getRoomList().isEmpty()){
+            System.out.println("No rooms are currently being rented!");
+        }else{
+            for(int i = 0; i < mStoreIn.getRoomList().size(); i++ ){
+                System.out.print("Room number: " + mStoreIn.getRoomList().get(i).getRoomNumber() + ", ");
+                System.out.print(" Rent name: " + mStoreIn.getRoomList().get(i).getRenterName());
+                System.out.println("");
+            }
+            System.out.println("Enter the room number to cancel:");
+            int roomNumber = scan.nextInt();
+            scan.nextLine();
+            try{
+                adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
+                System.out.println("Room canceled!");
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
         }
-        System.out.println("Enter the room number to cancel:");
-        int roomNumber = scan.nextInt();
-        scan.nextLine();
-        try{
-            adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
-            System.out.println("Room canceled!");
-        }catch(Exception e){
-            System.out.println(e.getMessage());
+        
+    }
+    
+    public static void addEquipmentToInventory(MusicStore mStoreIn, Admin adminIn){
+        //ToDo for loop to add as many items as wanted
+        
+        String itemName = "";
+        System.out.println("What Item would you like to add?");
+        while(!itemName.equalsIgnoreCase("done")){
+            System.out.println("What is the name of the product?");
+            itemName = scan.nextLine();
+            
+            System.out.println("What is the price?");
+            double price = scan.nextDouble();
+            scan.nextLine();
+            
+            if(isAmountValid(price)){
+                adminIn.addEquipmentToInventory(new Item(itemName, price), mStoreIn);
+                System.out.println(itemName + " added to the inventory to rent");
+            }else{
+                System.out.println("Please make sure to enter a valid amount");
+            }
+            for(int i = 0; i < mStoreIn.getInventorySize(); i++){
+                System.out.println(mStoreIn.getInventoryList().get(i).getName());
+            }
+
+
+            System.out.println("Enter 'done' to be finished or press enter to add another item");
+            itemName = scan.nextLine();
+            
+            
         }
     }
+
+    public static void displayRepairPricingInfo(MusicStore storeIn){
+        System.out.println("\nBusiness Days \tPrice");
+        storeIn.printRepairPricings();
+        System.out.println("");
+    }
+    
+    // public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
+    // }
+
+    public static void updateRepairPricing(MusicStore mStoreIn, Admin adminIn){
+        displayRepairPricingInfo(mStoreIn);
+        System.out.println("Enter the number for the kind of repair of which you'd like to update the price:");
+        RepairBusinessDayCategory rc=null;
+        boolean isIntType=true;
+        do{
+            try{
+                //-1 since key set is indexed at 0
+                int i = Integer.parseInt(scan.nextLine())-1;
+                try{
+                rc = mStoreIn.getRepairBusinessCategory(i);
+                }
+                catch(Exception e){
+                    System.out.println("Invalid number entered");
+                }
+                isIntType=true;
+            }catch(NumberFormatException nfe){
+                isIntType=false;
+                System.out.println("Input entered was not a number. Try again.");
+            }
+        }while(rc==null||isIntType==false);
+        boolean isCorrectType = true;
+        boolean isValidAmt = true;
+        double amount=-1;
+        do{
+            System.out.println("Enter the price you'd like to set for a repair that's "+rc.toString()+" business days: ");
+            try{
+                amount = Double.parseDouble(scan.nextLine());
+                try{
+                    adminIn.updateRepairPricing(rc, amount);
+                    isValidAmt=true;
+                }catch(Exception e){
+                    isValidAmt=false;
+                    System.out.println("Invalid price entered");
+                }
+                isCorrectType=true;
+            }catch(NumberFormatException nfe){
+                System.out.println("Price entered contains nonnumerical input outside of a '.' ... Try again.");
+                isCorrectType=false;
+            }
+        }while(isCorrectType==false||isValidAmt==false);
+
+        System.out.println("Pricing for "+rc.toString()+" business day repairs has been updated to $"+amount);
+        
+    }
+
     public static void employeeList(MusicStore mStoreIn){
         for(int i = 0; i < mStoreIn.getAdminList().size(); i++){
             System.out.print("Name: " +   mStoreIn.getAdminList().get(i).getName() + ",");
@@ -345,7 +449,8 @@ public class Main {
         //System.out.println(custOne.getTransactionHistory().get(0).getRoomRented().getRoomNumber());
     }
     public static boolean validChoiceAdmin(String input){
-        String[] choices = {"pay employee", "Hire employee", "Terminate employee", "View Employee list", "Done"};
+        String[] choices = {"Pay employee", "Hire employee", "Terminate Employee", "View Employee List", 
+        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Add Item to Inventory","Done"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -353,217 +458,447 @@ public class Main {
         }
         return false;
     }
-    public static void adminInterface(MusicStore mStore){
-        mStore.addEmployee(new Employee(12346, "Sean", mStore));
-        mStore.addEmployee(new Employee(12347, "Toby", mStore));
-        mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
-        System.out.println("Welcome to the Admin interface");
-        
-        String input = "go";
-        System.out.println("Enter your name");
-        String name = "Sean Blackford";
-        name = scan.nextLine();
-        Admin adminOne = new Admin(12345,  name, mStore);
-        mStore.addAdmin(adminOne);
-
-        while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nDone\n");
-            input = scan.nextLine();
-
-            if (!validChoiceAdmin(input)){
-                System.out.println("Please enter a valid choice");
-            } 
-            else if(input.equalsIgnoreCase("pay employee")){
-                payEmployee(mStore, adminOne);
-            }
-            else if(input.equalsIgnoreCase("hire employee")){
-                hireEmployee(mStore, adminOne);
-            }
-            else if(input.equalsIgnoreCase("terminate employee")){
-               fireEmployee(mStore, adminOne);
-            }
-            // else if(input.equalsIgnoreCase("add rental space")){
-            //     addRentalSpace(mStore, adminOne);
-            // }
-            // else if(input.equalsIgnoreCase("cancel rental space")){
-            //     cancelRentalSpace(mStore, adminOne);
-            // }
-            else if(input.equalsIgnoreCase("View Employee list")){
-                employeeList(mStore);
-            }
+    public static void adminInterface(MusicStore mStore, Customer customerIn){
+        System.out.println("Enter client or admin");
+        String uiPick = scan.nextLine();
+        if(uiPick.equalsIgnoreCase("client")){
+            employeeInterface(mStore, customerIn);
         }
-            
-            
-        }
-
-        public static void addRepair(RepairTech currTech){
-            System.out.println("Enter client's name");
-            String itemName;
-            String clientName;
-            String damageDescription;
-            clientName = scan.nextLine();
-            System.out.println("Enter item name");
-            itemName = scan.nextLine();
-            System.out.println("Enter damage description");
-            damageDescription = scan.nextLine();
-            currTech.addToActiveRepairList(new Repair(new ThingToBeRepaired(itemName, clientName, damageDescription), currTech));
-        }
-
-        public static void giveQuote(RepairTech currTech){
-            System.out.println("Enter client's name");
-            String itemName;
-            String clientName;
-            double timeEst;
-            clientName = scan.nextLine();
-            System.out.println("Enter item name");
-            itemName = scan.nextLine();
-            try{
-                currTech.getRepair(itemName, clientName);
-            }
-            catch(Exception e){
-                System.out.println("Cannot find the Repair");
-            }
-            //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-            System.out.println("Enter time estimate (in business days)");
-            timeEst = Double.parseDouble(scan.nextLine());
-            try{
-                String quote = currTech.getRepair(itemName, clientName).createQuote(timeEst);
-                System.out.println(quote);
-            }
-            catch(Exception e){
-                System.out.println("Cannot find the Repair");
-                return;
-            }
-        }
-
-        public static void pullFromInventoryForRepair(RepairTech currTech){
-            System.out.println("Enter client's name");
-            String itemName;
-            String clientName;
-            String inventoryItem;
-            clientName = scan.nextLine();
-            System.out.println("Enter item to repair name");
-            itemName = scan.nextLine();
-            System.out.println("Enter item to pull from equipment Inventory");
-            inventoryItem = scan.nextLine();
-            try{
-                currTech.getRepair(itemName, clientName);
-                
-            }
-            catch(Exception e){
-                System.out.println("Cannot find the Repair");
-                return;
-            }
-            try{
-                currTech.getRepair(itemName, clientName).addItemToEquipmentUsed(currTech.pullFromEquipInventory(inventoryItem));
-                
-            }
-            catch(Exception e){
-                System.out.println("Cannot find the item wanted");
-                return;
-            }
-        
-            
-            
-        }
-
-        public static void finishRepair(RepairTech currTech){
-            System.out.println("Enter client's name");
-            String itemName;
-            String clientName;
-            clientName = scan.nextLine();
-            System.out.println("Enter item name");
-            itemName = scan.nextLine();
-            try{
-                currTech.getRepair(itemName, clientName);
-            }
-            catch(Exception e){
-                System.out.println("Cannot find the Repair");
-                return;
-            }
-            try{
-                currTech.getRepair(itemName, clientName).setRepairIsFinished(true);
-            }
-            catch(Exception e){
-                System.out.println("Cannot find the Repair");
-                return;
-            }
-        }
-
-        public static void viewRepairs(RepairTech currTech){
-            for (int i =0; i < currTech.getActiveRepairList().size(); i ++){
-                Repair curRepair = currTech.getRepair(i);
-                System.out.println("Repair " + i+1 + ":");
-                System.out.println("\tClient: " + curRepair.getItem().getClientName());
-                System.out.println("\tItem To Fix: " + curRepair.getItem().getItemName());
-                System.out.println("\tDamage Description: " + curRepair.getItem().getDamageDescription());
-            }
-        }
-
-        public static boolean validChoiceRepair(String input){
-            String[] choices = {"give quote", "add repair", "pull from inventory for repair", "Finish Repair", "Use Tuner", "view active repairs", "Done"};
-            for (int i=0;i<choices.length;i++){
-                if(input.equalsIgnoreCase(choices[i])){
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public static void repairInterface(MusicStore mStore){
-            
-            mStore.addToRepairTechList(new RepairTech(12346, "Morgan", mStore));
-            mStore.addToRepairTechList(new RepairTech(12348, "Sam", mStore));
-            mStore.addEquipment(new Equipment("guitar string", 12));
-            mStore.addEquipment(new Equipment("glue", 6));
-            System.out.println("Welcome to the Repair Tech interface");
+        else if(uiPick.equalsIgnoreCase("admin")){
+            mStore.addEmployee(new Employee(12346, "Sean", mStore));
+            mStore.addEmployee(new Employee(12347, "Toby", mStore));
+            mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
+            System.out.println("Welcome to the Admin interface");
             
             String input = "go";
             System.out.println("Enter your name");
             String name = "Sean Blackford";
             name = scan.nextLine();
-            RepairTech currTech;
-            if (mStore.findRepairTech(name)!=-1){
-                currTech = mStore.getRepairTech(name);
+            Admin adminOne = new Admin(12345,  name, mStore);
+            Customer customerOne = new Customer(mStore, "Joe");
+            mStore.addAdmin(adminOne);
+
+            while(!input.equals("valid")){
+                System.out.println("Enter your employee ID");
+                int employeeID = 0;
+                employeeID = scan.nextInt();
+                scan.nextLine();
+                
+                if (mStore.findAdmin(employeeID) !=-1){
+                    int index = mStore.findAdmin(employeeID);
+                    adminOne = mStore.getAdmin(index);
+                    input = "valid";
+                }
+                else{
+                    System.out.println("Incorrect employeeID");
+                }
             }
-            else{
-                currTech = new RepairTech(12347, name, mStore);
-            }
-            mStore.addToRepairTechList(currTech);
-    
+        
+            
+                
+            System.out.println("Welcome: " + adminOne.getName());
             while(!input.equalsIgnoreCase("done")){
-                System.out.println("\n--Repair Menu--\nView Active Repairs\nGive Quote\nAdd Repair\nPull From Inventory for Repair\nFinish Repair\nUse Tuner\nDone\n");
+                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nAdd Item to Inventory\nDone\n");
                 input = scan.nextLine();
-    
-                if (!validChoiceRepair(input)){
+
+                if (!validChoiceAdmin(input)){
                     System.out.println("Please enter a valid choice");
                 } 
-                else if(input.equalsIgnoreCase("give quote")){
-                    giveQuote(currTech);
+                else if(input.equalsIgnoreCase("pay employee")){
+                    payEmployee(mStore, adminOne);
                 }
-                else if(input.equalsIgnoreCase("view active repairs")){
-                    viewRepairs(currTech);
+                else if(input.equalsIgnoreCase("hire employee")){
+                    hireEmployee(mStore, adminOne);
                 }
-                else if(input.equalsIgnoreCase("add repair")){
-                    addRepair(currTech);
+                else if(input.equalsIgnoreCase("terminate employee")){
+                fireEmployee(mStore, adminOne);
                 }
-                else if(input.equalsIgnoreCase("pull from inventory for repair")){
-                    pullFromInventoryForRepair(currTech);
+                else if(input.equalsIgnoreCase("add rental space")){
+                    addRentalSpace(mStore, adminOne);
                 }
-                else if(input.equalsIgnoreCase("finish repair")){
-                   finishRepair(currTech);
+                else if(input.equalsIgnoreCase("cancel rental space")){
+                    cancelRentalSpace(mStore, adminOne);
                 }
-                else if(input.equalsIgnoreCase("Use tuner")){
-                    currTech.tuner();
+                else if(input.equalsIgnoreCase("add item to inventory")){
+                    addEquipmentToInventory(mStore, adminOne);
                 }
-                
-                
+                else if(input.equalsIgnoreCase("display repair pricing info")){
+                    displayRepairPricingInfo(mStore);
+                }
+                else if(input.equalsIgnoreCase("update a repair price")){
+                    updateRepairPricing(mStore, adminOne);
+                }
+                else if(input.equalsIgnoreCase("View Employee list")){
+                    employeeList(mStore);
+                }
+                else if(input.equalsIgnoreCase("check stock")){
+                    checkStock(mStore, adminOne);
+                }
+                else if(input.equalsIgnoreCase("charge customer")){
+                    chargeCustomer(adminOne, customerIn);
+                }
+                else if(input.equalsIgnoreCase("refund customer")){
+                    refundCustomer(adminOne, customerIn);
+                }
+                else if(input.equalsIgnoreCase("view space schedule")){
+                    viewSpaceSchedule(mStore);
+                }
+                else if(input.equalsIgnoreCase("view equipment schedule")){
+                    viewEquipmentSchedule(mStore);
+                }
             }
+        }
+    }       
+            
+    
+
+    public static void addRepair(RepairTech currTech){
+        System.out.println("Enter client's name");
+        String itemName;
+        String clientName;
+        String damageDescription;
+        clientName = scan.nextLine();
+        System.out.println("Enter item name");
+        itemName = scan.nextLine();
+        System.out.println("Enter damage description");
+        damageDescription = scan.nextLine();
+        currTech.addToActiveRepairList(new Repair(new ThingToBeRepaired(itemName, clientName, damageDescription), currTech));
+    }
+
+    public static void giveQuote(RepairTech currTech){
+        System.out.println("Enter client's name");
+        String itemName;
+        String clientName;
+        double timeEst;
+        clientName = scan.nextLine();
+        System.out.println("Enter item name");
+        itemName = scan.nextLine();
+        try{
+            currTech.getRepair(itemName, clientName);
+        }
+        catch(Exception e){
+            System.out.println("Cannot find the Repair");
+        }
+        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
+        System.out.println("Enter time estimate (in business days)");
+        timeEst = Double.parseDouble(scan.nextLine());
+        try{
+            String quote = currTech.getRepair(itemName, clientName).createQuote(timeEst);
+            System.out.println(quote);
+        }
+        catch(Exception e){
+            System.out.println("Cannot find the Repair");
+            return;
+        }
+    }
+
+    public static void pullFromInventoryForRepair(RepairTech currTech){
+        System.out.println("Enter client's name");
+        String itemName;
+        String clientName;
+        String inventoryItem;
+        clientName = scan.nextLine();
+        System.out.println("Enter item to repair name");
+        itemName = scan.nextLine();
+        System.out.println("Enter item to pull from equipment Inventory");
+        inventoryItem = scan.nextLine();
+        try{
+            currTech.getRepair(itemName, clientName);
+            
+        }
+        catch(Exception e){
+            System.out.println("Cannot find the Repair");
+            return;
+        }
+        try{
+            currTech.getRepair(itemName, clientName).addItemToEquipmentUsed(currTech.pullFromEquipInventory(inventoryItem));
+            
+        }
+        catch(Exception e){
+            System.out.println("Cannot find the item wanted");
+            return;
+        }
+    
+        
+        
+    }
+
+    public static void finishRepair(RepairTech currTech){
+        System.out.println("Enter client's name");
+        String itemName;
+        String clientName;
+        clientName = scan.nextLine();
+        System.out.println("Enter item name");
+        itemName = scan.nextLine();
+        try{
+            currTech.getRepair(itemName, clientName);
+        }
+        catch(Exception e){
+            System.out.println("Cannot find the Repair");
+            return;
+        }
+        try{
+            currTech.getRepair(itemName, clientName).setRepairIsFinished(true);
+        }
+        catch(Exception e){
+            System.out.println("Cannot find the Repair");
+            return;
+        }
+    }
+
+    public static void viewRepairs(RepairTech currTech){
+        for (int i =0; i < currTech.getActiveRepairList().size(); i ++){
+            Repair curRepair = currTech.getRepair(i);
+            System.out.println("Repair " + i+1 + ":");
+            System.out.println("\tClient: " + curRepair.getItem().getClientName());
+            System.out.println("\tItem To Fix: " + curRepair.getItem().getItemName());
+            System.out.println("\tDamage Description: " + curRepair.getItem().getDamageDescription());
+        }
+    }
+
+    public static boolean validChoiceRepair(String input){
+        String[] choices = {"give quote", "add repair", "pull from inventory for repair", "Finish Repair", "Use Tuner", "view active repairs", "Done"};
+        for (int i=0;i<choices.length;i++){
+            if(input.equalsIgnoreCase(choices[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static void repairInterface(MusicStore mStore){
+        
+        mStore.addToRepairTechList(new RepairTech(12346, "Morgan", mStore));
+        mStore.addToRepairTechList(new RepairTech(12348, "Sam", mStore));
+        mStore.addEquipment(new Equipment("guitar string", 12));
+        mStore.addEquipment(new Equipment("glue", 6));
+        System.out.println("Welcome to the Repair Tech interface");
+        
+        String input = "go";
+        System.out.println("Enter your name");
+        String name = "Sean Blackford";
+        name = scan.nextLine();
+        RepairTech currTech;
+        if (mStore.findRepairTech(name)!=-1){
+            currTech = mStore.getRepairTech(name);
+        }
+        else{
+            currTech = new RepairTech(12347, name, mStore);
+        }
+        mStore.addToRepairTechList(currTech);
+
+        while(!input.equalsIgnoreCase("done")){
+            System.out.println("\n--Repair Menu--\nView Active Repairs\nGive Quote\nAdd Repair\nPull From Inventory for Repair\nFinish Repair\nUse Tuner\nDone\n");
+            input = scan.nextLine();
+
+            if (!validChoiceRepair(input)){
+                System.out.println("Please enter a valid choice");
+            } 
+            else if(input.equalsIgnoreCase("give quote")){
+                giveQuote(currTech);
+            }
+            else if(input.equalsIgnoreCase("view active repairs")){
+                viewRepairs(currTech);
+            }
+            else if(input.equalsIgnoreCase("add repair")){
+                addRepair(currTech);
+            }
+            else if(input.equalsIgnoreCase("pull from inventory for repair")){
+                pullFromInventoryForRepair(currTech);
+            }
+            else if(input.equalsIgnoreCase("finish repair")){
+                finishRepair(currTech);
+            }
+            else if(input.equalsIgnoreCase("Use tuner")){
+                currTech.tuner();
+            }
+        }
+    }
+
+    public static void checkStock(MusicStore storeIn, Employee employeeIn){
+        System.out.println("Enter name of item you are looking for:");
+        String itemName = scan.nextLine();
+        System.out.println();
+        if(employeeIn.checkStock(itemName, storeIn.getInventory())){
+            for(int i = 0 ; i < storeIn.getInventorySize(); i ++){
+                if(storeIn.getInventory().get(i).getName().equalsIgnoreCase(itemName)){
+                    System.out.println(storeIn.getInventory().get(i).getName());
+                    System.out.println("$" +storeIn.getInventory().get(i).getPrice());
+                    System.out.println();
+                }
+            }
+        }else{
+            System.out.println("Item not found!");
+        }
+    }
+
+    public static void chargeCustomer(Employee employeeIn, Customer customerIn){
+        String input = "go";
+        while(!input.equalsIgnoreCase("done")){
+            System.out.println("Charge room, item, or done");
+            input = scan.nextLine();
+            if(input.equalsIgnoreCase("room")){
+                System.out.println("Enter number of room:");
+                int roomNumber = scan.nextInt();
+                scan.nextLine();
+                try{
+                    employeeIn.chargeCustomerForRoomRental(customerIn, roomNumber);
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                } 
+            }
+            else if(input.equalsIgnoreCase("item")){
+                System.out.println("Enter name of item:");
+                String itemName = scan.nextLine();
+                try{
+                    employeeIn.chargeCustomerForItemRental(customerIn, itemName);
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+    }
+    public static void refundCustomer(Employee employeeIn, Customer customerIn){
+        String input = "go";
+        while(!input.equalsIgnoreCase("done")){
+            System.out.println("Refund room, item, or done");
+            input = scan.nextLine();
+            if(input.equalsIgnoreCase("room")){
+                System.out.println("Enter number of room:");
+                int roomNumber = scan.nextInt();
+                scan.nextLine();
+                try{
+                employeeIn.refundCustomerForRoomRental(customerIn, roomNumber);
+            }catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+            }
+            else if(input.equalsIgnoreCase("item")){
+            System.out.println("Enter name of item:");
+            String itemName = scan.nextLine();
+                try{
+                    employeeIn.refundCustomerForItemRental(customerIn, itemName);
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        
+    }
+    public static void viewSpaceSchedule(MusicStore musicStoreIn){
+        if(musicStoreIn.getRoomList().isEmpty()){
+            System.out.println("No rooms present!");
+        }else{
+            for(int i = 0; i < musicStoreIn.getRoomListSize();i++){
+                System.out.println("Room number: " + musicStoreIn.getRoomList().get(i).getRoomNumber());
+                System.out.println("Has equipment: " + musicStoreIn.getRoomList().get(i).getHasEquipment());
+                System.out.println("Room occuiped: " + musicStoreIn.getRoomList().get(i).getIsEmptyRoom());
+                System.out.println("Room rate: " + musicStoreIn.getRoomList().get(i).getRate());
+                System.out.println("Renter name: " + musicStoreIn.getRoomList().get(i).getRenterName());
+                System.out.println();
+            }
+        }
+    }
+    public static void viewEquipmentSchedule(MusicStore musicStoreIn){
+        if(musicStoreIn.getRentedList().isEmpty()){
+            System.out.println("No items are currently rented!");
+            if(musicStoreIn.getInventory().isEmpty()){
+                System.out.println("No items in the store to be rented");
+            }
+        }else{
+            for(int i = 0; i < musicStoreIn.getRentedList().size(); i++){
+                System.out.println("Item name: " + musicStoreIn.getRentedList().get(i).getName());
+                System.out.println("Renter name: " + musicStoreIn.getRentedList().get(i).getRenterName());
+                System.out.println("Price: " + musicStoreIn.getRentedList().get(i).getPrice());
+                System.out.println();
+            }
+            for(int i = 0; i < musicStoreIn.getInventory().size(); i++){
+                System.out.println("Item name: " +musicStoreIn.getInventory().get(i).getName());
+                System.out.println("Price: " + musicStoreIn.getInventory().get(i).getPrice());
+                System.out.println();
+            }
+        }
+    }
+    public static boolean validChoiceEmployee(String input){
+        String[] choices = {"check stock", "charge customer", "refund customer", "view space schedule", "view equipment schedule", "done"};
+        for (int i=0;i<choices.length;i++){
+            if(input.equalsIgnoreCase(choices[i])){
+                return true;
+            }
+        }
+        return false;
+    }
+    public static void employeeInterface(MusicStore mStore, Customer customerIn){
+        
+        mStore.addEmployee(new Admin(12346, "Sean", mStore));
+        mStore.addEmployee(new Employee(12347, "Toby", mStore));
+        
+        System.out.println("Welcome to the Employee interface");
+        Employee currEmployee = null;
+        String input = "go";
+        while(!input.equals("valid")){
+            System.out.println("Enter your employee ID");
+            int employeeID = 0;
+            employeeID = scan.nextInt();
+            scan.nextLine();
+            
+            if (mStore.findEmployee(employeeID) !=-1){
+                int index = mStore.findEmployee(employeeID);
+                currEmployee = mStore.getEmployee(index);
+                input = "valid";
+            }
+            else{
+                System.out.println("Incorrect employeeID");
+            }
+        }
+        System.out.println("Welcome: " + currEmployee.getName());
+        while(!input.equalsIgnoreCase("done")){
+            System.out.println("\n--Employee Menu--\nCheck Stock\nCharge Customer\nRefund Customer\nView Space Schedule\nView Equipment Schedule\nDone\n");
+            input = scan.nextLine();
+
+            if (!validChoiceEmployee(input)){
+                System.out.println("Please enter a valid choice");
+            }
+            else if(input.equalsIgnoreCase("check stock")){
+                checkStock(mStore, currEmployee);
+            }
+            else if(input.equalsIgnoreCase("charge customer")){
+                chargeCustomer(currEmployee, customerIn);
+            }
+            else if(input.equalsIgnoreCase("refund customer")){
+                refundCustomer(currEmployee, customerIn);
+            }
+            else if(input.equalsIgnoreCase("view space schedule")){
+                viewSpaceSchedule(mStore);
+            }
+            else if(input.equalsIgnoreCase("view equipment schedule")){
+                viewEquipmentSchedule(mStore);
+            }
+            
+        }
     }
 
     public static void main(String[] args)  {
         Scanner scan = new Scanner(System.in);
         MusicStore mStore = new MusicStore("Ithaca Music Store");
+        mStore.addToInventory(new Item("Piano", 30, "none"));
+        mStore.addToInventory(new Item("Saxophone", 15, "none"));
+        mStore.addToInventory(new Item("Drums", 50, "none"));
+        mStore.addToInventory(new Item("Guitar", 15, "none"));
+        mStore.addToInventory(new Item("Guitar", 25, "none"));
+        mStore.addToRented(new Item("Piano", 30, "Joe"));
+        mStore.addToRented(new Item("Saxophone", 40, "Jim"));
+        mStore.addToRoomList(new Room(true,1,false,"none"));
+        mStore.addToRoomList(new Room(false,2,true,"Joe Smith"));
+        mStore.addToRoomList(new Room(true,3,false,"none"));
+        mStore.addToRoomList(new Room(false,4,false,"Bob"));
+        mStore.addToRoomList(new Room(true,5,false,"none"));
+        Customer currCustomer = new Customer(mStore, "Sean");
+        currCustomer.rentRoom(1, new Employee(12345, "Doe", mStore));
+        currCustomer.rentItem("Piano",  new Employee(12345, "Doe", mStore));
+        currCustomer.rentItem("Guitar",  new Employee(12345, "Doe", mStore));
+        mStore.addToStoreBalance(50000);
+        
         int menuNum=-1;
         int numMenus=4;
         boolean isCorrectType = true;
@@ -581,7 +916,7 @@ public class Main {
                     menuNum=-1;
                 }
                 else if(menuNum==2){
-                    adminInterface(mStore);
+                    adminInterface(mStore, currCustomer);
                     menuNum=-1;
                 }
                 else if(menuNum==3){
@@ -605,17 +940,5 @@ public class Main {
             }
         }
         scan.close();
-        
-
-
-        //CAN UNCOMMENT TO SHOW TUNER
-        //MusicStore store = new MusicStore("Place");
-        //RepairTech tech= new RepairTech(12345, "Steve", store);
-        //tech.tuner();
-        
-       
-
     }
-
-
 }

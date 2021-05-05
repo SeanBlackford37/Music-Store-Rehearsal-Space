@@ -59,6 +59,9 @@ public class Admin extends Employee {
         else{throw new IllegalArgumentException("invalid amount for pricing");}
     }
 
+    public void addEquipmentToInventory(Item itemIn, MusicStore musicStoreIn){
+        musicStoreIn.addToInventory(itemIn);
+    }
     public void payEmployee(int employeeID, String employeeType) throws IllegalArgumentException{
             
         if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
@@ -199,6 +202,26 @@ public class Admin extends Employee {
                 }
             }else{
                 throw new IllegalArgumentException("Invalid Employee Type");
+            }
+        }
+
+        public void orderItem(String name, double price){
+            try {
+                Item toAdd = new Item(name, price);
+                store.addToInventory(toAdd);
+            }
+            catch(Exception e){
+                throw new IllegalArgumentException("Not a valid item");
+            }
+        }
+
+        public void orderEquipment(String name, double price){
+            try {
+                Equipment toAdd = new Equipment(name, price);
+                store.addEquipment(toAdd);
+            }
+            catch(Exception e){
+                throw new IllegalArgumentException("Not a valid item");
             }
         }
     

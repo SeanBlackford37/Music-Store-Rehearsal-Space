@@ -184,6 +184,51 @@ public class AdminTest {
         assertEquals(15.5, store.getEmployeeList().get(3).getPayAmt());
         assertThrows(IllegalArgumentException.class, ()->admin1.hireEmployees(12349, "Katherine", -15.5, store, "Employee"));
         assertThrows(IllegalArgumentException.class, ()->admin1.hireEmployees(12349, "Katherine", 15.555, store, "Employee"));
-        
+    }
+    @Test
+    void addEquipmentToInventoryTest(){
+        MusicStore store= new MusicStore("Fancy Store", 10000);
+        Admin admin1= new Admin(56789, "Jack", 20.00, store);
+        store.addToInventory(new Item("Piano", 30, "none"));
+        store.addToInventory(new Item("Saxophone", 15, "none"));
+        store.addToInventory(new Item("Drums", 50, "none"));
+        store.addToInventory(new Item("Guitar", 15, "none"));
+        store.addToInventory(new Item("Guitar", 15, "none"));
+        assertEquals(5, store.getInventoryList().size());
+        admin1.addEquipmentToInventory(new Item("Guitar 2.0", 36), store);
+        assertEquals(6, store.getInventoryList().size());
+        assertEquals("Guitar 2.0", store.getInventoryItem(5).getName());
+    }
+
+    @Test
+    void orderEquipmentTest(){
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
+        employeeOne.orderEquipment("guitar string", 12);
+        employeeOne.orderEquipment("guitar s", 12.01);
+        assertEquals(0, ms.findEquipment("guitar string"));
+        assertEquals(1, ms.findEquipment("guitar s"));
+
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", -5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("", 5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", 5.234)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", -5.2)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", -5.23)); 
+    }
+
+    @Test
+    void orderItemTest(){
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
+        employeeOne.orderItem("guitar string", 12);
+        employeeOne.orderItem("guitar s", 12.01);
+        assertEquals(0, ms.searchForInventoryItem("guitar string"));
+        assertEquals(1, ms.searchForInventoryItem("guitar s"));
+
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", -5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("", 5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", 5.234)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", -5.2)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", -5.23)); 
     }
 }
