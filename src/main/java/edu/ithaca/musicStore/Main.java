@@ -286,14 +286,21 @@ public class Main {
             double price = scan.nextDouble();
             scan.nextLine();
             
-            if(isAmountValid(price)){
-                adminIn.addEquipmentToInventory(new Item(itemName, price), mStoreIn);
-                System.out.println(itemName + " added to the inventory to rent");
-            }else{
-                System.out.println("Please make sure to enter a valid amount");
+            try{
+                if(isAmountValid(price)){
+                    mStoreIn.subtractFromStoreBalance(price);
+                    adminIn.addEquipmentToInventory(new Item(itemName, price), mStoreIn);
+                    System.out.println(itemName + " added to the inventory to rent");
+                }else{
+                    System.out.println("Please make sure to enter a valid amount");
+                }
+                
+                for(int i = 0; i < mStoreIn.getInventorySize(); i++){
+                    System.out.println(mStoreIn.getInventoryList().get(i).getName());
+                }
             }
-            for(int i = 0; i < mStoreIn.getInventorySize(); i++){
-                System.out.println(mStoreIn.getInventoryList().get(i).getName());
+            catch(Exception e){
+                System.out.println("Cannot create item, check store balance or retry");
             }
 
 
