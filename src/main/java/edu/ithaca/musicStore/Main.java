@@ -482,9 +482,6 @@ public class Main {
                     System.out.println("Incorrect employeeID");
                 }
             }
-        
-            
-                
             System.out.println("Welcome: " + adminOne.getName());
             while(!input.equalsIgnoreCase("done")){
                 System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nOrder Item\nOrder Equipment\nDisplay Repair Pricing Info\nUpdate a Repair Price\nDone\n");
