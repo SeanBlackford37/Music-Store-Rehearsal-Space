@@ -150,6 +150,62 @@ public class RepairTech extends Employee{
             }
         }
         System.out.println("Your E string is in tune!");
+        System.out.println("Next let's tune your B string. Enter a frequency between 236 and 256");
+        notePlayed= keyboard.nextInt();
+        while(notePlayed>250 || notePlayed<242){
+            if(notePlayed>250){
+                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            if(notePlayed<242){
+                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+        }
+        System.out.println("Your B string is in tune!");
+        System.out.println("Next let's tune your G string. Enter a frequency between 186 and 206");
+        notePlayed= keyboard.nextInt();
+        while(notePlayed>200 || notePlayed<192){
+            if(notePlayed>200){
+                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            if(notePlayed<192){
+                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            
+        }
+
+        System.out.println("Your G string is in tune!");
+        System.out.println("Next let's tune your D string. Enter a frequency between 136 and 156");
+        notePlayed= keyboard.nextInt();
+        while(notePlayed>150 || notePlayed<142){
+            if(notePlayed>150){
+                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            if(notePlayed<142){
+                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            
+        }
+        System.out.println("Your D string is in tune!");
+        System.out.println("Next let's tune your A string. Enter a frequency between 100 and 120");
+        notePlayed= keyboard.nextInt();
+        while(notePlayed>114 || notePlayed<106){
+            if(notePlayed>114){
+                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            if(notePlayed<106){
+                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            
+        }
+        System.out.println("The guitar is now in tune!");
         
             /*for (int i =1; i <7; i++){
                 System.out.print("Play your " + i + " string then hit enter: ");
