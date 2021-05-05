@@ -199,4 +199,36 @@ public class AdminTest {
         assertEquals(6, store.getInventoryList().size());
         assertEquals("Guitar 2.0", store.getInventoryItem(5).getName());
     }
+
+    @Test
+    void orderEquipmentTest(){
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
+        employeeOne.orderEquipment("guitar string", 12);
+        employeeOne.orderEquipment("guitar s", 12.01);
+        assertEquals(0, ms.findEquipment("guitar string"));
+        assertEquals(1, ms.findEquipment("guitar s"));
+
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", -5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("", 5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", 5.234)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", -5.2)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderEquipment("string", -5.23)); 
+    }
+
+    @Test
+    void orderItemTest(){
+        MusicStore ms = new MusicStore("ms");
+        Admin employeeOne= new Admin(56789, "Sean", 25.00,ms);
+        employeeOne.orderItem("guitar string", 12);
+        employeeOne.orderItem("guitar s", 12.01);
+        assertEquals(0, ms.searchForInventoryItem("guitar string"));
+        assertEquals(1, ms.searchForInventoryItem("guitar s"));
+
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", -5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("", 5)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", 5.234)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", -5.2)); 
+        assertThrows(IllegalArgumentException.class, ()->employeeOne.orderItem("string", -5.23)); 
+    }
 }
