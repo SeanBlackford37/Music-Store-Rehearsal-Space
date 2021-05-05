@@ -204,5 +204,25 @@ public class Admin extends Employee {
                 throw new IllegalArgumentException("Invalid Employee Type");
             }
         }
+
+        public void orderItem(String name, double price){
+            try {
+                Item toAdd = new Item(name, price);
+                store.addToInventory(toAdd);
+            }
+            catch(Exception e){
+                throw new IllegalArgumentException("Not a valid item");
+            }
+        }
+
+        public void orderEquipment(String name, double price){
+            try {
+                Equipment toAdd = new Equipment(name, price);
+                store.addEquipment(toAdd);
+            }
+            catch(Exception e){
+                throw new IllegalArgumentException("Not a valid item");
+            }
+        }
     
 }
