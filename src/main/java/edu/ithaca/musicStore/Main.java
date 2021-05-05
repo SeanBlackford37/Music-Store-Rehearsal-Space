@@ -924,7 +924,7 @@ public class Main {
                     menuNum=-1;
                 }
                 else if(menuNum==4){
-                    System.out.println("Our employee menu is still under development, but you may try any of the others.");
+                    employeeInterface(mStore, currCustomer);
                     menuNum=-1;
                 }
                 else if (menuNum==0){
