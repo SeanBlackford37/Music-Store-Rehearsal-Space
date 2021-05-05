@@ -60,7 +60,9 @@ public class MusicStore {
     public void addToRepairTechList(RepairTech techToAdd){
         repairTechList.add(techToAdd);
     }
-
+    public List<Item> getRentedList(){
+        return rentedList;
+    }
     public List<RepairTech> getRepairTechList(){
         return repairTechList;
     }
