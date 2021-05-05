@@ -217,7 +217,7 @@ public class Main {
                 adminIn.fireEmployee(employeeID, employeeType);
                 System.out.println(employeeType + "has been terminate!");
             }else{
-                System.out.println("Can'terminate self!");
+                System.out.println("Can't terminate self!");
             }
         }catch(Exception e){
                 System.out.println(e.getMessage());
@@ -550,7 +550,7 @@ public class Main {
             clientName = scan.nextLine();
             System.out.println("Enter item to repair name");
             itemName = scan.nextLine();
-            System.out.println("Enter item to pull from equipment Inventory");
+            System.out.println("Enter item to pull from equipment inventory");
             inventoryItem = scan.nextLine();
             try{
                 currTech.getRepair(itemName, clientName);
