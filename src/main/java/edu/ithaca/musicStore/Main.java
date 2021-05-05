@@ -470,7 +470,7 @@ public class Main {
         mStore.addAdmin(adminOne);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nAdd Item to Inventory\nDone\n");
+            System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nAdd Item to Inventory\nDisplay Repair Pricing Info\nUpdate a Repair Price\nDone\n");
             input = scan.nextLine();
 
             if (!validChoiceAdmin(input)){
@@ -494,16 +494,18 @@ public class Main {
             else if(input.equalsIgnoreCase("add item to inventory")){
                 addEquipmentToInventory(mStore, adminOne);
             }
-            // else if(input.equalsIgnoreCase("get repair pricing")){
-            //     getRepairPricing(adminOne, ONETOTHREE);
-            // }
+            else if(input.equalsIgnoreCase("display repair pricing info")){
+                displayRepairPricingInfo(mStore);
+            }
+            else if(input.equalsIgnoreCase("update a repair price")){
+                updateRepairPricing(mStore, adminOne);
+            }
             else if(input.equalsIgnoreCase("View Employee list")){
                 employeeList(mStore);
             }
-        }
+        }    
             
-            
-        }
+    }
 
         public static void addRepair(RepairTech currTech){
             System.out.println("Enter client's name");
