@@ -522,21 +522,6 @@ public class Main {
                 else if(input.equalsIgnoreCase("View Employee list")){
                     employeeList(mStore);
                 }
-                else if(input.equalsIgnoreCase("check stock")){
-                    checkStock(mStore, adminOne);
-                }
-                else if(input.equalsIgnoreCase("charge customer")){
-                    chargeCustomer(adminOne, customerIn);
-                }
-                else if(input.equalsIgnoreCase("refund customer")){
-                    refundCustomer(adminOne, customerIn);
-                }
-                else if(input.equalsIgnoreCase("view space schedule")){
-                    viewSpaceSchedule(mStore);
-                }
-                else if(input.equalsIgnoreCase("view equipment schedule")){
-                    viewEquipmentSchedule(mStore);
-                }
             }
         }
     }       
