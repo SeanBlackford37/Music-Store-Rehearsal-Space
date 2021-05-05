@@ -298,14 +298,60 @@ public class Main {
             
         }
     }
-    
-    public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
-        //TODO
-        
-        
+
+    public static void displayRepairPricingInfo(MusicStore storeIn){
+        System.out.println("\nBusiness Days \tPrice");
+        storeIn.printRepairPricings();
+        System.out.println("");
     }
+    
+    // public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
+    // }
+
     public static void updateRepairPricing(MusicStore mStoreIn, Admin adminIn){
-        //TODO
+        displayRepairPricingInfo(mStoreIn);
+        System.out.println("Enter the number for the kind of repair of which you'd like to update the price:");
+        RepairBusinessDayCategory rc=null;
+        boolean isIntType=true;
+        do{
+            try{
+                //-1 since key set is indexed at 0
+                int i = Integer.parseInt(scan.nextLine())-1;
+                try{
+                rc = mStoreIn.getRepairBusinessCategory(i);
+                }
+                catch(Exception e){
+                    System.out.println("Invalid number entered");
+                }
+                isIntType=true;
+            }catch(NumberFormatException nfe){
+                isIntType=false;
+                System.out.println("Input entered was not a number. Try again.");
+            }
+        }while(rc==null||isIntType==false);
+        boolean isCorrectType = true;
+        boolean isValidAmt = true;
+        double amount=-1;
+        do{
+            System.out.println("Enter the price you'd like to set for a repair that's "+rc.toString()+" business days: ");
+            try{
+                amount = Double.parseDouble(scan.nextLine());
+                try{
+                    adminIn.updateRepairPricing(rc, amount);
+                    isValidAmt=true;
+                }catch(Exception e){
+                    isValidAmt=false;
+                    System.out.println("Invalid price entered");
+                }
+                isCorrectType=true;
+            }catch(NumberFormatException nfe){
+                System.out.println("Price entered contains nonnumerical input outside of a '.' ... Try again.");
+                isCorrectType=false;
+            }
+        }while(isCorrectType==false||isValidAmt==false);
+
+        System.out.println("Pricing for "+rc.toString()+" business day repairs has been updated to $"+amount);
+        
     }
 
     public static void employeeList(MusicStore mStoreIn){
@@ -404,7 +450,7 @@ public class Main {
     }
     public static boolean validChoiceAdmin(String input){
         String[] choices = {"Pay employee", "Hire employee", "Terminate Employee", "View Employee List", 
-        "Add Rental Space", "Cancel Rental space", "Get Repair Pricing", "Add Item to Inventory","Done"};
+        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Add Item to Inventory","Done"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -418,30 +464,37 @@ public class Main {
         if(uiPick.equalsIgnoreCase("client")){
             employeeInterface(mStore, customerIn);
         }else if(uiPick.equalsIgnoreCase("admin")){
-            mStore.addAdmin(new Admin(12346, "Sean", mStore));
+            mStore.addEmployee(new Employee(12346, "Sean", mStore));
             mStore.addEmployee(new Employee(12347, "Toby", mStore));
             mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
             System.out.println("Welcome to the Admin interface");
-            Admin adminOne = null;
+            
             String input = "go";
-                while(!input.equals("valid")){
-                    System.out.println("Enter your employee ID");
-                    int employeeID = 0;
-                    employeeID = scan.nextInt();
-                    scan.nextLine();
-                   
-                    if (mStore.findAdmin(employeeID) !=-1){
-                        int index = mStore.findAdmin(employeeID);
-                        adminOne = mStore.getAdmin(index);
-                        input = "valid";
-                    }
-                    else{
-                        System.out.println("Incorrect employeeID");
-                    }
+            System.out.println("Enter your name");
+            String name = "Sean Blackford";
+            name = scan.nextLine();
+            Admin adminOne = new Admin(12345,  name, mStore);
+            Customer customerOne = new Customer(mStore, "Joe");
+            mStore.addAdmin(adminOne);
+
+            while(!input.equals("valid")){
+                System.out.println("Enter your employee ID");
+                int employeeID = 0;
+                employeeID = scan.nextInt();
+                scan.nextLine();
+                
+                if (mStore.findAdmin(employeeID) !=-1){
+                    int index = mStore.findAdmin(employeeID);
+                    adminOne = mStore.getAdmin(index);
+                    input = "valid";
                 }
+                else{
+                    System.out.println("Incorrect employeeID");
+                }
+            }
+        
             
-          
-            
+                
             System.out.println("Welcome: " + adminOne.getName());
             while(!input.equalsIgnoreCase("done")){
                 System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nView Employee list\nAdd Rental space\nCancel Rental Space\nAdd Item to Inventory\nDone\n");
@@ -468,9 +521,12 @@ public class Main {
                 else if(input.equalsIgnoreCase("add item to inventory")){
                     addEquipmentToInventory(mStore, adminOne);
                 }
-                // else if(input.equalsIgnoreCase("get repair pricing")){
-                //     getRepairPricing(adminOne, ONETOTHREE);
-                // }
+                else if(input.equalsIgnoreCase("display repair pricing info")){
+                    displayRepairPricingInfo(mStore);
+                }
+                else if(input.equalsIgnoreCase("update a repair price")){
+                    updateRepairPricing(mStore, adminOne);
+                }
                 else if(input.equalsIgnoreCase("View Employee list")){
                     employeeList(mStore);
                 }
@@ -490,11 +546,12 @@ public class Main {
                     viewEquipmentSchedule(mStore);
                 }
             }
-        }       
+        }
+    }       
             
-    }
+    
 
-        public static void addRepair(RepairTech currTech){
+    public static void addRepair(RepairTech currTech){
             System.out.println("Enter client's name");
             String itemName;
             String clientName;
