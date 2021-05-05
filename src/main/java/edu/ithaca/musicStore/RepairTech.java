@@ -134,10 +134,24 @@ public class RepairTech extends Employee{
 
     public void tuner(){
         Scanner keyboard = new Scanner(System.in);
-        Random random = new Random();
-        int tuned =0;
+        //Random random = new Random();
+        int notePlayed;
+        System.out.println("Lets tune your guitar!");
+        System.out.println("Play your E string by entering a frequency between 320 and 340 Hz: ");
+        notePlayed= keyboard.nextInt();
+        while(notePlayed>334 || notePlayed<326){
+            if(notePlayed>331){
+                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+            if(notePlayed<329){
+                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
+                notePlayed= keyboard.nextInt();
+            }
+        }
+        System.out.println("Your E string is in tune!");
         
-            for (int i =1; i <7; i++){
+            /*for (int i =1; i <7; i++){
                 System.out.print("Play your " + i + " string then hit enter: ");
                 keyboard.nextLine();
                 tuned = 0;
@@ -157,7 +171,7 @@ public class RepairTech extends Employee{
                         System.out.println("The note is in tune");
                     }
                 }
-            }
+            }*/
             keyboard.close();
 }
 
