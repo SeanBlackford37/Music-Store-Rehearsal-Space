@@ -163,6 +163,26 @@ public class Main {
             System.out.println("No transaction history!");
         }
     }
+
+    public static void requestRepair(MusicStore mStoreIn, Customer customerIn, RepairTech currTech){
+        System.out.println("Enter the name of the item to be repaired:");
+        String itemToFix= scan.nextLine();
+        System.out.println("Enter a description of the damage:");
+        String damage= scan.nextLine();
+        ThingToBeRepaired fixThis= new ThingToBeRepaired(itemToFix, customerIn.getCustomerName(), damage);
+        Repair newRepair= new Repair(fixThis, currTech);
+        currTech.addToActiveRepairList(newRepair);
+        double timeEst= Math.random()* 5;
+        String quote= currTech.getRepair(itemToFix, customerIn.getCustomerName()).createQuote(timeEst);
+        System.out.println(quote);
+        System.out.println("Would you like to accept this repair? (Y/N): ");
+        String answer= scan.nextLine();
+        if(answer.equals("yes")){
+            mStoreIn.addToStoreBalance(newRepair.getPrice());
+        }
+
+    }
+
     public static void payEmployee(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Which employee do you want to pay?");
         employeeList(mStoreIn);
@@ -332,7 +352,7 @@ public class Main {
     public static boolean validChoice(String input){
 
         String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", 
-        "cancel equipment", "cancel room rental", "order total", "done", "Display information", "transaction History"};
+        "cancel equipment", "cancel room rental", "order total", "done", "Display information", "transaction History", "request repair"};
 
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
@@ -356,6 +376,7 @@ public class Main {
 
         String input = "go";
         Employee employeeOne = new Employee(12345, "Toby", store);
+        RepairTech employeeTwo= new RepairTech(23456, "Max", store);
         System.out.println("Enter your name");
         String name = "Sean Blackford";
         name = scan.nextLine();
@@ -363,7 +384,7 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nOrder Total\nDisplay information\nTransaction History\nDone\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nOrder Total\nDisplay information\nTransaction History\nRequest Repair\nDone\n");
 
             input = scan.nextLine();
            
@@ -396,6 +417,9 @@ public class Main {
             }
             else if(input.equalsIgnoreCase("transaction History")){
                 transactionHistory(custOne);
+            }
+            else if(input.equalsIgnoreCase("request repair")){
+                requestRepair(store, custOne, employeeTwo);
             }
             
             
@@ -629,9 +653,9 @@ public class Main {
 
     public static void main(String[] args)  {
         MusicStore mStore = new MusicStore("Ithaca Music Store");
-        //customerInteraction(mStore);
+        customerInteraction(mStore);
         //adminInterface(mStore);
-        repairInterface(mStore);
+        //repairInterface(mStore);
 
 
 
