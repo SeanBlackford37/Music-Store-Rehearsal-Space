@@ -434,7 +434,8 @@ public class MusicStore {
         Iterator<Entry<RepairBusinessDayCategory,Double>> eI = entries.iterator();
         int i=1;
         while(eI.hasNext()){
-            System.out.println("("+i+") "+eI.next().getKey().name()+"\t"+eI.next().getValue());
+            Entry<RepairBusinessDayCategory,Double> entry = eI.next();
+            System.out.println("("+i+") "+entry.getKey().name()+"\t"+entry.getValue());
             i++;
         }
         

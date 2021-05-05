@@ -302,7 +302,7 @@ public class Main {
     public static void displayRepairPricingInfo(MusicStore storeIn){
         System.out.println("\nBusiness Days \tPrice");
         storeIn.printRepairPricings();
-        System.out.println("\n");
+        System.out.println("");
     }
     
     // public static void getRepairPricing(Admin adminIn, RepairBusinessDayCategory rc){
@@ -330,6 +330,7 @@ public class Main {
             }
         }while(rc==null||isIntType==false);
         boolean isCorrectType = true;
+        boolean isValidAmt = true;
         double amount=-1;
         do{
             System.out.println("Enter the price you'd like to set for a repair that's "+rc.toString()+" business days: ");
@@ -337,7 +338,9 @@ public class Main {
                 amount = Double.parseDouble(scan.nextLine());
                 try{
                     adminIn.updateRepairPricing(rc, amount);
+                    isValidAmt=true;
                 }catch(Exception e){
+                    isValidAmt=false;
                     System.out.println("Invalid price entered");
                 }
                 isCorrectType=true;
@@ -345,7 +348,7 @@ public class Main {
                 System.out.println("Price entered contains nonnumerical input outside of a '.' ... Try again.");
                 isCorrectType=false;
             }
-        }while(isCorrectType==false||amount==-1);
+        }while(isCorrectType==false||isValidAmt==false);
 
         System.out.println("Pricing for "+rc.toString()+" business day repairs has been updated to $"+amount);
         
@@ -447,7 +450,8 @@ public class Main {
     }
     public static boolean validChoiceAdmin(String input){
         String[] choices = {"pay employee", "Hire employee", "Terminate employee", "View Employee list", 
-        "add rental space", "cancel rental space", "get repair pricing", "add item to inventory" ,"Done"};
+        "add rental space", "cancel rental space", "get repair pricing", 
+        "add item to inventory","display repair pricing info","update a repair price","Done"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -675,8 +679,8 @@ public class Main {
     public static void main(String[] args)  {
         MusicStore mStore = new MusicStore("Ithaca Music Store");
         //customerInteraction(mStore);
-        //adminInterface(mStore);
-        repairInterface(mStore);
+        adminInterface(mStore);
+        //repairInterface(mStore);
 
 
 
