@@ -5,28 +5,28 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ThingToBeRepairedTest {
     @Test
-    void constructorTest(){
+    void constructorTest(){ //Unit Test
         ThingToBeRepaired item = new ThingToBeRepaired("Guitar", "Steph", "String broken");
-        assertEquals("Guitar", item.getItemName());
-        assertEquals("Steph", item.getClientName());
-        assertEquals("String broken", item.getDamageDescription());
-        assertEquals(true, item.getIsBroken());
+        assertEquals("Guitar", item.getItemName()); //Equivalence class
+        assertEquals("Steph", item.getClientName()); //Equivalence class
+        assertEquals("String broken", item.getDamageDescription()); //Equivalence class
+        assertEquals(true, item.getIsBroken()); //Equivalence class
 
-        assertThrows(IllegalArgumentException.class, ()-> new ThingToBeRepaired(null, "Steve", "Bonk"));
-        assertThrows(IllegalArgumentException.class, ()-> new ThingToBeRepaired("guitar", null, "Bonk"));
-        assertThrows(IllegalArgumentException.class, ()-> new ThingToBeRepaired("guitar", "Steve", null));
+        assertThrows(IllegalArgumentException.class, ()-> new ThingToBeRepaired(null, "Steve", "Bonk")); //Border Case
+        assertThrows(IllegalArgumentException.class, ()-> new ThingToBeRepaired("guitar", null, "Bonk")); //Border Case
+        assertThrows(IllegalArgumentException.class, ()-> new ThingToBeRepaired("guitar", "Steve", null)); //Border Case
     }
      
     @Test
-    void isBrokenTest(){
+    void isBrokenTest(){ //Unit Test
         ThingToBeRepaired item = new ThingToBeRepaired("Guitar", "Steph", "String broken");
-        assertEquals(true, item.getIsBroken());
+        assertEquals(true, item.getIsBroken()); //Equivalence class
         item.setisBroken(false);
-        assertEquals(false, item.getIsBroken());
+        assertEquals(false, item.getIsBroken()); //Equivalence class
     }
 
     @Test 
-    void displayDamageDescriptionTest(){
+    void displayDamageDescriptionTest(){ //Unit Test
         ThingToBeRepaired item = new ThingToBeRepaired("Guitar", "Steph", "String broken");
         System.out.print("Expected: ");
         System.out.println("String broken");
