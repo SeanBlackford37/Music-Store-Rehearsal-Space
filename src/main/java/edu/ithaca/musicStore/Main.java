@@ -673,9 +673,9 @@ public class Main {
 
     public static void main(String[] args)  {
         MusicStore mStore = new MusicStore("Ithaca Music Store");
-        customerInteraction(mStore);
+        //customerInteraction(mStore);
         //adminInterface(mStore);
-        //repairInterface(mStore);
+        repairInterface(mStore);
 
 
 
