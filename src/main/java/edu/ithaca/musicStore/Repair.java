@@ -107,6 +107,7 @@ public class Repair {
         return equipmentUsed;
     }
 
+    //either need to create a quote first or manually set the base price or else it will be 0
     public Double getPrice() {
         return price;
     }
