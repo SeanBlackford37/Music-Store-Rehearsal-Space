@@ -12,20 +12,20 @@ import org.junit.jupiter.api.Test;
 public class EmployeeTest {
     
     @Test
-    void constructorTest(){
+    void constructorTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
         Employee employee1= new Employee(12345, "Steve",ms);
-        assertTrue(employee1.getName().equals("Steve"));
-        assertTrue(employee1.getID()== 12345);
-        assertTrue(employee1.getPayAmt()==15.00);
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(0, "Steve",ms));
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "",ms));
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", -50,ms));
-        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", 25.555,ms));
+        assertEquals("Steve", employee1.getName()); //Equivalence class
+        assertEquals(12345, employee1.getID()); //Equivalence class
+        assertEquals(15.00, employee1.getPayAmt()); //Equivalence class
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(0, "Steve",ms)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "",ms)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", -50,ms)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()-> new Employee(12345, "Steve", 25.555,ms)); //Border Case
     }
     
     @Test
-    void checkStockTest(){
+    void checkStockTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
         Employee employee1= new Employee(12345, "Steve",ms);
         ArrayList<Item> stock= new ArrayList<Item>();
@@ -37,15 +37,15 @@ public class EmployeeTest {
         stock.add(new Item("piano", 150, "Max"));
         stock.add(new Item("guitar", 100, "John"));
         stock.add(new Item("trumpet", 100, "John"));
-        assertTrue(employee1.checkStock("piano", stock));
-        assertTrue(employee1.checkStock("trumpet", stock));
-        assertTrue(employee1.checkStock("guitar", stock));
-        assertFalse(employee1.checkStock("trombone", stock));
+        assertTrue(employee1.checkStock("piano", stock)); //Equivalence class
+        assertTrue(employee1.checkStock("trumpet", stock)); //Equivalence class
+        assertTrue(employee1.checkStock("guitar", stock)); //Equivalence class
+        assertFalse(employee1.checkStock("trombone", stock)); //Equivalence class
 
     }
 
     @Test
-    void equipmentScheduleTest(){
+    void equipmentScheduleTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
         Employee employee1= new Employee(12345, "Steve",ms);
         ArrayList<Item> out= new ArrayList<Item>();
@@ -58,7 +58,7 @@ public class EmployeeTest {
     }
 
     @Test
-    void viewSpaceScheduleTest(){
+    void viewSpaceScheduleTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
         Employee employee1= new Employee(12345, "Steve",ms);
         ArrayList<Room> rented= new ArrayList<Room>();
@@ -71,33 +71,33 @@ public class EmployeeTest {
     }
 
     @Test
-    void addHoursTest(){
+    void addHoursTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
         Employee employee1= new Employee(12345, "Steve",ms);
         employee1.addHours(20);
-        assertTrue(employee1.getHoursWorked()== 20);
+        assertEquals(20, employee1.getHoursWorked()); //Equivalence class
         employee1.addHours(5);
-        assertTrue(employee1.getHoursWorked()==25);
+        assertEquals(25, employee1.getHoursWorked()); //Equivalence class
         Employee employee2= new Employee(23456, "Dustin",ms);
         employee2.addHours(0);
-        assertThrows(IllegalArgumentException.class, ()-> employee2.addHours(-30));
-        assertTrue(employee2.getHoursWorked()==0);
+        assertThrows(IllegalArgumentException.class, ()-> employee2.addHours(-30)); //Border Case
+        assertEquals(0, employee2.getHoursWorked()); //Equivalence class
         Employee employee3= new Employee(34567, "Nancy",ms);
         employee3.addHours(50.50);
-        assertTrue(employee3.getHoursWorked()==50.50);
+        assertEquals(50.50, employee3.getHoursWorked()); //Equivalence class
 
 
     }
 
     @Test
-    void chargeCustomerForItemRentalTest(){
+    void chargeCustomerForItemRentalTest(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");
         Item i = new Item("djembe",45);
 
         //empty inventory
-        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe"));
+        assertThrows(IllegalArgumentException.class,()->e.chargeCustomerForItemRental(c, "djembe")); 
         assertEquals(0,ms.getStoreBalance());
 
         ms.addToInventory(i);
@@ -123,7 +123,7 @@ public class EmployeeTest {
     }
 
     @Test
-    void chargeCustomerForRoomRentalTest(){
+    void chargeCustomerForRoomRentalTest(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");
@@ -155,7 +155,7 @@ public class EmployeeTest {
     }
 
     @Test
-    void refundCustomerForItemRentalTest(){
+    void refundCustomerForItemRentalTest(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");
@@ -188,7 +188,7 @@ public class EmployeeTest {
     }
 
     @Test
-    void refundCustomerForRoomRentalTest(){
+    void refundCustomerForRoomRentalTest(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         Employee e = new Employee(10000, "Kip",ms);
         Customer c = new Customer(ms,"Barb");

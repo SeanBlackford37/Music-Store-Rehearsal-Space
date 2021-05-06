@@ -30,6 +30,6 @@ Sprint goal: Finishing UIs for different use cases and users and more functional
 
 Link to class diagram: https://drive.google.com/file/d/1okZgdjYoQ3xhobRgUdCf9HKkcqBrxmHD/view?usp=sharing
 
-Sprint review/demo agenda:
+Sprint review/demo agenda: https://docs.google.com/document/d/1bB8CRA6xRxuphmzuGiZsneeDt0HsoKVFYwXxwKOMlso/edit?usp=sharing
 
 Sprint retrospective: 
