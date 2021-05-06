@@ -214,17 +214,29 @@ public class Main {
         scan.nextLine();
         System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
         String employeeType = scan.nextLine();
-        System.out.println("Enter the amount of hours:");
-        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-        double hours = scan.nextDouble();
-        scan.nextLine();
-
-        try{
-            adminIn.hoursEmployee(employeeID, employeeType, hours);
-            System.out.println("Employee Given Hours");
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        
+        //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
+        boolean isCorrectType = true;
+        boolean isValidAmt = true;
+        double hours=-1;
+        do{
+            System.out.println("Enter the amount of hours:");
+            try{
+                hours = Double.parseDouble(scan.nextLine());
+                try{
+                    adminIn.hoursEmployee(employeeID, employeeType, hours);
+                    System.out.println("Employee Given Hours");
+                    isValidAmt=true;
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                    isValidAmt=false;
+                }
+                isCorrectType=true;
+            }catch(NumberFormatException nfe){
+                System.out.println("Price entered contains nonnumerical input outside of a '.' ... Try again.");
+                isCorrectType=false;
+            }
+        }while(isCorrectType==false||isValidAmt==false);
        
             
        
@@ -332,15 +344,24 @@ public class Main {
                 System.out.println("");
             }
             System.out.println("Enter the room number to cancel:");
-            //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-            int roomNumber = scan.nextInt();
-            scan.nextLine();
-            try{
-                adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
-                System.out.println("Room canceled!");
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-            }
+            //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
+            int roomNumber=-1;
+            boolean isCorrectType=true;
+            do{
+                try{
+                    roomNumber = Integer.parseInt(scan.nextLine());
+                    try{
+                        adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
+                        System.out.println("Room canceled!");
+                    }catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
+                    isCorrectType=true;
+                }catch(NumberFormatException nfe){
+                    System.out.println("Non numerical input entered. Try again.");
+                    isCorrectType=false;
+                }
+            }while(isCorrectType==false);
         }
         
     }
@@ -355,24 +376,35 @@ public class Main {
                 break;
             }
             System.out.println("What is the price?");
-          //TYpe check here
-            double price = scan.nextDouble();
-            scan.nextLine();
-            
-            try{
-                if(isAmountValid(price)){
-                    mStoreIn.subtractFromStoreBalance(price);
-                    adminIn.orderItem(itemName, price);
-                    System.out.println(itemName + " added to the inventory to rent");
-                }else{
-                    System.out.println("Please make sure to enter a valid amount");
+            //X TYpe check here
+            double price = -1;
+            boolean isCorrectType = true;
+            boolean isValidAmt = true;
+            do{
+                try{
+                    price = Double.parseDouble(scan.nextLine());
+                    
+                    try{
+                        if(isAmountValid(price)){
+                            mStoreIn.subtractFromStoreBalance(price);
+                            adminIn.orderItem(itemName, price);
+                            System.out.println(itemName + " added to the inventory to rent");
+                            isValidAmt=true;
+                        }else{
+                            System.out.println("Please make sure to enter a valid amount");
+                        }
+                    }
+                    catch(Exception e){
+                        isValidAmt=false;
+                        System.out.println(e.getMessage());
+                    }
+                    isCorrectType=true;
+                }catch(NumberFormatException nfe){
+                    System.out.println("Price entered contains nonnumerical input outside of a '.' ... Try again.");
+                    isCorrectType=false;
                 }
-                
-                
-            }
-            catch(Exception e){
-                System.out.println(e.getMessage());
-            }
+            }while(isCorrectType==false||isValidAmt==false);
+
 
         }
     
@@ -402,15 +434,28 @@ public class Main {
         String itemName = scan.nextLine();
         System.out.println("Enter price of equipment you want to add: ");
         //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-        double price = scan.nextDouble();
-        scan.nextLine();
-        try{
-            mStoreIn.subtractFromStoreBalance(price);
-            adminIn.orderEquipment(itemName, price);
-            System.out.println("Equipment ordered");
-        }catch(Exception e){
-            System.out.println(e.getMessage());
-        }
+        boolean isCorrectType = true;
+        boolean isValidAmt = true;
+        double price=-1;
+        do{
+            System.out.println("Enter price of equipment you want to add: ");
+            try{
+                price = Double.parseDouble(scan.nextLine());
+                try{
+                    mStoreIn.subtractFromStoreBalance(price);
+                    adminIn.orderEquipment(itemName, price);
+                    isValidAmt=true;
+                    System.out.println("Equipment ordered");
+                }catch(Exception e){
+                    isValidAmt=false;
+                    System.out.println("Invalid price entered");
+                }
+                isCorrectType=true;
+            }catch(NumberFormatException nfe){
+                System.out.println("Price entered contains nonnumerical input outside of a '.' ... Try again.");
+                isCorrectType=false;
+            }
+        }while(isCorrectType==false||isValidAmt==false);
     }
 
     public static void displayRepairPricingInfo(MusicStore storeIn){
@@ -636,8 +681,17 @@ public class Main {
                 System.out.println("Enter your employee ID");
                 int employeeID = 0;
                 //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-                employeeID = scan.nextInt();
-                scan.nextLine();
+                boolean isCorrectType= true;
+                do{
+                    try{
+                    employeeID = Integer.parseInt(scan.nextLine());
+                    isCorrectType= true;
+                    }
+                    catch(NumberFormatException nfe){
+                        isCorrectType= false;
+                        System.out.println("Invalid employee ID. Try again.");
+                    }
+                }while(isCorrectType==false);
                 
                 if (mStore.findAdmin(employeeID) !=-1){
                     int index = mStore.findAdmin(employeeID);
@@ -770,7 +824,7 @@ public class Main {
         catch(Exception e){
             System.out.println("Cannot find the Repair");
         }
-        //TYPE CHECK HERE EMMA!!!! <3 XOXOX 
+        //X TYPE CHECK HERE EMMA!!!! <3 XOXOX 
         boolean isCorrectType=true;
         do{
             try{
@@ -903,9 +957,18 @@ public class Main {
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
                 System.out.println("Enter number of room:");
-                //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-                int roomNumber = scan.nextInt();
-                scan.nextLine();
+                //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
+                int roomNumber=-1;
+                boolean isCorrectType=true;
+                do{
+                    try{
+                    roomNumber = Integer.parseInt(scan.nextLine());
+                    isCorrectType=true;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid room number. try again.");
+                        isCorrectType=false;
+                    }
+                }while(isCorrectType==false);
                 try{
                     employeeIn.chargeCustomerForRoomRental(customerIn, roomNumber);
                 }catch(Exception e){
@@ -930,14 +993,23 @@ public class Main {
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
                 System.out.println("Enter number of room:");
-                //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-                int roomNumber = scan.nextInt();
-                scan.nextLine();
+                //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
+                int roomNumber=-1;
+                boolean isCorrectType=true;
+                do{
+                    try{
+                    roomNumber = Integer.parseInt(scan.nextLine());
+                    isCorrectType=true;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("Invalid room number. Try again");
+                        isCorrectType=false;
+                    }
+                }while(isCorrectType==false);
                 try{
                 employeeIn.refundCustomerForRoomRental(customerIn, roomNumber);
-            }catch(Exception e){
-                System.out.println(e.getMessage());
-            }
+                }catch(Exception e){
+                    System.out.println(e.getMessage());
+                }
             }
             else if(input.equalsIgnoreCase("item")){
             System.out.println("Enter name of item:");
@@ -1005,9 +1077,18 @@ public class Main {
         while(!input.equals("valid")){
             System.out.println("Enter your employee ID");
             int employeeID = 0;
-            //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-            employeeID = scan.nextInt();
-            scan.nextLine();
+            //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
+            boolean isCorrectType= true;
+            do{
+                try{
+                employeeID = Integer.parseInt(scan.nextLine());
+                isCorrectType= true;
+                }
+                catch(NumberFormatException nfe){
+                    isCorrectType= false;
+                    System.out.println("Invalid employee ID. Try again.");
+                }
+            }while(isCorrectType==false);
             
             if (mStore.findEmployee(employeeID) !=-1){
                 int index = mStore.findEmployee(employeeID);
