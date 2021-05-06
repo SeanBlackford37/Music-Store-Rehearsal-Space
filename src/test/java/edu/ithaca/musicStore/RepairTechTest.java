@@ -108,6 +108,12 @@ public class RepairTechTest {
 
     }
 
+    @Test
+    void tunerTest(){
+        MusicStore store = new MusicStore("Place");
+        RepairTech employee1= new RepairTech(12345, "Steve", store);
+        employee1.tuner();
+    }
 
     
 }

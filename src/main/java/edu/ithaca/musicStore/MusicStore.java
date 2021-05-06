@@ -2,7 +2,10 @@ package edu.ithaca.musicStore;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.Map.Entry;
 import java.util.EnumMap;
+import java.util.Iterator;
 
 
 
@@ -57,7 +60,9 @@ public class MusicStore {
     public void addToRepairTechList(RepairTech techToAdd){
         repairTechList.add(techToAdd);
     }
-
+    public List<Item> getRentedList(){
+        return rentedList;
+    }
     public List<RepairTech> getRepairTechList(){
         return repairTechList;
     }
@@ -363,9 +368,13 @@ public class MusicStore {
     }
 
     public void subtractFromStoreBalance(double cost) throws IllegalArgumentException{
-        if(!isAmountValid(cost) || cost > storeBalance){
+        if(!isAmountValid(cost) ){
             throw new IllegalArgumentException("invalid argument");
-        }else{
+        }
+        else if(cost > storeBalance){
+            throw new IllegalArgumentException("Not enough money");
+        }
+        else{
             storeBalance -= cost;
             int num  = (int)(storeBalance * 100);
             storeBalance = ((double)num) /100;
@@ -400,11 +409,42 @@ public class MusicStore {
         return repairPricings.get(rc);
     }
 
+    public RepairBusinessDayCategory getRepairBusinessCategory(int i) {
+        Set<RepairBusinessDayCategory> keys = repairPricings.keySet();
+        Iterator<RepairBusinessDayCategory> iter = keys.iterator();
+        if(i<0||i>=keys.size()){
+            throw new IndexOutOfBoundsException("number entered is too large or negative");
+        }
+        else{
+            int x =0;
+            while(iter.hasNext()){
+                RepairBusinessDayCategory rc = iter.next();
+                if(x==i){
+                    return rc;
+                }
+                x++;
+            }
+            throw new RuntimeException("Error: no repair business day category was found");
+        }
+    }
+
     public void updateRepairPricing(RepairBusinessDayCategory rc,double amount) throws IllegalArgumentException{
         if(isAmountValid(amount)){
             repairPricings.replace(rc, amount);
         }
         else{throw new IllegalArgumentException("invalid amount for a repair pricing.");}
+    }
+
+    public void printRepairPricings(){
+        Set<Entry<RepairBusinessDayCategory,Double>> entries = repairPricings.entrySet();
+        Iterator<Entry<RepairBusinessDayCategory,Double>> eI = entries.iterator();
+        int i=1;
+        while(eI.hasNext()){
+            Entry<RepairBusinessDayCategory,Double> entry = eI.next();
+            System.out.println("("+i+") "+entry.getKey().name()+"\t"+entry.getValue());
+            i++;
+        }
+        
     }
 
     public void addEquipment(Equipment e){
