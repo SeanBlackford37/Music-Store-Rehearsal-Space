@@ -247,12 +247,17 @@ public class Main {
                 adminIn.fireEmployee(employeeID, employeeType);
                 System.out.println(employeeType + "has been terminate!");
             }else{
-                System.out.println("Can'terminate self!");
+                System.out.println("Can't terminate self!");
             }
         }catch(Exception e){
                 System.out.println(e.getMessage());
             }
     }
+
+    public static void viewStoreBalance(MusicStore mStoreIn){
+        System.out.println("Store balance: " + mStoreIn.getStoreBalance());
+    }
+
     public static void addRentalSpace(MusicStore mStoreIn, Admin adminIn){
         
         if(mStoreIn.getRoomList().isEmpty()){
@@ -300,24 +305,41 @@ public class Main {
         
     }
     
-    public static void orderItem(Admin adminIn){
-        System.out.println("Enter name of item you want to add: ");
-        String itemName = scan.nextLine();
-        System.out.println("Enter price of item you want to add: ");
-        //TYPE CHECK HERE EMMA!!!! <3 XOXOX
-        double price = scan.nextDouble();
-        scan.nextLine();
-        try{
-            adminIn.orderItem(itemName, price);
-            System.out.println("Item ordered");
-        } catch(Exception e){
-            System.out.println(e.getMessage());
+
+    public static void orderItem(MusicStore mStoreIn, Admin adminIn){
+        String itemName = "";
+        while(!itemName.equalsIgnoreCase("done")){
+            System.out.println("What is the name of the product?");
+            itemName = scan.nextLine();
+            if (itemName.equalsIgnoreCase("done")){
+                break;
+            }
+            System.out.println("What is the price?");
+          //TYpe check here
+            double price = scan.nextDouble();
+            scan.nextLine();
+            
+            try{
+                if(isAmountValid(price)){
+                    mStoreIn.subtractFromStoreBalance(price);
+                    adminIn.orderItem(itemName, price);
+                    System.out.println(itemName + " added to the inventory to rent");
+                }else{
+                    System.out.println("Please make sure to enter a valid amount");
+                }
+                
+                
+            }
+            catch(Exception e){
+                System.out.println(e.getMessage());
+            }
+
         }
         
-        
+            
 
     }
-    public static void orderEquipment(Admin adminIn){
+    public static void orderEquipment(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Enter name of equipment you want to add: ");
         String itemName = scan.nextLine();
         System.out.println("Enter price of equipment you want to add: ");
@@ -325,6 +347,7 @@ public class Main {
         double price = scan.nextDouble();
         scan.nextLine();
         try{
+            mStoreIn.subtractFromStoreBalance(price);
             adminIn.orderEquipment(itemName, price);
             System.out.println("Equipment ordered");
         }catch(Exception e){
@@ -480,7 +503,8 @@ public class Main {
     }
     public static boolean validChoiceAdmin(String input){
         String[] choices = {"Pay employee", "Hire employee", "Terminate Employee", "View Employee List", 
-        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Order Item", "Order Equipment", "Set Employee Hours", "Done"};
+        "Add Rental Space", "Cancel Rental space", "Display Repair Pricing Info","Update a Repair Price", "Order Item", "Order Equipment", "Set Employee Hours", "View Store Balance" , "Done"};
+
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -519,7 +543,9 @@ public class Main {
             }
             System.out.println("Welcome: " + adminOne.getName());
             while(!input.equalsIgnoreCase("done")){
-                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nSet Employee Hours\nView Employee list\nAdd Rental space\nCancel Rental Space\nOrder Item\nOrder Equipment\nDisplay Repair Pricing Info\nUpdate a Repair Price\nDone\n");
+
+                System.out.println("\n--Admin Menu--\nPay Employee\nHire Employee\nTerminate Employee\nSet Employee Hours\nView Employee list\nAdd Rental space\nCancel Rental Space\nOrder Item\nOrder Equipment\nDisplay Repair Pricing Info\nUpdate a Repair Price\nView Store Balance\nDone\n");
+
                 input = scan.nextLine();
 
                 if (!validChoiceAdmin(input)){
@@ -534,8 +560,11 @@ public class Main {
                 else if(input.equalsIgnoreCase("hire employee")){
                     hireEmployee(mStore, adminOne);
                 }
+                else if(input.equalsIgnoreCase("View Store balance")){
+                    viewStoreBalance(mStore);
+                }
                 else if(input.equalsIgnoreCase("terminate employee")){
-                fireEmployee(mStore, adminOne);
+                    fireEmployee(mStore, adminOne);
                 }
                 else if(input.equalsIgnoreCase("add rental space")){
                     addRentalSpace(mStore, adminOne);
@@ -544,9 +573,9 @@ public class Main {
                     cancelRentalSpace(mStore, adminOne);
                 }
                 else if(input.equalsIgnoreCase("order item")){
-                    orderItem(adminOne);
+                    orderItem(mStore, adminOne);
                 }else if(input.equalsIgnoreCase("order equipment")){
-                    orderEquipment(adminOne);
+                    orderEquipment(mStore, adminOne);
                 }
                 else if(input.equalsIgnoreCase("display repair pricing info")){
                     displayRepairPricingInfo(mStore);
