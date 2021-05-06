@@ -133,6 +133,7 @@ public class RepairTech extends Employee{
 
 
     public void tuner(){
+        // keyboard is closed in main
         Scanner keyboard = new Scanner(System.in);
         //Random random = new Random();
         int notePlayed=-1;
@@ -348,8 +349,7 @@ public class RepairTech extends Employee{
                     }
                 }
             }*/
-            keyboard.close();
-}
+    }
 
     public void addToActiveRepairList(Repair repairToAdd){
         activeRepairs.add(repairToAdd);
@@ -427,5 +427,4 @@ public class RepairTech extends Employee{
 
     }
 
-    
 }

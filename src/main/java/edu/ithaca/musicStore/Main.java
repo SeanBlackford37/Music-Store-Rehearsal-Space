@@ -187,15 +187,22 @@ public class Main {
         double timeEst= Math.random()* 5;
         String quote= currTech.getRepair(itemToFix, customerIn.getCustomerName()).createQuote(timeEst);
         System.out.println(quote);
-        System.out.println("Would you like to accept this repair? (Y/N): ");
-        String answer= scan.nextLine();
-        if(answer.equals("yes")){
-            mStoreIn.addToStoreBalance(newRepair.getPrice());
-            currTech.addToActiveRepairList(newRepair);
-            System.out.println("You can pick up this item when the repair is complete");
-        }
-        if(answer.equals("no")){
-            System.out.println("Feel free to return for other repairs soon!");
+        String answer="invalid";
+        while(answer.equals("invalid")){
+            System.out.println("Would you like to accept this repair? (Y/N): ");
+            answer = scan.nextLine();
+            if(answer.equalsIgnoreCase("yes")||answer.equalsIgnoreCase("y")){
+                mStoreIn.addToStoreBalance(newRepair.getPrice());
+                currTech.addToActiveRepairList(newRepair);
+                System.out.println("You can pick up this item when the repair is complete");
+            }
+            else if(answer.equalsIgnoreCase("no")||answer.equalsIgnoreCase("n")){
+                System.out.println("Feel free to return for other repairs soon!");
+            }
+            else{
+                answer = "invalid";
+                System.out.println("invalid input entered. Try again.");
+            }
         }
 
     }
@@ -216,10 +223,11 @@ public class Main {
         System.out.println("Which employee do you want to pay?");
         employeeList(mStoreIn);
 
-        System.out.println("Enter employee ID:");
+        
         int employeeID = 0;
         boolean correctTypeEntered = true;
         do{
+            System.out.println("Enter employee ID:");
             try{
                 employeeID = Integer.parseInt(scan.nextLine());
                 System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
@@ -244,11 +252,19 @@ public class Main {
     public static void giveEmployeeHours(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Which employee do you want to give hours?");
         employeeList(mStoreIn);
-
-        System.out.println("Enter employee ID:");
         int employeeID = 0;
-        employeeID = scan.nextInt();
-        scan.nextLine();
+        boolean isGoodType= true;
+        do{
+            System.out.println("Enter your employee ID");
+            try{
+            employeeID = Integer.parseInt(scan.nextLine());
+            isGoodType= true;
+            }
+            catch(NumberFormatException nfe){
+                isGoodType= false;
+                System.out.println("Invalid employee ID. Try again.");
+            }
+        }while(isGoodType==false);
         System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
         String employeeType = scan.nextLine();
         
@@ -282,9 +298,9 @@ public class Main {
     public static void hireEmployee(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Enter name of the new hire:");
         String newEmployeeName = scan.nextLine();
-        System.out.println("Enter pay amount:");
         boolean isGoodInputType=true;
         do{
+            System.out.println("Enter pay amount:");
             try{
                 double payAmt = Double.parseDouble(scan.nextLine());
                 System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
@@ -309,10 +325,11 @@ public class Main {
         System.out.println("Which employee do you want to fire?");
         employeeList(mStoreIn);
       
-        System.out.println("Enter employee ID:");
+        
         int employeeID = 0;
         boolean isGoodInputType=true;
         do{
+            System.out.println("Enter employee ID:");
             try{
                 employeeID = Integer.parseInt(scan.nextLine());
                 System.out.println("Enter the employee type(Admin,Employee,RepairTech):");
@@ -377,14 +394,14 @@ public class Main {
         }else{
             for(int i = 0; i < mStoreIn.getRoomList().size(); i++ ){
                 System.out.print("Room number: " + mStoreIn.getRoomList().get(i).getRoomNumber() + ", ");
-                System.out.print(" Rent name: " + mStoreIn.getRoomList().get(i).getRenterName());
+                System.out.print(" Renter name: " + mStoreIn.getRoomList().get(i).getRenterName());
                 System.out.println("");
             }
-            System.out.println("Enter the room number to cancel:");
             //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
             int roomNumber=-1;
             boolean isCorrectType=true;
             do{
+                System.out.println("Enter the room number to cancel:");
                 try{
                     roomNumber = Integer.parseInt(scan.nextLine());
                     try{
@@ -407,17 +424,17 @@ public class Main {
     public static void orderItem(MusicStore mStoreIn, Admin adminIn){
         String itemName = "";
         while(!itemName.equalsIgnoreCase("done")){
-            System.out.println("What is the name of the product?");
+            System.out.println("Enter the name of the product or 'done':");
             itemName = scan.nextLine();
             if (itemName.equalsIgnoreCase("done")){
                 break;
             }
-            System.out.println("What is the price?");
             //X TYpe check here
             double price = -1;
             boolean isCorrectType = true;
             boolean isValidAmt = true;
             do{
+                System.out.println("What is the price?");
                 try{
                     price = Double.parseDouble(scan.nextLine());
                     
@@ -441,35 +458,12 @@ public class Main {
                     isCorrectType=false;
                 }
             }while(isCorrectType==false||isValidAmt==false);
-
-
-        }
-    
-        boolean isGoodInputType = true;
-        do{
-            System.out.println("Enter the room number to cancel:");
-            try{
-                int roomNumber = Integer.parseInt(scan.nextLine());
-                try{
-                    adminIn.cancelSpaceRental(roomNumber, mStoreIn.getRoomList());
-                    System.out.println("Room canceled!");
-                }catch(Exception e){
-                    System.out.println(e.getMessage());
-                }
-                isGoodInputType = true;
-            }catch(NumberFormatException ime){
-                System.out.println("Input entered for room number was not a valid number. Try again.");
-                isGoodInputType = false;
-            }
-        }while(isGoodInputType == false);
-        
-            
+        }    
 
     }
     public static void orderEquipment(MusicStore mStoreIn, Admin adminIn){
         System.out.println("Enter name of equipment you want to add: ");
         String itemName = scan.nextLine();
-        System.out.println("Enter price of equipment you want to add: ");
         //TYPE CHECK HERE EMMA!!!! <3 XOXOX
         boolean isCorrectType = true;
         boolean isValidAmt = true;
@@ -709,7 +703,7 @@ public class Main {
         return false;
     }
     public static void adminInterface(MusicStore mStore, Customer customerIn){
-        System.out.println("Enter client or admin");
+        System.out.println("Enter 'client' for ringing up purposes or 'admin' for managerial purposes:");
         String uiPick = scan.nextLine();
         if(uiPick.equalsIgnoreCase("client")){
             employeeInterface(mStore, customerIn);
@@ -722,11 +716,11 @@ public class Main {
             Admin adminOne = null;
           
            while(!input.equals("valid")){
-                System.out.println("Enter your employee ID");
                 int employeeID = 0;
                 //TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 boolean isCorrectType= true;
                 do{
+                    System.out.println("Enter your employee ID");
                     try{
                     employeeID = Integer.parseInt(scan.nextLine());
                     isCorrectType= true;
@@ -867,6 +861,7 @@ public class Main {
         }
         catch(Exception e){
             System.out.println("Cannot find the Repair");
+            return;
         }
         //X TYPE CHECK HERE EMMA!!!! <3 XOXOX 
         boolean isCorrectType=true;
@@ -1000,11 +995,11 @@ public class Main {
             System.out.println("Charge room, item, or done");
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
-                System.out.println("Enter number of room:");
                 //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 int roomNumber=-1;
                 boolean isCorrectType=true;
                 do{
+                    System.out.println("Enter number of room:");
                     try{
                     roomNumber = Integer.parseInt(scan.nextLine());
                     isCorrectType=true;
@@ -1119,11 +1114,11 @@ public class Main {
         Employee currEmployee = null;
         String input = "go";
         while(!input.equals("valid")){
-            System.out.println("Enter your employee ID");
             int employeeID = 0;
             //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
             boolean isCorrectType= true;
             do{
+                System.out.println("Enter your employee ID");
                 try{
                 employeeID = Integer.parseInt(scan.nextLine());
                 isCorrectType= true;
