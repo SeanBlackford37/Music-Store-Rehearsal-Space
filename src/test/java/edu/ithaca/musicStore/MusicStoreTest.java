@@ -8,48 +8,48 @@ import static org.junit.jupiter.api.Assertions.*;
 public class MusicStoreTest {
     
     @Test
-    void createStoreTest() {
+    void createStoreTest() { //Unit Test
         //Create store
         MusicStore store = new MusicStore("Fancy Store");
-        assertEquals("Fancy Store", store.getStoreName());
+        assertEquals("Fancy Store", store.getStoreName()); //Equivalence class
     }
 
     @Test
-    void addItemTest() {
+    void addItemTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         //Add valid item
         store.addToInventory(new Item("Guitar", 94, "none"));
-        assertEquals(1, store.getInventorySize());
-        assertEquals("Guitar", store.getInventoryItem(0).getName());
+        assertEquals(1, store.getInventorySize()); //Equivalence class
+        assertEquals("Guitar", store.getInventoryItem(0).getName()); //Equivalence class
 
         //Add same item
         store.addToInventory(new Item("Guitar", 94, "none"));
-        assertEquals(2, store.getInventorySize());
-        assertEquals("Guitar", store.getInventoryItem(1).getName());
+        assertEquals(2, store.getInventorySize()); //Equivalence class
+        assertEquals("Guitar", store.getInventoryItem(1).getName()); //Equivalence class
 
     }
 
     @Test
-    void removeItemTest() {
+    void removeItemTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
-        store.addToInventory(new Item("Guitar", 94, "none"));
+        store.addToInventory(new Item("Guitar", 94, "none")); 
         //remove valid item
-        store.removeFromInventory("Guitar", 94);
-        assertEquals(0, store.getInventorySize());
+        store.removeFromInventory("Guitar", 94); 
+        assertEquals(0, store.getInventorySize()); //Equivalence class
 
         //Remove when items have same name but different price
         store.addToInventory(new Item("Guitar", 94, "none"));
         store.addToInventory(new Item("Guitar", 93, "none"));
         store.removeFromInventory("Guitar", 94);
-        assertEquals(1, store.getInventorySize());
-        assertEquals(93, store.getInventoryItem(0).getPrice());
+        assertEquals(1, store.getInventorySize()); //Equivalence class
+        assertEquals(93, store.getInventoryItem(0).getPrice()); //Equivalence class
 
         //Remove an item that doesnt exist
-        assertThrows(IllegalArgumentException.class, ()->store.removeFromInventory("Bongos", 50)); 
+        assertThrows(IllegalArgumentException.class, ()->store.removeFromInventory("Bongos", 50));  //Border Case
     }
 
     @Test
-    void searchForItemTest() {
+    void searchForItemTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToInventory(new Item("Flute", 23, "none"));
         store.addToInventory(new Item("Guitar", 94, "none"));
@@ -70,7 +70,7 @@ public class MusicStoreTest {
     }
 
     @Test
-    void moveToRentedTest() {
+    void moveToRentedTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToInventory(new Item("Flute", 23, "none"));
         store.addToInventory(new Item("Guitar", 94, "none"));
@@ -94,7 +94,7 @@ public class MusicStoreTest {
     }
 
     @Test
-    void moveToInventoryTest() {
+    void moveToInventoryTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToRented(new Item("Flute", 23, "none"));
         store.addToRented(new Item("Guitar", 94, "none"));
@@ -118,7 +118,7 @@ public class MusicStoreTest {
     }
 
     @Test
-    void addRoomTest() {
+    void addRoomTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         //Add valid room
         store.addToRoomList(new Room(true, 1, false, "none"));
@@ -133,9 +133,10 @@ public class MusicStoreTest {
     }
 
     @Test
-    void removeRoomTest() {
+    void removeRoomTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToRoomList(new Room(true, 1, false, "none"));
+       
         //remove valid item
         store.removeFromRoomList(1);
         assertEquals(0, store.getRoomListSize());
@@ -152,7 +153,7 @@ public class MusicStoreTest {
     }
 
     @Test
-    void searchForRoomTest() {
+    void searchForRoomTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToRoomList(new Room(true, 1, false, "none"));
         store.addToRoomList(new Room(true, 2, false, "none"));
@@ -172,7 +173,7 @@ public class MusicStoreTest {
         assertEquals(-1, store.findRoom(30));
     }
     @Test
-    void avaibleRoomListTest() {
+    void avaibleRoomListTest() { //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToRoomList(new Room(true,1,false,"none"));
         store.addToRoomList(new Room(false,2,true,"Joe Smith"));
@@ -186,21 +187,21 @@ public class MusicStoreTest {
     }
 
     @Test
-    void addEmployeeTest(){
+    void addEmployeeTest(){ //Unit Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addEmployee(new Employee(12345, "Steve",store));
         store.addEmployee(new Employee(23456, "Linda",store));
         store.addEmployee(new Employee(34567, "John",store));
-        assertTrue(store.getEmployeeList().size()==3);
-        assertTrue(store.getEmployeeList().get(0).getName().equals("Steve"));
-        assertTrue(store.getEmployeeList().get(1).getID()== 23456);
-        assertTrue(store.getEmployeeList().get(2).getName().equals("John"));
+        assertEquals(3, store.getEmployeeList().size());
+        assertEquals("Steve", store.getEmployeeList().get(0).getName());
+        assertEquals(23456, store.getEmployeeList().get(1).getID());
+        assertEquals("John", store.getEmployeeList().get(2).getName());
         assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(12345, "",store)));
         assertThrows(IllegalArgumentException.class, ()-> store.addEmployee(new Employee(0, "Sarah",store)));
     }
 
     @Test
-    void createStoreTestWithBalance(){
+    void createStoreTestWithBalance(){ //Unit Test
         //create valid store with no decimals
         MusicStore store = new MusicStore("Cool", 10);
         assertEquals(10, store.getStoreBalance());
@@ -227,7 +228,7 @@ public class MusicStoreTest {
     }
 
     @Test
-    void addToStoreBalanceTest(){
+    void addToStoreBalanceTest(){ //Unit Test
         //create valid store 
         MusicStore store = new MusicStore("Cool", 10);
         assertEquals(10, store.getStoreBalance());
@@ -259,28 +260,28 @@ public class MusicStoreTest {
     }
 
     @Test
-    void removeEmployeeTest(){
+    void removeEmployeeTest(){ //Integration Test
         MusicStore store = new MusicStore("Fancy Store");
         Employee employee1=new Employee(12345, "Steve",store);
-        Employee employee2= (new Employee(23456, "Linda",store));
+        Employee employee2= new Employee(23456, "Linda",store);
         Employee employee3= new Employee(34567, "John",store);
         Employee employee4= new Employee(45678, "Dustin",store);
         store.addEmployee(employee1);
         store.addEmployee(employee2);
         store.addEmployee(employee3);
-        assertTrue(store.getEmployeeList().size()==3);
+        assertEquals(3, store.getEmployeeList().size()); //Equivalence class
         store.removeEmployee(12345);
         store.removeEmployee(34567);
-        assertTrue(store.getEmployeeList().size()==1);
-        assertFalse(store.getEmployeeList().contains(employee1));
-        assertFalse(store.getEmployeeList().contains(employee3));
-        assertTrue(store.getEmployeeList().contains(employee2));
-        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(12345));
-        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(45678));
+        assertEquals(1, store.getEmployeeList().size()); //Equivalence class
+        assertFalse(store.getEmployeeList().contains(employee1)); //Equivalence class
+        assertFalse(store.getEmployeeList().contains(employee3)); //Equivalence class
+        assertTrue(store.getEmployeeList().contains(employee2)); //Equivalence class
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(12345)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()-> store.removeEmployee(45678)); //Border Case
     }
 
     @Test
-    void searchForEmployeeTest() {
+    void searchForEmployeeTest() { //Integration Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addEmployee(new Employee(12345, "John", store));
         store.addEmployee(new Employee(13345, "Bob",store));
@@ -300,8 +301,9 @@ public class MusicStoreTest {
         assertEquals(-1, store.findEmployee(19345));
     }
 
+    @Test
+    void subtractFromStoreBalanceTest(){ //Unit Test
 
-    void subtractFromStoreBalanceTest(){
         //create valid store 
         MusicStore store = new MusicStore("Cool", 10);
         assertEquals(10, store.getStoreBalance());
@@ -334,8 +336,7 @@ public class MusicStoreTest {
     }
 
     @Test
-
-    void addToRepairTechListTest() {
+    void addToRepairTechListTest() { //Integration Test
         MusicStore store = new MusicStore("Fancy Store");
         //Add valid tech
         store.addToRepairTechList(new RepairTech(12345, "Nick", store));
@@ -350,7 +351,7 @@ public class MusicStoreTest {
     }
 
     @Test
-    void removeRepairTechTest() {
+    void removeRepairTechTest() { //Integration Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToRepairTechList(new RepairTech(12345, "Nick", store));
         //remove valid item
@@ -369,7 +370,7 @@ public class MusicStoreTest {
     }
 
     @Test
-    void searchForRepairTechTest() {
+    void searchForRepairTechTest() { //Integration Test
         MusicStore store = new MusicStore("Fancy Store");
         store.addToRepairTechList(new RepairTech(12345, "Nick", store));
         store.addToRepairTechList(new RepairTech(12346, "Beck", store));
@@ -394,78 +395,78 @@ public class MusicStoreTest {
         assertEquals(-1, store.findRepairTech("James"));
     }
 
-    void getRepairPricingTest(){
+    void getRepairPricingTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
-        assertEquals(80.0,ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        assertEquals(80.0,ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN)); //Equivalence class
     }
 
     @Test
-    void updateRepairPricingTest(){
+    void updateRepairPricingTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
-        assertEquals(80.0,ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
-        ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 120);
-        assertEquals(120.0, ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
+        assertEquals(80.0,ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN)); //Equivalence class
+        ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 120); 
+        assertEquals(120.0, ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN)); //Equivalence class
         ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 120.75);
-        assertEquals(120.75, ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.34));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.345));
-        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 20.394));
+        assertEquals(120.75, ms.getRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN)); //Equivalence class
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120)); //Border Case
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.34)); //Border Case
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, -120.345)); //Border Case
+        assertThrows(IllegalArgumentException.class,()->ms.updateRepairPricing(RepairBusinessDayCategory.FIVETOSEVEN, 20.394)); //Border Case
         
         
     }
 
     @Test
-    void getEquipmentTest(){
+    void getEquipmentTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
-        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1));
-        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(0));
-        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(0)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1)); //Border Case
 
         Equipment e = new Equipment("guitar strings", 5.50);
         ms.addEquipment(e);
 
-        assertEquals(e, ms.getEquipment(0));
+        assertEquals(e, ms.getEquipment(0)); //Equivalence class
 
-        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1));
-        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1));
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(-1)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->ms.getEquipment(1)); //Border Case
         
     }
 
     @Test 
-    void addEquipmentTest(){
+    void addEquipmentTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
-        assertEquals(0,ms.getEquipmentListSize());
+        assertEquals(0,ms.getEquipmentListSize()); //Equivalence class
         Equipment e = new Equipment("guitar strings",5.50);
         ms.addEquipment(e);
-        assertEquals(1,ms.getEquipmentListSize());
-        assertEquals(e,ms.getEquipment(0));
+        assertEquals(1,ms.getEquipmentListSize()); //Equivalence class
+        assertEquals(e,ms.getEquipment(0)); //Equivalence class
 
     }
 
     @Test
-    void removeEquipmentTest(){
+    void removeEquipmentTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
-        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(0));
-        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(-1));
-        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(1));
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(0)); //Border Case
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(-1)); //Border Case
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(1)); //Border Case
 
         Equipment e = new Equipment("guitar strings",5.50);
         ms.addEquipment(e);
-        assertEquals(1,ms.getEquipmentListSize());
-        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(-1));
-        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(1));
-        ms.removeEquipment(0);
-        assertEquals(0,ms.getEquipmentListSize());
+        assertEquals(1,ms.getEquipmentListSize()); //Equivalence class
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(-1)); //Border Case
+        assertThrows(IllegalArgumentException.class,()->ms.removeEquipment(1));//Border Case
+        ms.removeEquipment(0); 
+        assertEquals(0,ms.getEquipmentListSize()); //Equivalence class
     }
 
     @Test
-    void findEquipmentTest(){
+    void findEquipmentTest(){ //Unit Test
         MusicStore ms = new MusicStore("ms");
         Equipment e = new Equipment("guitar strings",5.50);
-        assertEquals(-1,ms.findEquipment("ms"));
+        assertEquals(-1,ms.findEquipment("ms")); //Equivalence class
         ms.addEquipment(e);
-        assertEquals(0,ms.findEquipment("guitar strings"));
+        assertEquals(0,ms.findEquipment("guitar strings")); //Equivalence class
     }
 
 }

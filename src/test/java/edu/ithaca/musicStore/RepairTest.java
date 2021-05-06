@@ -6,7 +6,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class RepairTest {
 
     @Test
-    void createQuoteTest(){
+    void createQuoteTest(){ //Integration Test
         MusicStore store = new MusicStore("Place");
         store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
@@ -18,17 +18,17 @@ public class RepairTest {
     }
 
     @Test
-    void setPriceTest(){
+    void setPriceTest(){ //Integration Test
         MusicStore store = new MusicStore("Place");
         store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
         repair.setPrice(12);
-        assertEquals(0, Double.compare(12, repair.getPrice()));
+        assertEquals(0, Double.compare(12, repair.getPrice())); //Equivalence class
         repair.setPrice(12.01);
-        assertEquals(0, Double.compare(12.01, repair.getPrice()));
+        assertEquals(0, Double.compare(12.01, repair.getPrice())); //Equivalence class
         repair.setPrice(12.1);
-        assertEquals(0, Double.compare(12.1, repair.getPrice()));
+        assertEquals(0, Double.compare(12.1, repair.getPrice())); //Equivalence class
 
         //create store with 3 decimals
         assertThrows(IllegalArgumentException.class, ()->repair.setPrice(12.101));
@@ -48,36 +48,36 @@ public class RepairTest {
     }
 
     @Test
-    void setRepairIsFinished(){
+    void setRepairIsFinished(){ //Unit Test
         MusicStore store = new MusicStore("Place");
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
-        assertEquals(false,repair.getIsRepairFinished());
+        assertEquals(false,repair.getIsRepairFinished()); //Integration Test
         repair.setRepairIsFinished(true);
-        assertEquals(true,repair.getIsRepairFinished());
+        assertEquals(true,repair.getIsRepairFinished()); //Integration Test
         repair.setRepairIsFinished(false);
-        assertEquals(false, repair.getIsRepairFinished());
+        assertEquals(false, repair.getIsRepairFinished()); //Integration Test
     }
 
     @Test
-    void addItemToEquipmentUsedTest(){
+    void addItemToEquipmentUsedTest(){ //Integration Test
         MusicStore store = new MusicStore("Place");
         store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
         repair.addItemToEquipmentUsed(tech.pullFromEquipInventory("string"));
-        assertEquals(-1, store.searchForInventoryItem("string"));
-        assertEquals("string",repair.getEquipmentUsed().get(0).getEquipmentName());
+        assertEquals(-1, store.searchForInventoryItem("string")); //Equivalence class
+        assertEquals("string",repair.getEquipmentUsed().get(0).getEquipmentName()); //Equivalence class
     }
 
     @Test
-    void removeItemFromEquipmentUsedTest(){
+    void removeItemFromEquipmentUsedTest(){ //Integration Test
         MusicStore store = new MusicStore("Place");
         store.addEquipment(new Equipment("string", 12));
         Repair repair = new Repair(new ThingToBeRepaired("guitar", "steph", "broken string"), new RepairTech(12345, "Kelsi", store));
         RepairTech tech = repair.getTech();
         repair.addItemToEquipmentUsed(tech.pullFromEquipInventory("string"));
-        assertEquals("string", repair.removeItemFromEquipmentUsed("string").getEquipmentName());
-        assertEquals(0, repair.getEquipmentUsed().size());
+        assertEquals("string", repair.removeItemFromEquipmentUsed("string").getEquipmentName()); //Equivalence class
+        assertEquals(0, repair.getEquipmentUsed().size()); //Equivalence class
     }
     
 }

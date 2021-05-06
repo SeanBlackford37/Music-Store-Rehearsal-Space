@@ -12,25 +12,25 @@ import java.util.ArrayList;
 class CustomerTest {
 
     @Test
-    void constructorTest(){
+    void constructorTest(){ //Unit Test
         
 
         //exception is thrown when music store is null
-        assertThrows(NullPointerException.class,()->new Customer(null, "Bob"));
+        assertThrows(NullPointerException.class,()->new Customer(null, "Bob")); //Border Case
 
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
 
         //customer is created when music store is not null
-        assertNotEquals(null, c);
+        assertNotEquals(null, c); //Border Case
 
         //customer has empty t list
-        assertEquals(0,c.getTransactionHistorySize());
+        assertEquals(0,c.getTransactionHistorySize()); //Equivalence class
 
     }
 
     @Test
-    void rentItemTest(){
+    void rentItemTest(){ //Intergration Test
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         Item i =new Item("guitar",45, "n/a");
@@ -38,11 +38,11 @@ class CustomerTest {
         Employee e = new Employee(10101,"Todd",ms);
 
         //Narrative 0: Employee never clocked in before charging the customer
-        assertThrows(IllegalArgumentException.class,()->c.rentItem("guitar",null));
+        assertThrows(IllegalArgumentException.class,()->c.rentItem("guitar",null));  
 
         //Narrative 1: Customer rents item that's available in the store inventory
             //Customer rents item and the price is checked
-        assertEquals(45, c.rentItem("guitar",e));
+        assertEquals(45, c.rentItem("guitar",e)); 
             //Transaction is created for item going from 0 to 1
         assertEquals(1,c.getTransactionHistorySize());
             //Item listed for the transaction is for the right item
@@ -103,7 +103,7 @@ class CustomerTest {
 
     }
     @Test 
-    void returnItemTest() {
+    void returnItemTest() { //Intergration Test
         MusicStore ms = new MusicStore("ms");
         Customer c = new Customer(ms, "Bob");
         Employee e = new Employee(10101,"Todd",ms);
@@ -473,7 +473,7 @@ class CustomerTest {
     }
 
     @Test
-    void rentRoomAndEquipment(){
+    void rentRoomAndEquipment(){ //Integration Test
         MusicStore IMstore = new MusicStore("Ithaca Music Store");
         Customer customerOne = new Customer(IMstore, "Bob");
         Employee employeeOne = new Employee(10101,"Todd",IMstore);
@@ -498,7 +498,7 @@ class CustomerTest {
     }
 
     @Test
-    public void rentMutipleItems(){
+    public void rentMutipleItems(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         Customer customerOne = new Customer(ms, "Bob");
         Employee employeeOne = new Employee(10101,"Todd",ms);
@@ -512,23 +512,23 @@ class CustomerTest {
         itemsToRent.add("Drums");
         itemsToRent.add("Guitar");
         customerOne.rentMultipleItems(itemsToRent, employeeOne);
-        assertEquals(110, customerOne.getTransaction(0).getOrderAmount());
-        assertEquals(4, customerOne.getRentedItemsSize());
-        assertEquals(4, ms.getRentedSize());
-        assertEquals(1, customerOne.getTransactionHistorySize());
-        assertEquals("Bob", customerOne.getRentedItem(0).getRenterName());
-        assertEquals("Bob", ms.getRentedItem(0).getRenterName());
-        assertEquals("Bob", customerOne.getRentedItem(2).getRenterName());
+        assertEquals(110, customerOne.getTransaction(0).getOrderAmount()); //Equivalence class
+        assertEquals(4, customerOne.getRentedItemsSize()); //Equivalence class
+        assertEquals(4, ms.getRentedSize()); //Equivalence class
+        assertEquals(1, customerOne.getTransactionHistorySize()); //Equivalence class
+        assertEquals("Bob", customerOne.getRentedItem(0).getRenterName()); //Equivalence class
+        assertEquals("Bob", ms.getRentedItem(0).getRenterName()); //Equivalence class
+        assertEquals("Bob", customerOne.getRentedItem(2).getRenterName()); //Equivalence class
         itemsToRent.add("GuitarTwo");
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, employeeOne));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, null));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null,employeeOne));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null, null));
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, employeeOne)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(itemsToRent, null)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null,employeeOne)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentMultipleItems(null, null)); //Border Case
         
     }
 
     @Test
-    public void rentItemAndARoom(){
+    public void rentItemAndARoom(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         Customer customerOne = new Customer(ms, "Bob");
         Employee employeeOne = new Employee(10101,"Todd",ms);
@@ -537,16 +537,16 @@ class CustomerTest {
         ms.addToRoomList(new Room(1));
         ms.addToRoomList(new Room(2));
         customerOne.rentItemAndRoom("Piano",1,employeeOne);
-        assertEquals("Bob", customerOne.getRentedItem(0).getRenterName());
-        assertEquals(1, customerOne.getRoomRented().getRoomNumber());
-        assertEquals("Bob", ms.getRentedItem(0).getRenterName());
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",1,employeeOne));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",2,null));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,employeeOne));
-        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,null));
+        assertEquals("Bob", customerOne.getRentedItem(0).getRenterName()); //Equivalence class
+        assertEquals(1, customerOne.getRoomRented().getRoomNumber()); //Equivalence class
+        assertEquals("Bob", ms.getRentedItem(0).getRenterName()); //Equivalence class
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",1,employeeOne)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Piano",2,null)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,employeeOne)); //Border Case
+        assertThrows(IllegalArgumentException.class, ()->customerOne.rentItemAndRoom("Guitar",2,null)); //Border Case
     }
     @Test
-    public void cancelMultipleItems(){
+    public void cancelMultipleItems(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         ms.addToInventory(new Item("Piano", 30, "none"));
         ms.addToInventory(new Item("Saxophone", 15, "none"));
@@ -564,27 +564,27 @@ class CustomerTest {
         //Removing all items
         customerOne.cancelMultipleItemRentals(itemsToCancel, customerOne, employeeOne);
         assertEquals(0, ms.getRentedSize());
-        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
-        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
-        assertEquals("n/a", ms.getInventoryItem(2).getRenterName());
-        assertEquals("n/a", ms.getInventoryItem(3).getRenterName());
-        assertEquals(0, customerOne.getTransactionHistory().size());
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(2).getRenterName()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(3).getRenterName()); //Equivalence class
+        assertEquals(0, customerOne.getTransactionHistory().size()); //Equivalence class
         assertEquals(4, ms.getInventorySize());
 
         //Removing only two items
         itemsToCancel = new ArrayList<String>();
         itemsToCancel.add("Piano");
         itemsToCancel.add("Saxophone");
-        customerOne.rentMultipleItems(itemsToRent, employeeOne);
-        assertEquals(1, customerOne.getTransactionHistory().size());
+        customerOne.rentMultipleItems(itemsToRent, employeeOne); 
+        assertEquals(1, customerOne.getTransactionHistory().size()); //Equivalence class
         customerOne.cancelMultipleItemRentals(itemsToCancel, customerOne, employeeOne);
-        assertEquals(2, ms.getRentedSize());
-        assertEquals(65, customerOne.getTransaction(0).getOrderAmount());
-        assertEquals(2, ms.getInventorySize());
+        assertEquals(2, ms.getRentedSize()); //Equivalence class
+        assertEquals(65, customerOne.getTransaction(0).getOrderAmount()); //Equivalence class
+        assertEquals(2, ms.getInventorySize()); //Equivalence class
     }
 
     @Test 
-    public void returnMultipleItems(){
+    public void returnMultipleItems(){ //Integration Test
         MusicStore ms = new MusicStore("ms");
         ms.addToInventory(new Item("Piano", 30, "none"));
         ms.addToInventory(new Item("Saxophone", 15, "none"));
@@ -602,13 +602,13 @@ class CustomerTest {
         //Returning all items
         customerOne.returnMultipleItems(itemsToReturn);
         
-        assertEquals(4, ms.getInventorySize());
+        assertEquals(4, ms.getInventorySize()); //Equivalence class
         
-        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
-        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
-        assertEquals("n/a", ms.getInventoryItem(2).getRenterName());
-        assertEquals("n/a", ms.getInventoryItem(3).getRenterName());
-        assertEquals(0, customerOne.getRentedItemsSize());
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(2).getRenterName()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(3).getRenterName()); //Equivalence class
+        assertEquals(0, customerOne.getRentedItemsSize()); //Equivalence class
         
         //Returning only two items 
         itemsToReturn = new ArrayList<String>();
@@ -616,10 +616,10 @@ class CustomerTest {
         itemsToReturn.add("Saxophone");
         customerOne.rentMultipleItems(itemsToRent, employeeOne);
         customerOne.returnMultipleItems(itemsToReturn);
-        assertEquals(2, ms.getRentedSize());
-        assertEquals("n/a", ms.getInventoryItem(0).getRenterName());
-        assertEquals("n/a", ms.getInventoryItem(1).getRenterName());
-        assertEquals(2, ms.getInventorySize());
+        assertEquals(2, ms.getRentedSize()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(0).getRenterName()); //Equivalence class
+        assertEquals("n/a", ms.getInventoryItem(1).getRenterName()); //Equivalence class
+        assertEquals(2, ms.getInventorySize()); //Equivalence class
     }
 
    

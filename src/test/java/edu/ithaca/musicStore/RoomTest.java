@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class RoomTest {
+public class RoomTest { 
     @Test
-    void constructorTest() throws IllegalArgumentException {
+    void constructorTest() throws IllegalArgumentException { //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals("Sean", roomOne.getRenterName()); //equivalence class
 
@@ -21,52 +21,52 @@ public class RoomTest {
     }
 
     @Test
-    void getIsEmptyRoomTest(){
+    void getIsEmptyRoomTest(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals(false, roomOne.getIsEmptyRoom()); //equivalence class
         Room roomTwo = new Room(true,210,false,"");
         assertEquals(true, roomTwo.getIsEmptyRoom()); //equivalence class
     }
     @Test
-    void getRoomNumberTest(){
+    void getRoomNumberTest(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals(210, roomOne.getRoomNumber()); //equivalence class
     }
     @Test
-    void getHasEquipmentTest(){
+    void getHasEquipmentTest(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals(true, roomOne.getHasEquipment()); //equivalence class
     }
     @Test
-    void getRenterNameTest(){
+    void getRenterNameTest(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals("Sean", roomOne.getRenterName()); //equivalence class
     }
     
     
     @Test
-    void setIsEmptyRoomTest(){ //This may be an issue
+    void setIsEmptyRoomTest(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals(false, roomOne.getIsEmptyRoom()); //equivalence class
         roomOne.setIsEmptyRoom(true);
         assertEquals(true, roomOne.getIsEmptyRoom()); //equivalence class
     }
     @Test
-    void setRoomNumberTest(){
+    void setRoomNumberTest(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals(210, roomOne.getRoomNumber()); //equivalence class
         roomOne.setRoomNumber(211);
         assertEquals(211, roomOne.getRoomNumber()); //equivalence class
     }
     @Test
-    void setHasEquipment(){ //This may be an issue
+    void setHasEquipment(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals(true, roomOne.getHasEquipment()); //equivalence class
         roomOne.setHasEquipment(false);
         assertEquals(false, roomOne.getHasEquipment()); //equivalence class
     }
     @Test
-    void setRenterNameTest(){
+    void setRenterNameTest(){ //Unit Test
         Room roomOne = new Room(false,210,true,"Sean");
         assertEquals("Sean", roomOne.getRenterName()); //equivalence class
         roomOne.setRenterName("Jim");
