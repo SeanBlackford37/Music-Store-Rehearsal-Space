@@ -133,75 +133,196 @@ public class RepairTech extends Employee{
 
 
     public void tuner(){
+        // keyboard is closed in main
         Scanner keyboard = new Scanner(System.in);
         //Random random = new Random();
-        int notePlayed;
+        int notePlayed=-1;
         System.out.println("Lets tune your guitar!");
-        System.out.println("Play your E string by entering a frequency between 320 and 340 Hz: ");
-        notePlayed= keyboard.nextInt();
+        while(true){
+            System.out.println("Play your E string by entering a frequency between 320 and 340 Hz: ");
+            try{
+                notePlayed= Integer.parseInt(keyboard.nextLine());
+                break;
+            }catch(NumberFormatException nfe){
+                System.out.println("invalid input entered. must be number. try again");
+                continue;
+            }
+        }
         while(notePlayed>334 || notePlayed<326){
             if(notePlayed>331){
-                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             if(notePlayed<329){
-                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
         }
         System.out.println("Your E string is in tune!");
-        System.out.println("Next let's tune your B string. Enter a frequency between 236 and 256");
-        notePlayed= keyboard.nextInt();
+        while(true){
+            System.out.println("Next let's tune your B string. Enter a frequency between 236 and 256");
+            try{
+                notePlayed= Integer.parseInt(keyboard.nextLine());
+                break;
+            }catch(NumberFormatException nfe){
+                System.out.println("invalid input entered. must be number. try again");
+                continue;
+            }
+        }
         while(notePlayed>250 || notePlayed<242){
             if(notePlayed>250){
-                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is sharp. Tune and enter a new frequency between 236 and 256 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             if(notePlayed<242){
-                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is flat. Tune and enter a new frequency between 236 and 256 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
         }
         System.out.println("Your B string is in tune!");
-        System.out.println("Next let's tune your G string. Enter a frequency between 186 and 206");
-        notePlayed= keyboard.nextInt();
-        while(notePlayed>200 || notePlayed<192){
+        while(true){
+            System.out.println("Next let's tune your G string. Enter a frequency between 186 and 206");
+            try{
+                notePlayed= Integer.parseInt(keyboard.nextLine());
+                break;
+            }catch(NumberFormatException nfe){
+                System.out.println("invalid input entered. must be number. try again");
+                continue;
+            }
+        }
+        while(notePlayed>206 || notePlayed<186){
             if(notePlayed>200){
-                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is sharp. Tune and enter a new frequency between 206 and 186 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             if(notePlayed<192){
-                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is flat. Tune and enter a new frequency between 206 and 186 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             
         }
 
         System.out.println("Your G string is in tune!");
-        System.out.println("Next let's tune your D string. Enter a frequency between 136 and 156");
-        notePlayed= keyboard.nextInt();
+        while(true){
+            System.out.println("Next let's tune your D string. Enter a frequency between 136 and 156");
+            try{
+                notePlayed= Integer.parseInt(keyboard.nextLine());
+                break;
+            }catch(NumberFormatException nfe){
+                System.out.println("invalid input entered. must be number. try again");
+                continue;
+            }
+        }
         while(notePlayed>150 || notePlayed<142){
             if(notePlayed>150){
-                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is sharp. Tune and enter a new frequency between 136 and 156 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             if(notePlayed<142){
-                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is flat. Tune and enter a new frequency between 136 and 156 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             
         }
         System.out.println("Your D string is in tune!");
-        System.out.println("Next let's tune your A string. Enter a frequency between 100 and 120");
-        notePlayed= keyboard.nextInt();
+        while(true){
+            System.out.println("Next let's tune your A string. Enter a frequency between 100 and 120");
+            try{
+                notePlayed= Integer.parseInt(keyboard.nextLine());
+                break;
+            }catch(NumberFormatException nfe){
+                System.out.println("invalid input entered. must be number. try again");
+                continue;
+            }
+        }
         while(notePlayed>114 || notePlayed<106){
             if(notePlayed>114){
-                System.out.println("The note is sharp. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is sharp. Tune and enter a new frequency between 100 and 120 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             if(notePlayed<106){
-                System.out.println("The note is flat. Tune and enter a new frequency between 320 and 340 Hz: ");
-                notePlayed= keyboard.nextInt();
+                while(true){
+                    System.out.println("The note is flat. Tune and enter a new frequency between 100 and 120 Hz: ");
+                    try{
+                        notePlayed= Integer.parseInt(keyboard.nextLine());
+                        break;
+                    }catch(NumberFormatException nfe){
+                        System.out.println("invalid input entered. must be number. try again");
+                        continue;
+                    }
+                }
             }
             
         }
@@ -228,8 +349,7 @@ public class RepairTech extends Employee{
                     }
                 }
             }*/
-            keyboard.close();
-}
+    }
 
     public void addToActiveRepairList(Repair repairToAdd){
         activeRepairs.add(repairToAdd);
@@ -307,5 +427,4 @@ public class RepairTech extends Employee{
 
     }
 
-    
 }
