@@ -191,8 +191,13 @@ public class Main {
     public static void pickUpRepairedItem(MusicStore mStoreIn, Customer customerIn, RepairTech currTech){
         System.out.println("Enter the name of the item you got repaired: ");
         String itemName= scan.nextLine();
+        if(currTech.getActiveRepairList().size()==0 || currTech.findRepair(itemName, customerIn.getCustomerName())==-1){
+            System.out.println("This repair does not exist");
+        }
+        else{
         currTech.removeFromActiveRepairList(itemName, customerIn.getCustomerName());
-        System.out.println("Your " + itemName + "is fixed.");
+        System.out.println("Your " + itemName + " is fixed.");
+        }
     }
 
     public static void payEmployee(MusicStore mStoreIn, Admin adminIn){
@@ -364,7 +369,7 @@ public class Main {
     public static boolean validChoice(String input){
 
         String[] choices = {"rent room", "rent equipment", "return room rental", "return equipment", 
-        "cancel equipment", "cancel room rental", "order total", "done", "Display information", "transaction History", "request repair"};
+        "cancel equipment", "cancel room rental", "order total", "done", "Display information", "transaction History", "request repair", "pick up repaired item"};
 
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
@@ -396,7 +401,7 @@ public class Main {
         Customer custOne= new Customer(store, name);
 
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nOrder Total\nDisplay information\nTransaction History\nRequest Repair\nDone\n");
+            System.out.println("\n--Customer Menu--\nRent Room\nRent Equipment\nReturn Room Rental\nReturn Equipment\nCancel Room Rental\nCancel Equipment\nOrder Total\nDisplay information\nTransaction History\nRequest Repair\nPick Up Repaired Item\nDone\n");
 
             input = scan.nextLine();
            
@@ -432,6 +437,9 @@ public class Main {
             }
             else if(input.equalsIgnoreCase("request repair")){
                 requestRepair(store, custOne, employeeTwo);
+            }
+            else if(input.equalsIgnoreCase("pick up repaired item")){
+                pickUpRepairedItem(store, custOne, employeeTwo);
             }
             
             
