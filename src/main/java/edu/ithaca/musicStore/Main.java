@@ -179,8 +179,20 @@ public class Main {
         String answer= scan.nextLine();
         if(answer.equals("yes")){
             mStoreIn.addToStoreBalance(newRepair.getPrice());
+            currTech.addToActiveRepairList(newRepair);
+            System.out.println("You can pick up this item when the repair is complete");
+        }
+        if(answer.equals("no")){
+            System.out.println("Feel free to return for other repairs soon!");
         }
 
+    }
+
+    public static void pickUpRepairedItem(MusicStore mStoreIn, Customer customerIn, RepairTech currTech){
+        System.out.println("Enter the name of the item you got repaired: ");
+        String itemName= scan.nextLine();
+        currTech.removeFromActiveRepairList(itemName, customerIn.getCustomerName());
+        System.out.println("Your " + itemName + "is fixed.");
     }
 
     public static void payEmployee(MusicStore mStoreIn, Admin adminIn){
