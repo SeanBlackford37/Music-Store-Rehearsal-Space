@@ -105,6 +105,43 @@ public class Admin extends Employee {
         }
     }
 
+    public void hoursEmployee(int employeeID, String employeeType, double hours) throws IllegalArgumentException{
+            
+        if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
+            
+            if(employeeType.equalsIgnoreCase("Employee")){
+                try{
+                    Employee toPay= store.getEmployee(store.findEmployee(employeeID));
+                    toPay.addHours(hours);
+                }catch(Exception e){
+                    throw new IllegalArgumentException("Employee with the employeeID could not be found!");
+                }
+                
+            }
+            else if(employeeType.equalsIgnoreCase("RepairTech")){
+                try{
+                    RepairTech toPay= store.getRepairTech(employeeID);
+                    toPay.addHours(hours);
+                }catch(Exception e){
+                    throw new IllegalArgumentException("RepairTech with the employeeID could not be found!");
+                }
+                
+            }
+            else if(employeeType.equalsIgnoreCase("Admin")){
+                try{
+                    Employee toPay=store.getAdmin(store.findAdmin(employeeID));
+                    toPay.addHours(hours);
+                }catch(Exception e){
+                    throw new IllegalArgumentException("Admin with the employeeID could not be found!");
+                }
+                
+            }
+        }
+        else{
+            throw new IllegalArgumentException("Employee Type could not be found");
+        }
+    }
+
     public static boolean isAmountValid(double balance){
         String s = "" + balance;
         String[] result = s.split("\\."); //Splits on the decimal and puts each side into result[1] (left half) and result[2] (right half)
