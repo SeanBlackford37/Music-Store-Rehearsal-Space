@@ -970,13 +970,16 @@ public class Main {
         }
     }
 
-    public static void chargeCustomer(Employee employeeIn, Customer customerIn){
+    public static void chargeCustomer(MusicStore storeIn, Employee employeeIn, Customer customerIn){
         String input = "go";
         while(!input.equalsIgnoreCase("done")){
             System.out.println("Charge room, item, or done");
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
                 //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
+                for(int i = 0; i < storeIn.availableRoomList().size(); i++){
+                    System.out.println("Room number: " + storeIn.availableRoomList().get(i).getRoomNumber());
+                }
                 int roomNumber=-1;
                 boolean isCorrectType=true;
                 do{
@@ -996,6 +999,9 @@ public class Main {
                 } 
             }
             else if(input.equalsIgnoreCase("item")){
+                for(int i = 0; i < storeIn.getInventoryList().size(); i++){
+                    System.out.println("Inventory List: " + storeIn.getInventoryList().get(i).getName() +" "+ storeIn.getInventoryList().get(i).getPrice());
+                }
                 System.out.println("Enter name of item:");
                 String itemName = scan.nextLine();
                 try{
@@ -1012,6 +1018,7 @@ public class Main {
             System.out.println("Refund room, item, or done");
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
+                System.out.println("Customer rented: " + customerIn.getRoomRented().getRoomNumber());
                 System.out.println("Enter number of room:");
                 //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 int roomNumber=-1;
@@ -1032,13 +1039,16 @@ public class Main {
                 }
             }
             else if(input.equalsIgnoreCase("item")){
-            System.out.println("Enter name of item:");
-            String itemName = scan.nextLine();
-                try{
-                    employeeIn.refundCustomerForItemRental(customerIn, itemName);
-                }catch(Exception e){
-                    System.out.println(e.getMessage());
+                for(int i = 0; i < customerIn.getRentedList().size(); i++){
+                    System.out.println("Customer renting: " + customerIn.getRentedList().get(i).getName());
                 }
+                System.out.println("Enter name of item:");
+                String itemName = scan.nextLine();
+                    try{
+                        employeeIn.refundCustomerForItemRental(customerIn, itemName);
+                    }catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
             }
         }
         
@@ -1127,7 +1137,7 @@ public class Main {
                 checkStock(mStore, currEmployee);
             }
             else if(input.equalsIgnoreCase("charge customer")){
-                chargeCustomer(currEmployee, customerIn);
+                chargeCustomer(mStore, currEmployee, customerIn);
             }
             else if(input.equalsIgnoreCase("refund customer")){
                 refundCustomer(currEmployee, customerIn);
