@@ -4,7 +4,7 @@ Narrative/scenarios document: https://docs.google.com/document/d/1clUWzP2B5oCUBi
 Sequence Diagram 1 (Morgan): https://drive.google.com/file/d/1gfzlaKgeMF1ayHRmIRy7fjLXDdbE_b0e/view?usp=sharing <br />
 Sequence Diagram 2 (Sean):  https://drive.google.com/file/d/1AMmt1AuU0Azyw4_MEtORvI-ShZ6HN8e0/view?usp=sharing <br />
 Sequence Diagram 3 (Emma): <br />
-Sequence Diagram 4 (Dani): <br />
+Sequence Diagram 4 (Dani): https://drive.google.com/file/d/1vhPBoTNK0FUbMSMVsDlRywLsBCWq-Ni1/view?usp=sharing<br />
 State Diagram: https://drive.google.com/file/d/1YYNuBpuXux-i0tVVA3hhjCQBD7CsHh2n/view?usp=sharing <br />
 
 ## Sprint One
