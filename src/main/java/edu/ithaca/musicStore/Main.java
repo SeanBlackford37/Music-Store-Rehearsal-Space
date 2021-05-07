@@ -1129,7 +1129,7 @@ public class Main {
                 }
             }while(isCorrectType==false);
             
-            if (mStore.findEmployee(employeeID) !=-1 ){
+            if (mStore.findEmployee(employeeID) !=-1){
                 int index = mStore.findEmployee(employeeID);
                 currEmployee = mStore.getEmployee(index);
                 input = "valid";
