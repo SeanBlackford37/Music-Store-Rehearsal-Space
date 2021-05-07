@@ -32,4 +32,4 @@ Link to class diagram: https://drive.google.com/file/d/1okZgdjYoQ3xhobRgUdCf9HKk
 
 Sprint review/demo agenda: https://docs.google.com/document/d/1bB8CRA6xRxuphmzuGiZsneeDt0HsoKVFYwXxwKOMlso/edit?usp=sharing
 
-Sprint retrospective: 
+Sprint retrospective: https://docs.google.com/document/d/1Ooh5K5yaRVIjChZqYCYriE8_WmesemLdnsQOmfEq940/edit?usp=sharing
