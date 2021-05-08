@@ -59,6 +59,7 @@ public class Main {
            
             if(store.searchForInventoryItem(input) != -1){
                 custIn.rentItem(input, employeeIn);
+                System.out.println(input + "rented");
             }else if(!input.equalsIgnoreCase("done")){
                 System.out.println("Invalid Item/Not found");
             }
@@ -1069,7 +1070,7 @@ public class Main {
             for(int i = 0; i < musicStoreIn.getRoomListSize();i++){
                 System.out.println("Room number: " + musicStoreIn.getRoomList().get(i).getRoomNumber());
                 System.out.println("Has equipment: " + musicStoreIn.getRoomList().get(i).getHasEquipment());
-                System.out.println("Room occuiped: " + musicStoreIn.getRoomList().get(i).getIsEmptyRoom());
+                System.out.println("Room occupied: " + !musicStoreIn.getRoomList().get(i).getIsEmptyRoom());
                 System.out.println("Room rate: " + musicStoreIn.getRoomList().get(i).getRate());
                 System.out.println("Renter name: " + musicStoreIn.getRoomList().get(i).getRenterName());
                 System.out.println();
