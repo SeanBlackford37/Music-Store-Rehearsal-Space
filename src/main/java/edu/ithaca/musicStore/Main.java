@@ -561,6 +561,7 @@ public class Main {
             System.out.print(" Tag: " + mStoreIn.getRepairTechList().get(i).getClass().getSimpleName());
             System.out.println("");
         }
+
     }
     
     public static boolean validChoice(String input){
@@ -621,18 +622,6 @@ public class Main {
         return false;
     }
     public static void customerInteraction(MusicStore store){
-        store.addToRoomList(new Room(true,1,false,"none"));
-        store.addToRoomList(new Room(false,2,true,"Joe Smith"));
-        store.addToRoomList(new Room(true,3,false,"none"));
-        store.addToRoomList(new Room(false,4,false,"Bob"));
-        store.addToRoomList(new Room(true,5,false,"none"));
-        
-        store.addToInventory(new Item("Piano", 30, "none"));
-        store.addToInventory(new Item("Saxophone", 15, "none"));
-        store.addToInventory(new Item("Drums", 50, "none"));
-        store.addToInventory(new Item("Guitar", 15, "none"));
-        store.addToInventory(new Item("Guitar", 15, "none"));
-
         String input = "go";
         Employee employeeOne = new Employee(12345, "Toby", store);
         RepairTech employeeTwo= new RepairTech(23456, "Max", store);
@@ -709,9 +698,6 @@ public class Main {
         if(uiPick.equalsIgnoreCase("client")){
             employeeInterface(mStore, customerIn);
         }else if(uiPick.equalsIgnoreCase("admin")){
-            mStore.addAdmin(new Admin(12346, "Sean", mStore));
-            mStore.addEmployee(new Employee(12347, "Toby", mStore));
-            mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
             System.out.println("Welcome to the Admin interface");
             String input = "go";
             Admin adminOne = null;
@@ -918,11 +904,6 @@ public class Main {
     }
 
     public static void repairInterface(MusicStore mStore){
-        
-        mStore.addToRepairTechList(new RepairTech(12346, "Morgan", mStore));
-        mStore.addToRepairTechList(new RepairTech(12348, "Sam", mStore));
-        mStore.addEquipment(new Equipment("guitar string", 12));
-        mStore.addEquipment(new Equipment("glue", 6));
         System.out.println("Welcome to the Repair Tech interface");
         
         String input = "go";
@@ -990,13 +971,16 @@ public class Main {
         }
     }
 
-    public static void chargeCustomer(Employee employeeIn, Customer customerIn){
+    public static void chargeCustomer(MusicStore storeIn, Employee employeeIn, Customer customerIn){
         String input = "go";
         while(!input.equalsIgnoreCase("done")){
             System.out.println("Charge room, item, or done");
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
                 //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
+                for(int i = 0; i < storeIn.availableRoomList().size(); i++){
+                    System.out.println("Room number: " + storeIn.availableRoomList().get(i).getRoomNumber());
+                }
                 int roomNumber=-1;
                 boolean isCorrectType=true;
                 do{
@@ -1016,6 +1000,9 @@ public class Main {
                 } 
             }
             else if(input.equalsIgnoreCase("item")){
+                for(int i = 0; i < storeIn.getInventoryList().size(); i++){
+                    System.out.println("Inventory List: " + storeIn.getInventoryList().get(i).getName() +" "+ storeIn.getInventoryList().get(i).getPrice());
+                }
                 System.out.println("Enter name of item:");
                 String itemName = scan.nextLine();
                 try{
@@ -1032,6 +1019,7 @@ public class Main {
             System.out.println("Refund room, item, or done");
             input = scan.nextLine();
             if(input.equalsIgnoreCase("room")){
+                System.out.println("Customer rented: " + customerIn.getRoomRented().getRoomNumber());
                 System.out.println("Enter number of room:");
                 //X TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 int roomNumber=-1;
@@ -1052,13 +1040,16 @@ public class Main {
                 }
             }
             else if(input.equalsIgnoreCase("item")){
-            System.out.println("Enter name of item:");
-            String itemName = scan.nextLine();
-                try{
-                    employeeIn.refundCustomerForItemRental(customerIn, itemName);
-                }catch(Exception e){
-                    System.out.println(e.getMessage());
+                for(int i = 0; i < customerIn.getRentedList().size(); i++){
+                    System.out.println("Customer renting: " + customerIn.getRentedList().get(i).getName());
                 }
+                System.out.println("Enter name of item:");
+                String itemName = scan.nextLine();
+                    try{
+                        employeeIn.refundCustomerForItemRental(customerIn, itemName);
+                    }catch(Exception e){
+                        System.out.println(e.getMessage());
+                    }
             }
         }
         
@@ -1107,10 +1098,6 @@ public class Main {
         return false;
     }
     public static void employeeInterface(MusicStore mStore, Customer customerIn){
-        
-        mStore.addEmployee(new Admin(12346, "Sean", mStore));
-        mStore.addEmployee(new Employee(12347, "Toby", mStore));
-        
         System.out.println("Welcome to the Employee interface");
         Employee currEmployee = null;
         String input = "go";
@@ -1151,7 +1138,7 @@ public class Main {
                 checkStock(mStore, currEmployee);
             }
             else if(input.equalsIgnoreCase("charge customer")){
-                chargeCustomer(currEmployee, customerIn);
+                chargeCustomer(mStore, currEmployee, customerIn);
             }
             else if(input.equalsIgnoreCase("refund customer")){
                 refundCustomer(currEmployee, customerIn);
@@ -1181,12 +1168,23 @@ public class Main {
         mStore.addToRoomList(new Room(true,3,false,"none"));
         mStore.addToRoomList(new Room(false,4,false,"Bob"));
         mStore.addToRoomList(new Room(true,5,false,"none"));
-        Customer currCustomer = new Customer(mStore, "Sean");
+        
+        Customer currCustomer = new Customer(mStore, "Jim Bob");
         currCustomer.rentRoom(1, new Employee(12345, "Doe", mStore));
         currCustomer.rentItem("Piano",  new Employee(12345, "Doe", mStore));
         currCustomer.rentItem("Guitar",  new Employee(12345, "Doe", mStore));
+        
         mStore.addToStoreBalance(50000);
         
+        mStore.addAdmin(new Admin(12346, "Sean", mStore));
+        mStore.addEmployee(new Employee(12347, "Toby", mStore));
+        mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
+        mStore.addToRepairTechList(new RepairTech(12346, "Morgan", mStore));
+        mStore.addToRepairTechList(new RepairTech(12348, "Sam", mStore));
+
+        mStore.addEquipment(new Equipment("guitar string", 12));
+        mStore.addEquipment(new Equipment("glue", 6));
+
         int menuNum=-1;
         int numMenus=4;
         boolean isCorrectType = true;
