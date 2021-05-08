@@ -1121,6 +1121,10 @@ public class Main {
                 int index = mStore.findEmployee(employeeID);
                 currEmployee = mStore.getEmployee(index);
                 input = "valid";
+            }else if(mStore.findAdmin(employeeID) !=-1){
+                int index = mStore.findAdmin(employeeID);
+                currEmployee = mStore.getAdmin(index);
+                input = "valid";
             }
             else{
                 System.out.println("Incorrect employeeID");
