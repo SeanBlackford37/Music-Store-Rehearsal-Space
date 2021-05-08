@@ -904,8 +904,8 @@ public class Main {
             return;
         }
         try{
-            currTech.getRepair(itemName, clientName).addItemToEquipmentUsed(currTech.pullFromEquipInventory(inventoryItem));
-            
+            currTech.getRepair(itemName, clientName).setRepairIsFinished(true);
+            currTech.removeFromActiveRepairList(itemName, clientName);
         }
         catch(Exception e){
             System.out.println("Cannot find the item wanted");
