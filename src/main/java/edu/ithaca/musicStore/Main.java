@@ -704,7 +704,6 @@ public class Main {
           
            while(!input.equals("valid")){
                 int employeeID = 0;
-                //TYPE CHECK HERE EMMA!!!! <3 XOXOX
                 boolean isCorrectType= true;
                 do{
                     System.out.println("Enter your employee ID");
@@ -807,6 +806,7 @@ public class Main {
         }
         try{
             currTech.getRepair(itemName, clientName).setRepairIsFinished(true);
+            currTech.removeFromActiveRepairList(itemName, clientName);
         }
         catch(Exception e){
             System.out.println("Cannot find the Repair");
@@ -891,12 +891,10 @@ public class Main {
             return;
         }
         try{
-            currTech.getRepair(itemName, clientName).setRepairIsFinished(true);
-            currTech.removeFromActiveRepairList(itemName, clientName);
+            currTech.getRepair(itemName, clientName).addItemToEquipmentUsed(currTech.pullFromEquipInventory(inventoryItem));
         }
         catch(Exception e){
             System.out.println("Cannot find the item wanted");
-            return;
         }
     
         
