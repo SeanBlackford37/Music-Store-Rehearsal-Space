@@ -339,7 +339,7 @@ public class Main {
                 try{
                     if(employeeID != adminIn.employeeID){
                         adminIn.fireEmployee(employeeID, employeeType);
-                        System.out.println(employeeType + "has been terminate!");
+                        System.out.println(employeeType + " has been terminated!");
                     }else{
                         System.out.println("Can'terminate self!");
                     }
@@ -1179,7 +1179,7 @@ public class Main {
         mStore.addToStoreBalance(50000);
         
         mStore.addAdmin(new Admin(12346, "Sean Blackford", mStore));
-        //mStore.addEmployee(new Employee(12347, "Toby", mStore));
+        mStore.addEmployee(new Employee(12347, "Toby", mStore));
         //mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
         //mStore.addToRepairTechList(new RepairTech(12346, "Morgan", mStore));
         //mStore.addToRepairTechList(new RepairTech(12348, "Sam", mStore));
