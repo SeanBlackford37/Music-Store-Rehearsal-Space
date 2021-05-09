@@ -206,7 +206,7 @@ public class Admin extends Employee {
     }
 
     public void hireEmployees(int employeeID, String name, double payAmt, MusicStore store, String employeeType){
-            if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin")){
+        if(employeeType.equalsIgnoreCase("Employee") || employeeType.equalsIgnoreCase("RepairTech")|| employeeType.equalsIgnoreCase("Admin") && isAmountValid(payAmt)){
                 if(employeeType.equalsIgnoreCase("Employee")){
                    Employee toHire= new Employee(employeeID, name, payAmt, store);
                     store.addEmployee(toHire);
