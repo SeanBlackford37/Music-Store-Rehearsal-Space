@@ -1180,11 +1180,11 @@ public class Main {
         
         mStore.addToStoreBalance(50000);
         
-        mStore.addAdmin(new Admin(12346, "Sean", mStore));
-        mStore.addEmployee(new Employee(12347, "Toby", mStore));
-        mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
-        mStore.addToRepairTechList(new RepairTech(12346, "Morgan", mStore));
-        mStore.addToRepairTechList(new RepairTech(12348, "Sam", mStore));
+        mStore.addAdmin(new Admin(12346, "Sean Blackford", mStore));
+        //mStore.addEmployee(new Employee(12347, "Toby", mStore));
+        //mStore.addToRepairTechList(new RepairTech(12348, "Doug", mStore));
+        //mStore.addToRepairTechList(new RepairTech(12346, "Morgan", mStore));
+        //mStore.addToRepairTechList(new RepairTech(12348, "Sam", mStore));
 
         mStore.addEquipment(new Equipment("guitar string", 12));
         mStore.addEquipment(new Equipment("glue", 6));
