@@ -1058,7 +1058,7 @@ public class Main {
         }else{
             for(int i = 0; i < musicStoreIn.getRoomListSize();i++){
                 System.out.println("Room number: " + musicStoreIn.getRoomList().get(i).getRoomNumber());
-                System.out.println("Has equipment: " + musicStoreIn.getRoomList().get(i).getHasEquipment());
+                System.out.println("Has items: " + musicStoreIn.getRoomList().get(i).getHasEquipment());
                 System.out.println("Room occupied: " + !musicStoreIn.getRoomList().get(i).getIsEmptyRoom());
                 System.out.println("Room rate: " + musicStoreIn.getRoomList().get(i).getRate());
                 System.out.println("Renter name: " + musicStoreIn.getRoomList().get(i).getRenterName());
@@ -1066,7 +1066,7 @@ public class Main {
             }
         }
     }
-    public static void viewEquipmentSchedule(MusicStore musicStoreIn){
+    public static void viewItemSchedule(MusicStore musicStoreIn){
         if(musicStoreIn.getRentedList().isEmpty()){
             System.out.println("No items are currently rented!");
             if(musicStoreIn.getInventory().isEmpty()){
@@ -1087,7 +1087,7 @@ public class Main {
         }
     }
     public static boolean validChoiceEmployee(String input){
-        String[] choices = {"check stock", "charge customer", "refund customer", "view space schedule", "view equipment schedule", "done"};
+        String[] choices = {"check stock", "charge customer", "refund customer", "view space schedule", "view item schedule", "done"};
         for (int i=0;i<choices.length;i++){
             if(input.equalsIgnoreCase(choices[i])){
                 return true;
@@ -1130,7 +1130,7 @@ public class Main {
         }
         System.out.println("Welcome: " + currEmployee.getName());
         while(!input.equalsIgnoreCase("done")){
-            System.out.println("\n--Employee Menu--\nCheck Stock\nCharge Customer\nRefund Customer\nView Space Schedule\nView Equipment Schedule\nDone\n");
+            System.out.println("\n--Employee Menu--\nCheck Stock\nCharge Customer\nRefund Customer\nView Space Schedule\nView Item Schedule\nDone\n");
             input = scan.nextLine();
 
             if (!validChoiceEmployee(input)){
@@ -1148,8 +1148,8 @@ public class Main {
             else if(input.equalsIgnoreCase("view space schedule")){
                 viewSpaceSchedule(mStore);
             }
-            else if(input.equalsIgnoreCase("view equipment schedule")){
-                viewEquipmentSchedule(mStore);
+            else if(input.equalsIgnoreCase("view item schedule")){
+                viewItemSchedule(mStore);
             }
             
         }
