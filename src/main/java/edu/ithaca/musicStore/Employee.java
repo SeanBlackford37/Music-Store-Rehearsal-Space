@@ -94,7 +94,7 @@ public class Employee {
 
     }
 
-    public String viewEquipmentSchedule(ArrayList<Item> rentedItestore){
+    public String viewItemSchedule(ArrayList<Item> rentedItestore){
         String schedule="Currently rented itestore: \n";
         for(int i=0; i<rentedItestore.size(); i++){
             schedule= schedule+ rentedItestore.get(i).getName() + "\n";

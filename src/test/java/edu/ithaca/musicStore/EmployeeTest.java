@@ -52,7 +52,7 @@ public class EmployeeTest {
         out.add(new Item("piano", 150, "Mary"));
         out.add(new Item("piano", 150, "Joe"));
         out.add(new Item("sheet music", 20, "Erica"));
-        String testView= employee1.viewEquipmentSchedule(out);
+        String testView= employee1.viewItemSchedule(out);
         System.out.println(testView);
 
     }
