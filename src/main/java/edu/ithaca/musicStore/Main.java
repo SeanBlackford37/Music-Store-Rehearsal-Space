@@ -47,7 +47,7 @@ public class Main {
         }
     }
     public static void rentingEquipment(MusicStore store, Customer custIn, Employee employeeIn){
-        System.out.println("whatEquipment would you like to rent, as many insturments as you want or enter 'Done' ");
+        System.out.println("What equipment would you like to rent, as many insturments as you want or enter 'Done' ");
         List<Item> inventoryList = store.getInventoryList();
         String input = "";
         while(!input.equalsIgnoreCase("done")){
@@ -59,7 +59,7 @@ public class Main {
            
             if(store.searchForInventoryItem(input) != -1){
                 custIn.rentItem(input, employeeIn);
-                System.out.println(input + "rented");
+                System.out.println(input + " rented");
             }else if(!input.equalsIgnoreCase("done")){
                 System.out.println("Invalid Item/Not found");
             }
